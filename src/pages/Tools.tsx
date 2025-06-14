@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Search, FileText, Code, Zap, Clock, Globe, Palette } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -88,7 +87,7 @@ const allTools = [
     icon: Code,
     category: "File & Format",
     route: "/tools/file-converter",
-    implemented: false
+    implemented: true
   },
   {
     title: "Markdown ↔ HTML",
@@ -96,7 +95,7 @@ const allTools = [
     icon: FileText,
     category: "File & Format",
     route: "/tools/md-html-converter",
-    implemented: false
+    implemented: true
   },
   {
     title: "CSV Parser",
@@ -104,7 +103,7 @@ const allTools = [
     icon: FileText,
     category: "File & Format",
     route: "/tools/csv-parser",
-    implemented: false
+    implemented: true
   },
   {
     title: "Text Diff Checker",
@@ -112,7 +111,7 @@ const allTools = [
     icon: Code,
     category: "File & Format",
     route: "/tools/text-diff",
-    implemented: false
+    implemented: true
   },
   {
     title: "JSON Merge Tool",
@@ -120,7 +119,7 @@ const allTools = [
     icon: Code,
     category: "File & Format",
     route: "/tools/json-merge",
-    implemented: false
+    implemented: true
   },
   {
     title: "YAML ↔ JSON",
@@ -128,7 +127,7 @@ const allTools = [
     icon: Code,
     category: "File & Format",
     route: "/tools/yaml-json",
-    implemented: false
+    implemented: true
   },
   
   // Developer Tools
@@ -138,7 +137,7 @@ const allTools = [
     icon: Zap,
     category: "Developer Tools",
     route: "/tools/env-formatter",
-    implemented: false
+    implemented: true
   },
   {
     title: "Gitignore Generator",
@@ -146,7 +145,7 @@ const allTools = [
     icon: Code,
     category: "Developer Tools",
     route: "/tools/gitignore-generator",
-    implemented: false
+    implemented: true
   },
   {
     title: "HTTP Request Tester",
@@ -154,7 +153,7 @@ const allTools = [
     icon: Globe,
     category: "Developer Tools",
     route: "/tools/http-tester",
-    implemented: false
+    implemented: true
   },
   {
     title: "Dockerfile Generator",
@@ -162,7 +161,7 @@ const allTools = [
     icon: Code,
     category: "Developer Tools",
     route: "/tools/dockerfile-generator",
-    implemented: false
+    implemented: true
   },
   {
     title: "Timestamp Converter",
@@ -178,7 +177,7 @@ const allTools = [
     icon: Code,
     category: "Developer Tools",
     route: "/tools/code-beautifier",
-    implemented: false
+    implemented: true
   },
   
   // Time & Schedule
@@ -188,7 +187,7 @@ const allTools = [
     icon: Clock,
     category: "Time & Schedule",
     route: "/tools/cron-helper",
-    implemented: false
+    implemented: true
   },
   {
     title: "Timezone Converter",
@@ -196,7 +195,7 @@ const allTools = [
     icon: Clock,
     category: "Time & Schedule",
     route: "/tools/timezone",
-    implemented: false
+    implemented: true
   },
   {
     title: "Countdown Timer",
@@ -204,7 +203,7 @@ const allTools = [
     icon: Clock,
     category: "Time & Schedule",
     route: "/tools/countdown",
-    implemented: false
+    implemented: true
   },
   
   // Network & Web Tools
@@ -214,7 +213,7 @@ const allTools = [
     icon: Globe,
     category: "Network & Web",
     route: "/tools/ip-lookup",
-    implemented: false
+    implemented: true
   },
   {
     title: "Network Tools",
@@ -222,7 +221,7 @@ const allTools = [
     icon: Globe,
     category: "Network & Web",
     route: "/tools/network-tools",
-    implemented: false
+    implemented: true
   },
   {
     title: "User Agent Parser",
@@ -230,7 +229,7 @@ const allTools = [
     icon: Globe,
     category: "Network & Web",
     route: "/tools/user-agent",
-    implemented: false
+    implemented: true
   },
   
   // Frontend/UX Helpers
@@ -248,7 +247,7 @@ const allTools = [
     icon: Palette,
     category: "Frontend/UX",
     route: "/tools/font-previewer",
-    implemented: false
+    implemented: true
   },
   {
     title: "Favicon Generator",
@@ -256,7 +255,7 @@ const allTools = [
     icon: Palette,
     category: "Frontend/UX",
     route: "/tools/favicon-generator",
-    implemented: false
+    implemented: true
   }
 ];
 
