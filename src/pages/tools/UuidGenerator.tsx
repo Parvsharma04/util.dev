@@ -1,12 +1,12 @@
-
 import { useState } from "react";
-import { Copy, RefreshCw } from "lucide-react";
+import { Copy, RefreshCw, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
+import { Link } from "react-router-dom";
 
 const UuidGenerator = () => {
   const [version, setVersion] = useState("v4");
@@ -22,7 +22,6 @@ const UuidGenerator = () => {
         return v.toString(16);
       });
     } else if (version === "v1") {
-      // Simplified v1 UUID (timestamp-based)
       const timestamp = Date.now();
       const random = Math.random().toString(16).substring(2, 15);
       return `${timestamp.toString(16)}-${random.substring(0, 4)}-1${random.substring(4, 7)}-${random.substring(7, 11)}-${random.substring(11)}`;
@@ -55,13 +54,10 @@ const UuidGenerator = () => {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
-          <div className="flex items-center gap-2 text-sm text-slate-500 mb-4">
-            <a href="/" className="hover:text-slate-700">Home</a>
-            <span>→</span>
-            <a href="/tools" className="hover:text-slate-700">Tools</a>
-            <span>→</span>
-            <span className="text-slate-900">UUID Generator</span>
-          </div>
+          <Link to="/tools" className="inline-flex items-center text-sm text-slate-600 hover:text-slate-900 mb-4">
+            <ArrowLeft className="w-4 h-4 mr-1" />
+            Back to Tools
+          </Link>
           
           <div className="flex items-center gap-4 mb-4">
             <div className="w-12 h-12 bg-gradient-to-r from-yellow-600 to-orange-600 rounded-xl flex items-center justify-center">

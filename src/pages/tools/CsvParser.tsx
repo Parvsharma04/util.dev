@@ -1,12 +1,12 @@
-
 import { useState } from "react";
-import { Upload, Download, Copy } from "lucide-react";
+import { Upload, Download, Copy, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useToast } from "@/hooks/use-toast";
+import { Link } from "react-router-dom";
 
 const CsvParser = () => {
   const [csvInput, setCsvInput] = useState("");
@@ -90,6 +90,10 @@ const CsvParser = () => {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
+          <Link to="/tools" className="inline-flex items-center text-sm text-slate-600 hover:text-slate-900 mb-4">
+            <ArrowLeft className="w-4 h-4 mr-1" />
+            Back to Tools
+          </Link>
           <h1 className="text-3xl font-bold text-slate-900">CSV Parser</h1>
           <p className="text-slate-600">Parse CSV data and convert to JSON or view as table</p>
           <Badge className="bg-green-100 text-green-700 border-green-200 mt-2">File & Format</Badge>

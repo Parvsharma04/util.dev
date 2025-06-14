@@ -1,12 +1,12 @@
-
 import { useState } from "react";
-import { Copy, RotateCcw } from "lucide-react";
+import { Copy, RotateCcw, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
+import { Link } from "react-router-dom";
 
 const MarkdownHtml = () => {
   const [markdownInput, setMarkdownInput] = useState("");
@@ -16,7 +16,6 @@ const MarkdownHtml = () => {
   const { toast } = useToast();
 
   const convertMarkdownToHtml = () => {
-    // Simple markdown to HTML conversion (basic implementation)
     let html = markdownInput
       .replace(/^# (.*$)/gim, '<h1>$1</h1>')
       .replace(/^## (.*$)/gim, '<h2>$1</h2>')
@@ -32,7 +31,6 @@ const MarkdownHtml = () => {
   };
 
   const convertHtmlToMarkdown = () => {
-    // Simple HTML to markdown conversion (basic implementation)
     let markdown = htmlInput
       .replace(/<h1>(.*?)<\/h1>/gim, '# $1')
       .replace(/<h2>(.*?)<\/h2>/gim, '## $1')
@@ -63,6 +61,10 @@ const MarkdownHtml = () => {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
+          <Link to="/tools" className="inline-flex items-center text-sm text-slate-600 hover:text-slate-900 mb-4">
+            <ArrowLeft className="w-4 h-4 mr-1" />
+            Back to Tools
+          </Link>
           <h1 className="text-3xl font-bold text-slate-900">Markdown ↔ HTML Converter</h1>
           <p className="text-slate-600">Convert between Markdown and HTML formats</p>
           <Badge className="bg-green-100 text-green-700 border-green-200 mt-2">File & Format</Badge>

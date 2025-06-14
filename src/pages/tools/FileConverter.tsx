@@ -1,11 +1,11 @@
-
 import { useState } from "react";
-import { Upload, Download, FileIcon } from "lucide-react";
+import { Upload, Download, FileIcon, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import { Link } from "react-router-dom";
 
 const FileConverter = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -26,7 +26,6 @@ const FileConverter = () => {
       setFile(uploadedFile);
       const reader = new FileReader();
       reader.onload = (e) => {
-        // For demo purposes, just store the content
         console.log("File content:", e.target?.result);
       };
       reader.readAsText(uploadedFile);
@@ -43,7 +42,6 @@ const FileConverter = () => {
       return;
     }
 
-    // Demo conversion - in real app would use proper file conversion libraries
     const mockConvertedData = `Converted ${file.name} to ${outputFormat} format\n\nThis is a demo conversion result.`;
     setConvertedData(mockConvertedData);
     
@@ -67,6 +65,10 @@ const FileConverter = () => {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
+          <Link to="/tools" className="inline-flex items-center text-sm text-slate-600 hover:text-slate-900 mb-4">
+            <ArrowLeft className="w-4 h-4 mr-1" />
+            Back to Tools
+          </Link>
           <h1 className="text-3xl font-bold text-slate-900">File Converter</h1>
           <p className="text-slate-600">Convert between different file formats</p>
           <Badge className="bg-green-100 text-green-700 border-green-200 mt-2">File & Format</Badge>
