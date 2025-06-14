@@ -12,15 +12,15 @@ const toolCategories = [
     icon: FileText,
     count: 9,
     tools: [
-      "JSON Formatter",
-      "Base64 Encoder/Decoder", 
-      "URL Encoder/Decoder",
-      "String Case Converter",
-      "JWT Decoder",
-      "Hash Generator",
-      "UUID Generator",
-      "Regex Tester",
-      "Lorem Ipsum Generator"
+      { name: "JSON Formatter", route: "/tools/json-formatter" },
+      { name: "Base64 Encoder/Decoder", route: "/tools/base64" }, 
+      { name: "URL Encoder/Decoder", route: "/tools/url-encoder" },
+      { name: "String Case Converter", route: "/tools/string-case" },
+      { name: "JWT Decoder", route: "/tools/jwt-decoder" },
+      { name: "Hash Generator", route: "/tools/hash-generator" },
+      { name: "UUID Generator", route: "/tools/uuid-generator" },
+      { name: "Regex Tester", route: "/tools/regex-tester" },
+      { name: "Lorem Ipsum Generator", route: "/tools/lorem-ipsum" }
     ]
   },
   {
@@ -28,12 +28,12 @@ const toolCategories = [
     icon: Code,
     count: 6,
     tools: [
-      "File Converter",
-      "Markdown ↔ HTML",
-      "CSV Parser",
-      "Text Diff Checker",
-      "JSON Merge Tool",
-      "YAML ↔ JSON"
+      { name: "File Converter", route: "/tools/file-converter" },
+      { name: "Markdown ↔ HTML", route: "/tools/md-html-converter" },
+      { name: "CSV Parser", route: "/tools/csv-parser" },
+      { name: "Text Diff Checker", route: "/tools/text-diff" },
+      { name: "JSON Merge Tool", route: "/tools/json-merge" },
+      { name: "YAML ↔ JSON", route: "/tools/yaml-json" }
     ]
   },
   {
@@ -41,12 +41,12 @@ const toolCategories = [
     icon: Zap,
     count: 6,
     tools: [
-      ".env Formatter",
-      "Gitignore Generator",
-      "HTTP Request Tester",
-      "Dockerfile Generator",
-      "Timestamp Converter",
-      "Code Minifier/Beautifier"
+      { name: ".env Formatter", route: "/tools/env-formatter" },
+      { name: "Gitignore Generator", route: "/tools/gitignore-generator" },
+      { name: "HTTP Request Tester", route: "/tools/http-tester" },
+      { name: "Dockerfile Generator", route: "/tools/dockerfile-generator" },
+      { name: "Timestamp Converter", route: "/tools/timestamp" },
+      { name: "Code Minifier/Beautifier", route: "/tools/code-beautifier" }
     ]
   },
   {
@@ -54,9 +54,9 @@ const toolCategories = [
     icon: Clock,
     count: 3,
     tools: [
-      "Cron Expression Helper",
-      "Timezone Converter",
-      "Countdown Timer"
+      { name: "Cron Expression Helper", route: "/tools/cron-helper" },
+      { name: "Timezone Converter", route: "/tools/timezone" },
+      { name: "Countdown Timer", route: "/tools/countdown" }
     ]
   },
   {
@@ -64,9 +64,9 @@ const toolCategories = [
     icon: Globe,
     count: 3,
     tools: [
-      "IP & DNS Lookup",
-      "Ping / Traceroute Visualizer",
-      "User Agent Parser"
+      { name: "IP & DNS Lookup", route: "/tools/ip-lookup" },
+      { name: "Ping / Traceroute Visualizer", route: "/tools/network-tools" },
+      { name: "User Agent Parser", route: "/tools/user-agent" }
     ]
   },
   {
@@ -74,9 +74,9 @@ const toolCategories = [
     icon: Palette,
     count: 3,
     tools: [
-      "Color Converter",
-      "Font Previewer",
-      "Favicon Generator"
+      { name: "Color Converter", route: "/tools/color-converter" },
+      { name: "Font Previewer", route: "/tools/font-previewer" },
+      { name: "Favicon Generator", route: "/tools/favicon-generator" }
     ]
   }
 ];
@@ -194,11 +194,11 @@ export function Sidebar({ open, onOpenChange }: SidebarProps) {
                       <div className="ml-7 mt-1 space-y-1">
                         {category.tools.map((tool) => (
                           <a
-                            key={tool}
-                            href={`/tools/${tool.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
+                            key={tool.name}
+                            href={tool.route}
                             className="block px-3 py-1.5 text-sm text-slate-600 hover:text-slate-900 hover:bg-slate-50 rounded transition-colors"
                           >
-                            {tool}
+                            {tool.name}
                           </a>
                         ))}
                       </div>

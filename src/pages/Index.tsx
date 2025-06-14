@@ -204,49 +204,52 @@ const Index = () => {
             <h2 className="text-2xl font-bold text-slate-900">
               {searchQuery ? `Search Results (${filteredTools.length})` : 'Featured Tools'}
             </h2>
-            <Button variant="outline" className="hover:bg-slate-50">
-              View All Tools
-            </Button>
+            <a href="/tools">
+              <Button variant="outline" className="hover:bg-slate-50">
+                View All Tools
+              </Button>
+            </a>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredTools.map((tool, index) => (
-              <Card 
-                key={tool.title} 
-                className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-slate-200 hover:border-slate-300 hover:-translate-y-1"
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
-                <CardHeader className="pb-3">
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="w-10 h-10 bg-gradient-to-r from-slate-100 to-slate-200 rounded-lg flex items-center justify-center group-hover:from-blue-100 group-hover:to-indigo-100 transition-colors duration-200">
-                      <tool.icon className="w-5 h-5 text-slate-600 group-hover:text-blue-600" />
+              <a key={tool.title} href={tool.route}>
+                <Card 
+                  className="group hover:shadow-xl transition-all duration-300 cursor-pointer border-slate-200 hover:border-slate-300 hover:-translate-y-1"
+                  style={{ animationDelay: `${index * 100}ms` }}
+                >
+                  <CardHeader className="pb-3">
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="w-10 h-10 bg-gradient-to-r from-slate-100 to-slate-200 rounded-lg flex items-center justify-center group-hover:from-blue-100 group-hover:to-indigo-100 transition-colors duration-200">
+                        <tool.icon className="w-5 h-5 text-slate-600 group-hover:text-blue-600" />
+                      </div>
+                      {tool.popular && (
+                        <Badge variant="secondary" className="bg-orange-100 text-orange-700 border-orange-200">
+                          Popular
+                        </Badge>
+                      )}
                     </div>
-                    {tool.popular && (
-                      <Badge variant="secondary" className="bg-orange-100 text-orange-700 border-orange-200">
-                        Popular
+                    <CardTitle className="text-lg group-hover:text-blue-900 transition-colors">
+                      {tool.title}
+                    </CardTitle>
+                    <CardDescription className="text-slate-600">
+                      {tool.description}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="pt-0">
+                    <div className="flex items-center justify-between">
+                      <Badge variant="outline" className="text-xs">
+                        {tool.category}
                       </Badge>
-                    )}
-                  </div>
-                  <CardTitle className="text-lg group-hover:text-blue-900 transition-colors">
-                    {tool.title}
-                  </CardTitle>
-                  <CardDescription className="text-slate-600">
-                    {tool.description}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="pt-0">
-                  <div className="flex items-center justify-between">
-                    <Badge variant="outline" className="text-xs">
-                      {tool.category}
-                    </Badge>
-                    <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                      <Button size="sm" variant="ghost" className="text-blue-600 hover:text-blue-700 hover:bg-blue-50">
-                        Try Now →
-                      </Button>
+                      <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                        <Button size="sm" variant="ghost" className="text-blue-600 hover:text-blue-700 hover:bg-blue-50">
+                          Try Now →
+                        </Button>
+                      </div>
                     </div>
-                  </div>
-                </CardContent>
-              </Card>
+                  </CardContent>
+                </Card>
+              </a>
             ))}
           </div>
         </section>

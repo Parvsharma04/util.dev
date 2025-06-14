@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
+import Tools from "./pages/Tools";
 import JsonFormatter from "./pages/tools/JsonFormatter";
 import Base64Encoder from "./pages/tools/Base64Encoder";
 import UrlEncoder from "./pages/tools/UrlEncoder";
@@ -47,6 +48,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/tools" element={<Tools />} />
           
           {/* Text & String Utilities */}
           <Route path="/tools/json-formatter" element={<JsonFormatter />} />
