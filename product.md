@@ -188,6 +188,65 @@ Clipboard Sync adds **daily usage gravity** to util.dev while staying true to it
 
 ---
 
+---
+
+## 🔗 DropLink — Ephemeral File & Message Sharing
+
+> **Share once. Burn forever.** 🔥
+
+DropLink is a privacy-first, ephemeral sharing utility built into util.dev. It allows developers to share files, text, or voice notes via short-lived links that automatically self-destruct after being opened or after a defined time period.
+
+### Why DropLink Belongs in util.dev
+
+* Developers frequently share logs, builds, keys, and snippets
+* Temporary sharing reduces risk by default
+* util.dev already carries trust for sensitive workflows
+
+### Core Capabilities (MVP)
+
+* Upload file → receive short link
+* Auto-delete after:
+
+  * single view **or**
+  * time-based TTL (5 min / 1 hr / 24 hr)
+* QR code generation
+* Copy-to-clipboard
+* No login required
+
+### Security & Privacy Features
+
+* Optional password protection
+* Client-side encryption using WebCrypto
+* One-time decryption keys stored in URL fragments
+* Server never sees plaintext content
+
+### Bonus Utilities
+
+* Burn-once text notes
+* Burn-once voice messages
+* Visual self-destruct countdown
+* Confirmation screen after burn
+
+### Hard Boundaries
+
+DropLink will **never**:
+
+* Retain files beyond TTL
+* Index or surface public links
+* Require accounts by default
+* Act as long-term storage
+
+### Architecture Overview
+
+* Frontend: Next.js + WebCrypto
+* Backend: Node.js API
+* Storage: AWS S3 / Backblaze B2
+* State & TTL: Redis
+
+DropLink strengthens util.dev’s position as a **trustworthy, privacy-forward developer toolbox**.
+
+---
+
 ## 🎨 UI & Design System
 
 * Neutral grayscale base
@@ -272,4 +331,4 @@ If a developer thinks:
 
 > *“Yep. This stays bookmarked.”*
 
-util.dev has succe
+util.dev has succeeded. 🧠✨
