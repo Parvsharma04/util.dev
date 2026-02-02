@@ -4,8 +4,6 @@
 
 util.dev is a **developer-first utility hub** — fast, minimal, offline-capable, and opinionated. It brings together the tools developers reach for every day, without ads, auth walls, or unnecessary abstraction.
 
-Think: *lovable.dev–level polish* for practical dev utilities.
-
 ---
 
 ## 🧠 Product Vision

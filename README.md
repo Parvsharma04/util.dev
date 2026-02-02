@@ -1,73 +1,106 @@
-# Welcome to your Lovable project
+# util.dev
 
-## Project info
+> **All the tools you need. None of the fluff.**
 
-**URL**: https://lovable.dev/projects/d313760c-8834-40a4-9e05-e22840777595
+util.dev is a **developer-first utility hub** — fast, minimal, offline-capable, and opinionated. It brings together the tools developers reach for every day, without ads, auth walls, or unnecessary abstraction.
 
-## How can I edit this code?
+## 🚀 Quick Start
 
-There are several ways of editing your application.
+### Frontend
 
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/d313760c-8834-40a4-9e05-e22840777595) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+```bash
+cd frontend
+npm install
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+The frontend will be available at `http://localhost:8080`
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Backend (Optional)
 
-**Use GitHub Codespaces**
+```bash
+cd backend
+npm install
+cp .env.example .env
+npm run dev
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+The API will be available at `http://localhost:3001`
 
-## What technologies are used for this project?
+## 🎨 Theme
 
-This project is built with:
+util.dev features a terminal-inspired theme with:
+- **Terminal Mode**: Green on black, hacker aesthetic (default)
+- **Dark Mode**: Easy on the eyes for night sessions
+- **Light Mode**: Clean and bright for daytime use
+- **System Mode**: Follows your OS preference
 
+Toggle themes using the theme switcher in the header.
+
+## ⌨️ Keyboard Shortcuts
+
+- `⌘/Ctrl + K` - Open Command Palette
+- `⌘/Ctrl + B` - Toggle Sidebar
+
+## 🧰 Available Tools
+
+### Text & String Utilities
+- JSON Formatter / Validator
+- Base64 Encoder / Decoder
+- URL Encoder / Decoder
+- String Case Converter
+- JWT Decoder
+- Hash Generator
+- UUID Generator
+- Regex Tester
+- Lorem Ipsum Generator
+
+### File & Format Utilities
+- CSV ↔ JSON / XML
+- Markdown ↔ HTML
+- YAML ↔ JSON
+- Text Diff Checker
+- JSON Merge Tool
+
+### Developer Utilities
+- .env Formatter
+- Gitignore Generator
+- HTTP Request Tester
+- Dockerfile Generator
+- Timestamp Converter
+- Code Beautifier / Minifier
+
+### Time & Scheduling
+- Cron Helper
+- Timezone Converter
+- Countdown Timers
+
+### Network & Web
+- IP & DNS Lookup
+- Header Inspector
+- User Agent Parser
+
+### Frontend & UX Helpers
+- Color Converter
+- Font Previewer
+- Favicon Generator
+
+## 🛠️ Tech Stack
+
+### Frontend
+- React + TypeScript
 - Vite
-- TypeScript
-- React
-- shadcn-ui
 - Tailwind CSS
+- shadcn/ui + Radix
 
-## How can I deploy this project?
+### Backend
+- Node.js + Express
+- TypeScript
 
-Simply open [Lovable](https://lovable.dev/projects/d313760c-8834-40a4-9e05-e22840777595) and click on Share -> Publish.
+## 📄 License
 
-## Can I connect a custom domain to my Lovable project?
+MIT
 
-Yes, you can!
+---
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+**Fast tools. Clean UI. Zero nonsense.**
