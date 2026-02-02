@@ -257,6 +257,39 @@ const allTools = [
     category: "Frontend/UX",
     route: "/tools/favicon-generator",
     implemented: true
+  },
+  // AI & LLM Tools
+  {
+    title: "Token Counter",
+    description: "Count tokens for GPT, Claude, Llama and other LLMs",
+    icon: Zap,
+    category: "AI & LLM",
+    route: "/tools/token-counter",
+    implemented: true
+  },
+  {
+    title: "JSON → TOON",
+    description: "Convert JSON to TOON format for smaller LLM context",
+    icon: Zap,
+    category: "AI & LLM",
+    route: "/tools/json-to-toon",
+    implemented: true
+  },
+  {
+    title: "YAML → TOON",
+    description: "Convert YAML to TOON format for token savings",
+    icon: Zap,
+    category: "AI & LLM",
+    route: "/tools/yaml-to-toon",
+    implemented: true
+  },
+  {
+    title: "Prompt Optimizer",
+    description: "Minify prompts to reduce token count",
+    icon: Zap,
+    category: "AI & LLM",
+    route: "/tools/prompt-optimizer",
+    implemented: true
   }
 ];
 
@@ -267,7 +300,8 @@ const categories = [
   { name: "Developer Tools", count: 6, icon: Zap, color: "bg-yellow-500/20 text-yellow-500 border-yellow-500/30" },
   { name: "Time & Schedule", count: 3, icon: Clock, color: "bg-orange-500/20 text-orange-500 border-orange-500/30" },
   { name: "Network & Web", count: 3, icon: Globe, color: "bg-red-500/20 text-red-500 border-red-500/30" },
-  { name: "Frontend/UX", count: 3, icon: Palette, color: "bg-purple-500/20 text-purple-500 border-purple-500/30" }
+  { name: "Frontend/UX", count: 3, icon: Palette, color: "bg-purple-500/20 text-purple-500 border-purple-500/30" },
+  { name: "AI & LLM", count: 4, icon: Zap, color: "bg-pink-500/20 text-pink-500 border-pink-500/30" }
 ];
 
 const Tools = () => {

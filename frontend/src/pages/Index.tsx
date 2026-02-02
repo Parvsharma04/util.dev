@@ -211,30 +211,6 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Categories */}
-        <section className="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold text-foreground mb-8 font-mono glow flex items-center gap-2">
-            <span className="text-muted-foreground">&gt;</span> Browse by Category
-          </h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            {categories.map((category, index) => (
-              <Card 
-                key={category.name} 
-                className="group hover:shadow-lg transition-all duration-200 cursor-pointer border-border hover:border-primary/50 bg-card card-glow" 
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
-                <CardContent className="p-4 text-center">
-                  <div className={`w-12 h-12 ${category.color} rounded-xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform duration-200 border`}>
-                    <category.icon className="w-6 h-6" />
-                  </div>
-                  <h3 className="font-semibold text-foreground mb-1 text-sm font-mono">{category.name}</h3>
-                  <p className="text-xs text-muted-foreground font-mono">{category.count} tools</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </section>
-
         {/* Featured Tools */}
         <section className="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between mb-8">
@@ -337,8 +313,7 @@ const Index = () => {
             </p>
             <div className="flex justify-center gap-6 text-sm text-muted-foreground font-mono">
               <a href="/about" className="hover:text-primary transition-colors">About</a>
-              <a href="https://github.com" className="hover:text-primary transition-colors">GitHub</a>
-              <a href="/feedback" className="hover:text-primary transition-colors">Feedback</a>
+              <a href="https://github.com/Parvsharma04/util.dev" className="hover:text-primary transition-colors">GitHub</a>
               <a href="/settings" className="hover:text-primary transition-colors">Settings</a>
             </div>
             <div className="mt-6 text-xs text-muted-foreground/60 font-mono">

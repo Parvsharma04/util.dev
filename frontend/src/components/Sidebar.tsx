@@ -78,6 +78,17 @@ const toolCategories = [
       { name: "Font Previewer", route: "/tools/font-previewer" },
       { name: "Favicon Generator", route: "/tools/favicon-generator" }
     ]
+  },
+  {
+    name: "AI & LLM Tools",
+    icon: Zap,
+    count: 4,
+    tools: [
+      { name: "Token Counter", route: "/tools/token-counter" },
+      { name: "JSON → TOON", route: "/tools/json-to-toon" },
+      { name: "YAML → TOON", route: "/tools/yaml-to-toon" },
+      { name: "Prompt Optimizer", route: "/tools/prompt-optimizer" }
+    ]
   }
 ];
 

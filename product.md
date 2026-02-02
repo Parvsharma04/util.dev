@@ -80,7 +80,6 @@ Developers constantly context-switch between:
 * `/favorites` — Local bookmarks
 * `/settings` — Theme, shortcuts
 * `/about` — Philosophy, changelog, GitHub
-* `/feedback` — Issues / contact
 
 ---
 

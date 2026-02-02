@@ -39,6 +39,10 @@ import UserAgentParser from "./pages/tools/UserAgentParser";
 import ColorConverter from "./pages/tools/ColorConverter";
 import FontPreviewer from "./pages/tools/FontPreviewer";
 import FaviconGenerator from "./pages/tools/FaviconGenerator";
+import TokenCounter from "./pages/tools/TokenCounter";
+import JsonToToon from "./pages/tools/JsonToToon";
+import YamlToToon from "./pages/tools/YamlToToon";
+import PromptOptimizer from "./pages/tools/PromptOptimizer";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -97,6 +101,12 @@ const App = () => (
           <Route path="/tools/color-converter" element={<ColorConverter />} />
           <Route path="/tools/font-previewer" element={<FontPreviewer />} />
           <Route path="/tools/favicon-generator" element={<FaviconGenerator />} />
+          
+          {/* AI & LLM Tools */}
+          <Route path="/tools/token-counter" element={<TokenCounter />} />
+          <Route path="/tools/json-to-toon" element={<JsonToToon />} />
+          <Route path="/tools/yaml-to-toon" element={<YamlToToon />} />
+          <Route path="/tools/prompt-optimizer" element={<PromptOptimizer />} />
           
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
