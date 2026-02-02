@@ -42,7 +42,7 @@ Developers constantly context-switch between:
 
 * Enterprise workflow orchestration
 * Paid SaaS dashboards
-* Heavy analytics or tracking platforms
+* Heavy analytics platforms
 
 ---
 
@@ -62,29 +62,27 @@ Developers constantly context-switch between:
 
 ### 3. Local-First & Private
 
-* Inputs never leave the browser by default
+* Inputs stay in the browser by default
 * Offline support where possible
-* No data retention
+* No silent data collection
 
 ### 4. Developer Taste
 
 * Clean typography
-* Neutral, low-contrast color palette
+* Neutral, low-contrast palette
 * Calm, deliberate motion
 
 ---
 
 ## 🗺️ Information Architecture
 
-### Core Routes
-
-* `/` — Home (search, featured tools, quick access)
+* `/` — Home (search, featured tools)
 * `/tools` — All tools (grid + category filters)
 * `/tools/[slug]` — Individual tool pages
-* `/favorites` — Bookmarked tools (local-first)
-* `/settings` — Theme, shortcuts, preferences
+* `/favorites` — Local bookmarks
+* `/settings` — Theme, shortcuts
 * `/about` — Philosophy, changelog, GitHub
-* `/feedback` — GitHub issues / contact
+* `/feedback` — Issues / contact
 
 ---
 
@@ -93,50 +91,48 @@ Developers constantly context-switch between:
 ### 1. Text & String Utilities
 
 * JSON Formatter / Validator
-* Base64 Encoder / Decoder (text & files)
+* Base64 Encoder / Decoder
 * URL Encoder / Decoder
 * String Case Converter
 * JWT Decoder
-* Hash Generator (MD5, SHA1, SHA256)
-* UUID Generator (v1 / v4 / v5)
+* Hash Generator
+* UUID Generator
 * Regex Tester
 * Lorem Ipsum Generator
 
 ### 2. File & Format Utilities
 
 * CSV ↔ JSON / XML
-* Markdown ↔ HTML (live preview)
+* Markdown ↔ HTML
 * YAML ↔ JSON
 * Text Diff Checker
 * JSON Merge Tool
-* File Preview & Export
 
 ### 3. Developer Utilities
 
-* `.env` Formatter & Validator
+* `.env` Formatter
 * Gitignore Generator
-* HTTP Request Tester (Postman-lite)
+* HTTP Request Tester
 * Dockerfile Generator
 * Timestamp Converter
-* Code Beautifier / Minifier (JS, CSS, HTML)
+* Code Beautifier / Minifier
 
 ### 4. Time & Scheduling
 
-* Cron Expression Helper
+* Cron Helper
 * Timezone Converter
-* Countdown / Shareable Timers
+* Countdown Timers
 
 ### 5. Network & Web
 
 * IP & DNS Lookup
 * Header Inspector
 * User Agent Parser
-* Ping / Traceroute Visualizer (frontend-only)
 
 ### 6. Frontend & UX Helpers
 
-* Color Converter (HEX / RGB / HSL)
-* Contrast Checker (WCAG)
+* Color Converter
+* Contrast Checker
 * Font Previewer
 * Favicon Generator
 
@@ -144,96 +140,104 @@ Developers constantly context-switch between:
 
 ## 🔥 Advanced & Modern Utilities (Planned)
 
-* **JSON → Type / DTO Generator** (TypeScript, Zod, Go, Java)
-* **JSON → Form / UI Generator**
-* **Token Counter** (LLM-aware: GPT, Claude, etc.)
-* **Prompt Cleaner & Formatter**
-* **cURL → Fetch / Axios Converter**
-* **SQL Formatter**
-* **Mock API Generator**
-* **Bulk UUID Generator**
+* JSON → Type / DTO Generator
+* JSON → Form / UI Generator
+* Token Counter (LLM-aware)
+* Prompt Cleaner & Formatter
+* cURL → Fetch / Axios Converter
+* SQL Formatter
+* Mock API Generator
+
+---
+
+## 📋 Clipboard Sync (ClipCloud) — util.dev Extension
+
+> **Copy here. Paste anywhere. Instantly.**
+
+Clipboard Sync is an **optional productivity extension inside util.dev** that allows developers to copy text or links on one device and paste them on another — without running heavy background apps.
+
+### Design Intent
+
+* Lightweight
+* Trust-first
+* Opt-in only
+
+### Core Capabilities
+
+* Copy text or links on one device
+* Paste instantly on another device
+* Auto-expiring clipboard items
+* Manual clear controls
+* QR-code based device pairing
+
+### Advanced (Opt-In)
+
+* End-to-end encrypted sync
+* Short clipboard history
+* Device management
+* Chrome extension + mobile app
+
+### Privacy Guarantees
+
+* No background monitoring
+* No permanent storage
+* Encrypted payloads
+* Explicit user action only
+
+Clipboard Sync adds **daily usage gravity** to util.dev while staying true to its minimal, no-fluff philosophy.
 
 ---
 
 ## 🎨 UI & Design System
 
-### Visual Style
-
-* Neutral grayscale foundation
+* Neutral grayscale base
 * Single restrained accent color
 * Soft shadows, no harsh borders
-* Rounded corners (subtle, not playful)
-
-### Layout
-
-* Collapsible sidebar grouped by category
-* Centered tool workspace
-* Breadcrumb navigation (Tools → Category → Tool)
-
-### Interaction Patterns
-
+* Collapsible sidebar
 * Command Palette (`Ctrl + K`)
-* Keyboard shortcuts surfaced inline
-* Toasts for copy / save success
-* Tabbed views for dual tools (encode/decode)
-
-### Theme System
-
-* Light / Dark / System modes
-* Token-based theming
-* Smooth, non-distracting transitions
+* Light / Dark / System themes
 
 ---
 
-## ⚙️ Shared Capabilities Across Tools
+## ⚙️ Shared Capabilities
 
-* Copy & download outputs
-* Drag-and-drop file upload
-* URL state persistence (`?input=`)
-* Offline caching via Service Workers
-* Local favorites (no auth required)
-* Zero ads, zero popups
+* Copy / download output
+* Drag & drop files
+* URL state sharing
+* Offline caching
+* Local favorites
+* Zero ads, zero tracking
 
 ---
 
 ## 🛠️ Technical Scope
 
-### Frontend Stack
+### Frontend
 
 * React + TypeScript
 * Vite
-* Tailwind CSS (tokenized)
+* Tailwind CSS
 * shadcn/ui + Radix
-* Lucide / Tabler icons
 
 ### Architecture
 
-* Tool modules isolated & lazy-loaded
-* Shared UI primitives
-* Local storage abstraction
-* Client-side caching
+* Modular tool isolation
+* Lazy loading
+* Local-first storage
 
-### Optional Backend (Future)
+### Optional Backend (Later)
 
-* Account sync for favorites
-* Privacy-first analytics
-* Tool usage insights (aggregated only)
+* Encrypted sync for Clipboard Sync
+* Optional account sync for favorites
 
 ---
 
 ## 📈 Success Metrics
 
-### Product Health
-
 * Time to first tool use (<2s)
 * Tools used per session
 * Return visits
-
-### Community
-
 * GitHub stars & forks
-* Issues & PRs opened
-* External references
 
 ---
 
@@ -242,9 +246,9 @@ Developers constantly context-switch between:
 util.dev will **never**:
 
 * Force login to use tools
-* Collect or store private input data
+* Store private inputs
 * Inject ads or affiliate links
-* Obscure simple tasks with abstractions
+* Obscure simple tasks
 
 ---
 
@@ -252,12 +256,11 @@ util.dev will **never**:
 
 util.dev becomes:
 
-* A trusted daily dev companion
-* A replacement for bookmarks
-* A visual Swiss Army knife for developers
+* A trusted dev companion
+* A bookmark replacement
+* A visual Swiss Army knife
 
-Not a growth-hacked SaaS —
-but a product developers quietly depend on.
+Quietly useful. Deeply reliable.
 
 ---
 
@@ -267,6 +270,6 @@ but a product developers quietly depend on.
 
 If a developer thinks:
 
-> *“Yep. This is staying bookmarked.”*
+> *“Yep. This stays bookmarked.”*
 
-Then util.dev has succeeded. 🧠✨
+util.dev has succe
