@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Upload, Download, Copy, Table as TableIcon, FileJson, FileText, Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";

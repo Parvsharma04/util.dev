@@ -1,6 +1,5 @@
 "use client";
 
-
 import { useState } from "react";
 import { Play, Activity, Globe, Server } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -34,7 +33,7 @@ const NetworkTools = () => {
     setProgress(0);
 
     // Simulate ping results
-    const mockPingData = [];
+    const mockPingData: any[] = [];
     for (let i = 1; i <= 10; i++) {
       setTimeout(() => {
         const time = Math.random() * 100 + 10; // Random time between 10-110ms
@@ -103,168 +102,182 @@ const NetworkTools = () => {
   const getAverageTime = () => {
     const successfulPings = pingResults.filter(p => p.status === "success");
     if (successfulPings.length === 0) return "0";
-    const avg = successfulPings.reduce((sum, ping) => sum + parseFloat(ping.time), 0) / successfulPings.length;
+    const avg = successfulPings.reduce((sum: number, ping: any) => sum + parseFloat(ping.time), 0) / successfulPings.length;
     return avg.toFixed(1);
   };
 
   const getPacketLoss = () => {
     if (pingResults.length === 0) return "0";
     const timeouts = pingResults.filter(p => p.status === "timeout").length;
-    return (
-      <ToolLayout title="Network Tools" description="Ping and traceroute visualization tools" category="Network & Web" icon={Badge}>
-        <Button
-          onClick={runPing}
-          disabled={isRunning}
-          className="bg-blue-600 hover:bg-blue-700"
-        >
-          <Activity className="w-4 h-4 mr-2" />
-          {isRunning ? "Running Ping..." : "Ping"}
-        </Button>
+    return ((timeouts / pingResults.length) * 100).toFixed(1);
+  };
 
-        <Button
-          onClick={runTraceroute}
-          disabled={isRunning}
-          className="bg-green-600 hover:bg-green-700"
-        >
-          <Globe className="w-4 h-4 mr-2" />
-          {isRunning ? "Running Traceroute..." : "Traceroute"}
-        </Button>
-      </div>
+  return (
+    <ToolLayout title="Network Tools" description="Ping and traceroute visualization tools" category="Network & Web" icon={Activity}>
+      {/* Input & Controls */}
+      <Card className="bg-card border-border mb-6">
+        <CardHeader>
+          <CardTitle className="text-foreground font-mono">Target Host</CardTitle>
+          <CardDescription className="text-muted-foreground">Enter a hostname or IP address to diagnose</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="flex flex-col sm:flex-row gap-4">
+            <Input
+              value={target}
+              onChange={(e) => setTarget(e.target.value)}
+              placeholder="e.g. google.com or 8.8.8.8"
+              className="flex-1 font-mono"
+            />
+            <div className="flex gap-2">
+              <Button
+                onClick={runPing}
+                disabled={isRunning}
+                className="bg-blue-600 hover:bg-blue-700"
+              >
+                <Activity className="w-4 h-4 mr-2" />
+                {isRunning ? "Running Ping..." : "Ping"}
+              </Button>
 
-                {
-      isRunning && (
-        <div className="space-y-2">
-          <div className="flex justify-between text-sm">
-            <span>Progress</span>
-            <span>{progress.toFixed(0)}%</span>
-          </div>
-          <Progress value={progress} />
-        </div>
-      )
-    }
-              </div >
-            </CardContent >
-          </Card >
-
-{
-  pingResults.length > 0 && (
-    <Card>
-      <CardHeader>
-        <CardTitle>Ping Results</CardTitle>
-        <CardDescription>Latency and packet loss statistics</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="p-3 bg-blue-50 rounded-lg text-center">
-              <div className="text-2xl font-bold text-blue-600">{getAverageTime()}ms</div>
-              <div className="text-sm text-blue-600">Average Latency</div>
+              <Button
+                onClick={runTraceroute}
+                disabled={isRunning}
+                className="bg-green-600 hover:bg-green-700"
+              >
+                <Globe className="w-4 h-4 mr-2" />
+                {isRunning ? "Running Traceroute..." : "Traceroute"}
+              </Button>
             </div>
+          </div>
 
-            <div className="p-3 bg-green-50 rounded-lg text-center">
-              <div className="text-2xl font-bold text-green-600">
-                {pingResults.filter(p => p.status === "success").length}
+          {isRunning && (
+            <div className="space-y-2 mt-4">
+              <div className="flex justify-between text-sm">
+                <span>Progress</span>
+                <span>{progress.toFixed(0)}%</span>
               </div>
-              <div className="text-sm text-green-600">Successful Pings</div>
+              <Progress value={progress} />
             </div>
+          )}
+        </CardContent>
+      </Card>
 
-            <div className="p-3 bg-red-50 rounded-lg text-center">
-              <div className="text-2xl font-bold text-red-600">{getPacketLoss()}%</div>
-              <div className="text-sm text-red-600">Packet Loss</div>
+      {/* Ping Results */}
+      {pingResults.length > 0 && (
+        <Card className="bg-card border-border mb-6">
+          <CardHeader>
+            <CardTitle className="text-foreground font-mono">Ping Results</CardTitle>
+            <CardDescription className="text-muted-foreground">Latency and packet loss statistics</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="p-3 bg-blue-500/10 border border-blue-500/30 rounded-lg text-center">
+                  <div className="text-2xl font-bold text-blue-400">{getAverageTime()}ms</div>
+                  <div className="text-sm text-blue-400/80">Average Latency</div>
+                </div>
+
+                <div className="p-3 bg-green-500/10 border border-green-500/30 rounded-lg text-center">
+                  <div className="text-2xl font-bold text-green-400">
+                    {pingResults.filter(p => p.status === "success").length}
+                  </div>
+                  <div className="text-sm text-green-400/80">Successful Pings</div>
+                </div>
+
+                <div className="p-3 bg-red-500/10 border border-red-500/30 rounded-lg text-center">
+                  <div className="text-2xl font-bold text-red-400">{getPacketLoss()}%</div>
+                  <div className="text-sm text-red-400/80">Packet Loss</div>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <h4 className="font-medium font-mono text-foreground">Ping Details</h4>
+                <div className="space-y-1 max-h-64 overflow-y-auto">
+                  {pingResults.map((ping, index) => (
+                    <div key={index} className="flex items-center justify-between p-2 bg-muted rounded text-sm font-mono">
+                      <span>Ping #{ping.sequence}</span>
+                      <span className={ping.status === "success" ? "text-green-400" : "text-red-400"}>
+                        {ping.status === "success" ? `${ping.time}ms (TTL=${ping.ttl})` : "Request timeout"}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
-          </div>
+          </CardContent>
+        </Card>
+      )}
 
-          <div className="space-y-2">
-            <h4 className="font-medium">Ping Details</h4>
-            <div className="space-y-1 max-h-64 overflow-y-auto">
-              {pingResults.map((ping, index) => (
-                <div key={index} className="flex items-center justify-between p-2 bg-muted rounded text-sm font-mono">
-                  <span>Ping #{ping.sequence}</span>
-                  <span className={ping.status === "success" ? "text-green-600" : "text-red-600"}>
-                    {ping.status === "success" ? `${ping.time}ms (TTL=${ping.ttl})` : "Request timeout"}
-                  </span>
+      {/* Traceroute Results */}
+      {tracerouteResults.length > 0 && (
+        <Card className="bg-card border-border mb-6">
+          <CardHeader>
+            <CardTitle className="text-foreground font-mono">Traceroute Results</CardTitle>
+            <CardDescription className="text-muted-foreground">Network path visualization to {target}</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-3">
+              {tracerouteResults.map((hop, index) => (
+                <div key={index} className="flex items-center gap-4 p-3 border border-border rounded-lg">
+                  <div className="flex items-center justify-center w-8 h-8 bg-primary/10 text-primary rounded-full text-sm font-bold">
+                    {hop.hop}
+                  </div>
+
+                  <div className="flex-1">
+                    <div className="font-medium text-foreground">{hop.hostname}</div>
+                    <div className="text-sm text-muted-foreground font-mono">{hop.ip}</div>
+                  </div>
+
+                  <div className="text-right">
+                    <div className="text-sm font-mono text-foreground">
+                      {hop.time1}ms / {hop.time2}ms / {hop.time3}ms
+                    </div>
+                    <div className="text-xs text-muted-foreground">RTT</div>
+                  </div>
+
+                  <Server className="w-5 h-5 text-muted-foreground" />
                 </div>
               ))}
             </div>
-          </div>
-        </div>
-      </CardContent>
-    </Card>
-  )
-}
+          </CardContent>
+        </Card>
+      )}
 
-{
-  tracerouteResults.length > 0 && (
-    <Card>
-      <CardHeader>
-        <CardTitle>Traceroute Results</CardTitle>
-        <CardDescription>Network path visualization to {target}</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-3">
-          {tracerouteResults.map((hop, index) => (
-            <div key={index} className="flex items-center gap-4 p-3 border border-slate-200 rounded-lg">
-              <div className="flex items-center justify-center w-8 h-8 bg-blue-100 text-blue-600 rounded-full text-sm font-bold">
-                {hop.hop}
-              </div>
-
-              <div className="flex-1">
-                <div className="font-medium">{hop.hostname}</div>
-                <div className="text-sm text-muted-foreground font-mono">{hop.ip}</div>
-              </div>
-
-              <div className="text-right">
-                <div className="text-sm font-mono">
-                  {hop.time1}ms / {hop.time2}ms / {hop.time3}ms
-                </div>
-                <div className="text-xs text-muted-foreground">RTT</div>
-              </div>
-
-              <Server className="w-5 h-5 text-muted-foreground" />
+      {/* Info Section */}
+      <Card className="bg-card border-border">
+        <CardHeader>
+          <CardTitle className="text-foreground font-mono">Network Diagnostics Info</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+            <div>
+              <h4 className="font-medium mb-2 text-foreground font-mono">Ping Tool</h4>
+              <p className="text-muted-foreground">
+                Measures round-trip time for packets sent to a destination host and shows packet loss statistics.
+              </p>
             </div>
-          ))}
-        </div>
-      </CardContent>
-    </Card>
-  )
-}
-
-<Card>
-  <CardHeader>
-    <CardTitle>Network Diagnostics Info</CardTitle>
-  </CardHeader>
-  <CardContent>
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-      <div>
-        <h4 className="font-medium mb-2">Ping Tool</h4>
-        <p className="text-muted-foreground">
-          Measures round-trip time for packets sent to a destination host and shows packet loss statistics.
-        </p>
-      </div>
-      <div>
-        <h4 className="font-medium mb-2">Traceroute Tool</h4>
-        <p className="text-muted-foreground">
-          Shows the path packets take through the network to reach a destination, displaying each hop along the route.
-        </p>
-      </div>
-      <div>
-        <h4 className="font-medium mb-2">Latency</h4>
-        <p className="text-muted-foreground">
-          The time it takes for a packet to travel from source to destination and back, measured in milliseconds.
-        </p>
-      </div>
-      <div>
-        <h4 className="font-medium mb-2">Packet Loss</h4>
-        <p className="text-muted-foreground">
-          The percentage of packets that fail to reach their destination, indicating network reliability.
-        </p>
-      </div>
-    </div>
-  </CardContent>
-</Card>
-        </div >
-              </ToolLayout >
-    );
+            <div>
+              <h4 className="font-medium mb-2 text-foreground font-mono">Traceroute Tool</h4>
+              <p className="text-muted-foreground">
+                Shows the path packets take through the network to reach a destination, displaying each hop along the route.
+              </p>
+            </div>
+            <div>
+              <h4 className="font-medium mb-2 text-foreground font-mono">Latency</h4>
+              <p className="text-muted-foreground">
+                The time it takes for a packet to travel from source to destination and back, measured in milliseconds.
+              </p>
+            </div>
+            <div>
+              <h4 className="font-medium mb-2 text-foreground font-mono">Packet Loss</h4>
+              <p className="text-muted-foreground">
+                The percentage of packets that fail to reach their destination, indicating network reliability.
+              </p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    </ToolLayout>
+  );
 };
 
 export default NetworkTools;

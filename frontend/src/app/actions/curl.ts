@@ -1,10 +1,9 @@
 "use server";
 
-import * as curlconverter from "curlconverter";
-
 export async function convertCurl(curl: string, mode: "fetch" | "axios") {
     if (!curl.trim()) return "";
     try {
+        const curlconverter = await import("curlconverter");
         if (mode === "fetch") {
             return curlconverter.toBrowser(curl);
         } else {

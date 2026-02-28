@@ -159,141 +159,162 @@ users:
 
     return (
         <ToolLayout title="YAML ↔ TOON" description="Convert YAML to TOON format for smaller LLM context" category="AI Tools" icon={Zap}>
-            <Button onClick={loadSample} variant="outline" size="sm">
-                Load Sample
-            </Button>
-        </div>
-                    </CardContent >
-                </Card >
+            {/* Settings & Actions */}
+            <Card className="bg-card border-border mb-6">
+                <CardContent className="pt-6">
+                    <div className="flex flex-wrap items-center gap-4">
+                        <div className="flex items-center gap-2">
+                            <Label className="font-mono text-sm">Delimiter</Label>
+                            <Select value={delimiter} onValueChange={(v) => setDelimiter(v as Delimiter)}>
+                                <SelectTrigger className="w-[120px]">
+                                    <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value={"\t"}>Tab</SelectItem>
+                                    <SelectItem value=",">,</SelectItem>
+                                    <SelectItem value="|">|</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <Switch checked={keyFolding} onCheckedChange={setKeyFolding} id="key-folding" />
+                            <Label htmlFor="key-folding" className="font-mono text-sm">Key Folding</Label>
+                        </div>
+                        <Button onClick={loadSample} variant="outline" size="sm">
+                            Load Sample
+                        </Button>
+                    </div>
+                </CardContent>
+            </Card>
 
-    {/* Main Content */ }
-    < div className = "grid grid-cols-1 lg:grid-cols-2 gap-6" >
-        {/* Input */ }
-        < Card className = "bg-card border-border" >
-                        <CardHeader className="pb-3">
-                            <div className="flex items-center justify-between">
-                                <CardTitle className="text-foreground font-mono">
-                                    {mode === "yaml-to-toon" ? "YAML Input" : "TOON Input"}
-                                </CardTitle>
-                                <Badge variant="outline" className="font-mono text-xs">
-                                    {stats.inputSize > 0 ? `${stats.inputSize} bytes` : "—"}
-                                </Badge>
-                            </div>
-                        </CardHeader>
-                        <CardContent>
-                            <Textarea
-                                value={input}
-                                onChange={(e) => setInput(e.target.value)}
-                                placeholder={
-                                    mode === "yaml-to-toon"
-                                        ? "key: value\narray:\n  - item1\n  - item2"
-                                        : "key: value\narray[2]: item1,item2"
-                                }
-                                className="min-h-[400px] font-mono text-sm bg-background border-border resize-none"
-                            />
-                        </CardContent>
-                    </Card >
-
-    {/* Output */ }
-    < Card className = "bg-card border-border" >
-                        <CardHeader className="pb-3">
-                            <div className="flex items-center justify-between">
-                                <CardTitle className="text-foreground font-mono">
-                                    {mode === "yaml-to-toon" ? "TOON Output" : "YAML Output"}
-                                </CardTitle>
-                                <div className="flex items-center gap-2">
-                                    {stats.outputSize > 0 && (
-                                        <Badge variant="outline" className="font-mono text-xs">
-                                            {stats.outputSize} bytes
-                                        </Badge>
-                                    )}
-                                    {stats.savings > 0 && mode === "yaml-to-toon" && (
-                                        <Badge className="bg-green-500/20 text-green-400 border-green-500/30 font-mono text-xs">
-                                            -{stats.savingsPercent.toFixed(1)}%
-                                        </Badge>
-                                    )}
-                                </div>
-                            </div>
-                        </CardHeader>
-                        <CardContent>
-                            {error ? (
-                                <div className="min-h-[400px] p-4 bg-red-500/10 border border-red-500/30 rounded-lg">
-                                    <p className="text-red-400 font-mono text-sm">{error}</p>
-                                </div>
-                            ) : (
-                                <Textarea
-                                    value={output}
-                                    readOnly
-                                    placeholder="Output will appear here..."
-                                    className="min-h-[400px] font-mono text-sm bg-background border-border resize-none"
-                                />
-                            )}
-                        </CardContent>
-                    </Card >
-                </div >
-
-    {/* Actions */ }
-    < div className = "flex flex-wrap gap-3 mt-6 justify-center" >
-                    <Button onClick={convert} className="min-w-[140px]">
-                        <Zap className="w-4 h-4 mr-2" />
-                        Convert
-                    </Button>
-                    <Button onClick={swapMode} variant="outline">
-                        <ArrowRightLeft className="w-4 h-4 mr-2" />
-                        Swap & Convert
-                    </Button>
-                    <Button onClick={copyOutput} variant="outline" disabled={!output}>
-                        <Copy className="w-4 h-4 mr-2" />
-                        Copy
-                    </Button>
-                    <Button onClick={downloadOutput} variant="outline" disabled={!output}>
-                        <Download className="w-4 h-4 mr-2" />
-                        Download
-                    </Button>
-                </div >
-
-    {/* Comparison Section */ }
-    < Card className = "mt-8 bg-muted/50 border-border" >
-                    <CardHeader>
-                        <CardTitle className="text-foreground font-mono text-lg">
-                            YAML vs TOON Comparison
-                        </CardTitle>
+            {/* Main Content */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* Input */}
+                <Card className="bg-card border-border">
+                    <CardHeader className="pb-3">
+                        <div className="flex items-center justify-between">
+                            <CardTitle className="text-foreground font-mono">
+                                {mode === "yaml-to-toon" ? "YAML Input" : "TOON Input"}
+                            </CardTitle>
+                            <Badge variant="outline" className="font-mono text-xs">
+                                {stats.inputSize > 0 ? `${stats.inputSize} bytes` : "—"}
+                            </Badge>
+                        </div>
                     </CardHeader>
                     <CardContent>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <h4 className="font-mono text-sm text-foreground mb-2">YAML</h4>
-                                <pre className="text-xs text-muted-foreground bg-background p-3 rounded-lg overflow-x-auto">
-                                    {`users:
+                        <Textarea
+                            value={input}
+                            onChange={(e) => setInput(e.target.value)}
+                            placeholder={
+                                mode === "yaml-to-toon"
+                                    ? "key: value\narray:\n  - item1\n  - item2"
+                                    : "key: value\narray[2]: item1,item2"
+                            }
+                            className="min-h-[400px] font-mono text-sm bg-background border-border resize-none"
+                        />
+                    </CardContent>
+                </Card>
+
+                {/* Output */}
+                <Card className="bg-card border-border">
+                    <CardHeader className="pb-3">
+                        <div className="flex items-center justify-between">
+                            <CardTitle className="text-foreground font-mono">
+                                {mode === "yaml-to-toon" ? "TOON Output" : "YAML Output"}
+                            </CardTitle>
+                            <div className="flex items-center gap-2">
+                                {stats.outputSize > 0 && (
+                                    <Badge variant="outline" className="font-mono text-xs">
+                                        {stats.outputSize} bytes
+                                    </Badge>
+                                )}
+                                {stats.savings > 0 && mode === "yaml-to-toon" && (
+                                    <Badge className="bg-green-500/20 text-green-400 border-green-500/30 font-mono text-xs">
+                                        -{stats.savingsPercent.toFixed(1)}%
+                                    </Badge>
+                                )}
+                            </div>
+                        </div>
+                    </CardHeader>
+                    <CardContent>
+                        {error ? (
+                            <div className="min-h-[400px] p-4 bg-red-500/10 border border-red-500/30 rounded-lg">
+                                <p className="text-red-400 font-mono text-sm">{error}</p>
+                            </div>
+                        ) : (
+                            <Textarea
+                                value={output}
+                                readOnly
+                                placeholder="Output will appear here..."
+                                className="min-h-[400px] font-mono text-sm bg-background border-border resize-none"
+                            />
+                        )}
+                    </CardContent>
+                </Card>
+            </div>
+
+            {/* Actions */}
+            <div className="flex flex-wrap gap-3 mt-6 justify-center">
+                <Button onClick={convert} className="min-w-[140px]">
+                    <Zap className="w-4 h-4 mr-2" />
+                    Convert
+                </Button>
+                <Button onClick={swapMode} variant="outline">
+                    <ArrowRightLeft className="w-4 h-4 mr-2" />
+                    Swap & Convert
+                </Button>
+                <Button onClick={copyOutput} variant="outline" disabled={!output}>
+                    <Copy className="w-4 h-4 mr-2" />
+                    Copy
+                </Button>
+                <Button onClick={downloadOutput} variant="outline" disabled={!output}>
+                    <Download className="w-4 h-4 mr-2" />
+                    Download
+                </Button>
+            </div>
+
+            {/* Comparison Section */}
+            <Card className="mt-8 bg-muted/50 border-border">
+                <CardHeader>
+                    <CardTitle className="text-foreground font-mono text-lg">
+                        YAML vs TOON Comparison
+                    </CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 className="font-mono text-sm text-foreground mb-2">YAML</h4>
+                            <pre className="text-xs text-muted-foreground bg-background p-3 rounded-lg overflow-x-auto">
+                                {`users:
   - id: 1
     name: Alice
   - id: 2
     name: Bob
   - id: 3
     name: Charlie`}
-                                </pre>
-                            </div>
-                            <div>
-                                <h4 className="font-mono text-sm text-foreground mb-2">
-                                    TOON (with key folding + tab delimiter)
-                                </h4>
-                                <pre className="text-xs text-muted-foreground bg-background p-3 rounded-lg overflow-x-auto">
-                                    {`users[3]{id	name}:
-  1	Alice
-  2	Bob
-  3	Charlie`}
-                                </pre>
-                            </div>
+                            </pre>
                         </div>
-                        <p className="text-sm text-muted-foreground mt-4">
-                            TOON's tabular format eliminates repetitive keys and uses
-                            efficient delimiters, typically saving{" "}
-                            <strong className="text-primary">30-50%</strong> on array-heavy
-                            data.
-                        </p>
-                    </CardContent>
-                </Card >
-                    </ToolLayout >
+                        <div>
+                            <h4 className="font-mono text-sm text-foreground mb-2">
+                                TOON (with key folding + tab delimiter)
+                            </h4>
+                            <pre className="text-xs text-muted-foreground bg-background p-3 rounded-lg overflow-x-auto">
+                                {`users[3]{id\tname}:
+  1\tAlice
+  2\tBob
+  3\tCharlie`}
+                            </pre>
+                        </div>
+                    </div>
+                    <p className="text-sm text-muted-foreground mt-4">
+                        TOON's tabular format eliminates repetitive keys and uses
+                        efficient delimiters, typically saving{" "}
+                        <strong className="text-primary">30-50%</strong> on array-heavy
+                        data.
+                    </p>
+                </CardContent>
+            </Card>
+        </ToolLayout>
     );
 };
 
