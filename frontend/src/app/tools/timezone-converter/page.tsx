@@ -64,89 +64,9 @@ const TimezoneConverter = () => {
 
     updateCurrentTimes();
     const interval = setInterval(updateCurrentTimes, 1000);
-    return () => clearInterval(interval);
-  }, []);
-
-  const convertTime = () => {
-    if (!sourceTime) {
-      toast({
-        title: "Error",
-        description: "Please enter a time to convert",
-        variant: "destructive"
-      });
-      return;
-    }
-
-    try {
-      // Create a date object from the input time
-      const inputDate = new Date(sourceTime);
-      
-      if (isNaN(inputDate.getTime())) {
-        throw new Error("Invalid date format");
-      }
-
-      // Convert to target timezone
-      const converted = inputDate.toLocaleString("en-US", {
-        timeZone: targetTimezone,
-        hour12: true,
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-        year: "numeric",
-        month: "short",
-        day: "2-digit",
-        weekday: "short"
-      });
-
-      setConvertedTime(converted);
-      
-      toast({
-        title: "Converted!",
-        description: "Time has been converted successfully"
-      });
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "Invalid time format. Use YYYY-MM-DD HH:MM format",
-        variant: "destructive"
-      });
-    }
-  };
-
-  const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text);
-    toast({ title: "Copied!", description: "Time copied to clipboard" });
-  };
-
-  const setCurrentTime = () => {
-    const now = new Date();
-    const formatted = now.toISOString().slice(0, 16);
-    setSourceTime(formatted);
-  };
-
-  const getTimezoneLabel = (tz: string) => {
-    const timezone = timezones.find(t => t.value === tz);
-    return timezone ? timezone.label : tz;
-  };
-
-  return (
-    <div className="min-h-screen bg-background">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-foreground">Timezone Converter</h1>
-          <p className="text-muted-foreground">Convert times between different timezones</p>
-          <Badge className="bg-orange-100 text-orange-700 border-orange-200 mt-2">Time & Schedule</Badge>
-        </div>
-
-        <div className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Time Conversion</CardTitle>
-              <CardDescription>Convert a specific time between timezones</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    return (
+        <ToolLayout title="Timezone Converter" description="Convert times between different timezones" category="Time & Schedule" icon={Badge}>
+<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="text-sm font-medium">From Timezone</label>
                     <Select value={sourceTimezone} onValueChange={setSourceTimezone}>
@@ -232,11 +152,11 @@ const TimezoneConverter = () => {
                         <div className="font-medium text-foreground">
                           {getTimezoneLabel(tz)}
                         </div>
-                        <div className="text-lg font-mono text-slate-700">
+                        <div className="text-lg font-mono text-muted-foreground">
                           {currentTimes[tz] || "Loading..."}
                         </div>
                       </div>
-                      <Globe className="w-5 h-5 text-slate-400" />
+                      <Globe className="w-5 h-5 text-muted-foreground" />
                     </div>
                   </div>
                 ))}
@@ -278,9 +198,8 @@ const TimezoneConverter = () => {
             </CardContent>
           </Card>
         </div>
-      </div>
-    </div>
-  );
+              </ToolLayout>
+    );
 };
 
 export default TimezoneConverter;

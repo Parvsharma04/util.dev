@@ -74,19 +74,8 @@ const TextDiff = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <Link href="/tools" className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground mb-4">
-            <ArrowLeft className="w-4 h-4 mr-1" />
-            Back to Tools
-          </Link>
-          <h1 className="text-3xl font-bold text-foreground">Text Diff Checker</h1>
-          <p className="text-muted-foreground">Compare two texts and highlight differences</p>
-          <Badge className="bg-green-100 text-green-700 border-green-200 mt-2">File & Format</Badge>
-        </div>
-
-        <div className="mb-6">
+        <ToolLayout title="Text Diff Checker" description="Compare two texts and highlight differences" category="File & Format" icon={Button}>
+<div className="mb-6">
           <div className="flex gap-3">
             <Button onClick={calculateDiff} className="bg-blue-600 hover:bg-blue-700">
               Compare Texts
@@ -158,7 +147,7 @@ const TextDiff = () => {
                         ? 'bg-green-100 text-green-800' 
                         : item.type === 'removed'
                         ? 'bg-red-100 text-red-800'
-                        : 'text-slate-700'
+                        : 'text-muted-foreground'
                     }`}
                   >
                     <span className="select-none mr-2">
@@ -171,9 +160,8 @@ const TextDiff = () => {
             </CardContent>
           </Card>
         )}
-      </div>
-    </div>
-  );
+              </ToolLayout>
+    );
 };
 
 export default TextDiff;

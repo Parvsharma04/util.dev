@@ -66,35 +66,8 @@ const HashGenerator = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
-            <a href="/" className="hover:text-foreground">Home</a>
-            <span>→</span>
-            <a href="/tools" className="hover:text-foreground">Tools</a>
-            <span>→</span>
-            <span className="text-foreground">Hash Generator</span>
-          </div>
-          
-          <div className="flex items-center gap-4 mb-4">
-            <div className="w-12 h-12 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl flex items-center justify-center">
-              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-              </svg>
-            </div>
-            <div>
-              <h1 className="text-3xl font-bold text-foreground">Hash Generator</h1>
-              <p className="text-muted-foreground">Generate MD5, SHA1, SHA256, and SHA512 hashes</p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <Badge className="bg-blue-100 text-blue-700 border-blue-200">Text & String</Badge>
-          </div>
-        </div>
-
-        <div className="mb-6">
+        <ToolLayout title="Hash Generator" description="Generate MD5, SHA1, SHA256, and SHA512 hashes" category="Text & String" icon={Badge}>
+<div className="mb-6">
           <div className="flex flex-wrap gap-3">
             <Button onClick={generateHashes} className="bg-blue-600 hover:bg-blue-700">
               Generate Hashes
@@ -132,7 +105,7 @@ const HashGenerator = () => {
                 {["MD5", "SHA1", "SHA256", "SHA512"].map((algorithm) => (
                   <div key={algorithm} className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <label className="text-sm font-medium text-slate-700">{algorithm}</label>
+                      <label className="text-sm font-medium text-muted-foreground">{algorithm}</label>
                       <Button
                         size="sm"
                         variant="outline"
@@ -177,9 +150,8 @@ const HashGenerator = () => {
             </CardContent>
           </Card>
         </div>
-      </div>
-    </div>
-  );
+              </ToolLayout>
+    );
 };
 
 export default HashGenerator;

@@ -103,31 +103,8 @@ Est. Input Cost: $${stats.estimatedCost.input.toFixed(6)}`;
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <Link href="/tools" className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground mb-4">
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Tools
-          </Link>
-          
-          <div className="flex items-center gap-4 mb-4">
-            <div className="w-12 h-12 bg-primary/20 rounded-xl flex items-center justify-center border border-primary/30">
-              <Zap className="w-6 h-6 text-primary" />
-            </div>
-            <div>
-              <h1 className="text-3xl font-bold text-foreground font-mono">Token Counter</h1>
-              <p className="text-muted-foreground">Estimate token count and costs for LLM APIs</p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <Badge className="bg-primary/20 text-primary border-primary/30">AI/LLM</Badge>
-            <Badge variant="outline">Cost Estimator</Badge>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <ToolLayout title="Token Counter" description="Estimate token count and costs for LLM APIs" category="AI/LLM" icon={Zap}>
+<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2 space-y-4">
             <Card className="bg-card border-border">
               <CardHeader className="pb-3">
@@ -247,9 +224,8 @@ Est. Input Cost: $${stats.estimatedCost.input.toFixed(6)}`;
             </Card>
           </div>
         </div>
-      </div>
-    </div>
-  );
+              </ToolLayout>
+    );
 };
 
 export default TokenCounter;

@@ -285,40 +285,8 @@ const PromptOptimizer = () => {
 	};
 
 	return (
-		<div className="min-h-screen bg-background">
-			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-				<div className="mb-8">
-					<Link href="/tools"
-						className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground mb-4"
-					>
-						<ArrowLeft className="w-4 h-4 mr-2" />
-						Back to Tools
-					</Link>
-
-					<div className="flex items-center gap-4 mb-4">
-						<div className="w-12 h-12 bg-primary/20 rounded-xl flex items-center justify-center border border-primary/30">
-							<Wand2 className="w-6 h-6 text-primary" />
-						</div>
-						<div>
-							<h1 className="text-3xl font-bold text-foreground font-mono">
-								Prompt Optimizer
-							</h1>
-							<p className="text-muted-foreground">
-								Reduce token count in your LLM prompts
-							</p>
-						</div>
-					</div>
-
-					<div className="flex items-center gap-2 flex-wrap">
-						<Badge variant="outline" className="border-primary/30 text-primary">
-							AI Tools
-						</Badge>
-						<Badge variant="outline">Token Saver</Badge>
-						<Badge variant="outline">Prompt Engineering</Badge>
-					</div>
-				</div>
-
-				<div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <ToolLayout title="Prompt Optimizer" description="Reduce token count in your LLM prompts" category="AI Tools" icon={Wand2}>
+<div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
 					{/* Options Sidebar */}
 					<Card className="bg-card border-border lg:col-span-1">
 						<CardHeader>
@@ -479,9 +447,8 @@ const PromptOptimizer = () => {
 						</ul>
 					</CardContent>
 				</Card>
-			</div>
-		</div>
-	);
+			        </ToolLayout>
+    );
 };
 
 export default PromptOptimizer;

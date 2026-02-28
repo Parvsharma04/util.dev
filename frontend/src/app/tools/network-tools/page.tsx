@@ -109,34 +109,9 @@ const NetworkTools = () => {
   const getPacketLoss = () => {
     if (pingResults.length === 0) return "0";
     const timeouts = pingResults.filter(p => p.status === "timeout").length;
-    return ((timeouts / pingResults.length) * 100).toFixed(1);
-  };
-
-  return (
-    <div className="min-h-screen bg-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-foreground">Network Tools</h1>
-          <p className="text-muted-foreground">Ping and traceroute visualization tools</p>
-          <Badge className="bg-red-100 text-red-700 border-red-200 mt-2">Network & Web</Badge>
-        </div>
-
-        <div className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Target Configuration</CardTitle>
-              <CardDescription>Enter hostname or IP address to test</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <Input
-                  placeholder="google.com or 8.8.8.8"
-                  value={target}
-                  onChange={(e) => setTarget(e.target.value)}
-                />
-                
-                <div className="flex gap-3">
-                  <Button 
+    return (
+        <ToolLayout title="Network Tools" description="Ping and traceroute visualization tools" category="Network & Web" icon={Badge}>
+<Button 
                     onClick={runPing} 
                     disabled={isRunning}
                     className="bg-blue-600 hover:bg-blue-700"
@@ -239,7 +214,7 @@ const NetworkTools = () => {
                         <div className="text-xs text-muted-foreground">RTT</div>
                       </div>
                       
-                      <Server className="w-5 h-5 text-slate-400" />
+                      <Server className="w-5 h-5 text-muted-foreground" />
                     </div>
                   ))}
                 </div>
@@ -281,9 +256,8 @@ const NetworkTools = () => {
             </CardContent>
           </Card>
         </div>
-      </div>
-    </div>
-  );
+              </ToolLayout>
+    );
 };
 
 export default NetworkTools;

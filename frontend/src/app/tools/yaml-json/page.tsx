@@ -122,15 +122,8 @@ const YamlJson = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-foreground">YAML ↔ JSON Converter</h1>
-          <p className="text-muted-foreground">Convert between YAML and JSON formats</p>
-          <Badge className="bg-green-100 text-green-700 border-green-200 mt-2">File & Format</Badge>
-        </div>
-
-        <div className="mb-6">
+        <ToolLayout title="YAML ↔ JSON Converter" description="Convert between YAML and JSON formats" category="File & Format" icon={Button}>
+<div className="mb-6">
           <Button onClick={clearAll} variant="outline" className="text-red-600 hover:text-red-700">
             <RotateCcw className="w-4 h-4 mr-2" />
             Clear All
@@ -247,9 +240,8 @@ const YamlJson = () => {
             </div>
           </TabsContent>
         </Tabs>
-      </div>
-    </div>
-  );
+              </ToolLayout>
+    );
 };
 
 export default YamlJson;

@@ -2,13 +2,15 @@
 
 
 import { useState } from "react";
-import { Copy, Download, Upload, RotateCcw } from "lucide-react";
+import { Copy, Download, Upload, RotateCcw, Terminal, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
+import { ThemeToggle } from "@/components/ThemeToggle";
+import { ToolLayout } from "@/components/ToolLayout";
 
 const Base64Encoder = () => {
   const [input, setInput] = useState("");
@@ -35,7 +37,7 @@ const Base64Encoder = () => {
       setOutput(decoded);
     } catch (err) {
       toast({
-        title: "Error", 
+        title: "Error",
         description: "Invalid Base64 string.",
         variant: "destructive",
       });
@@ -56,49 +58,23 @@ const Base64Encoder = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
-            <a href="/" className="hover:text-foreground">Home</a>
-            <span>→</span>
-            <a href="/tools" className="hover:text-foreground">Tools</a>
-            <span>→</span>
-            <span className="text-foreground">Base64 Encoder/Decoder</span>
-          </div>
-          
-          <div className="flex items-center gap-4 mb-4">
-            <div className="w-12 h-12 bg-gradient-to-r from-green-600 to-emerald-600 rounded-xl flex items-center justify-center">
-              <Upload className="w-6 h-6 text-white" />
-            </div>
-            <div>
-              <h1 className="text-3xl font-bold text-foreground">Base64 Encoder/Decoder</h1>
-              <p className="text-muted-foreground">Encode and decode Base64 strings with ease</p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <Badge className="bg-blue-100 text-blue-700 border-blue-200">Text & String</Badge>
-            <Badge variant="outline">Popular</Badge>
-          </div>
-        </div>
-
-        <Tabs value={mode} onValueChange={(value) => setMode(value as "encode" | "decode")} className="mb-6">
-          <TabsList>
-            <TabsTrigger value="encode">Encode</TabsTrigger>
-            <TabsTrigger value="decode">Decode</TabsTrigger>
+        <ToolLayout title="Base64 Encoder/Decoder" description="Encode and decode Base64 strings with ease" category="Text & String" icon={Terminal} popular>
+<Tabs value={mode} onValueChange={(value) => setMode(value as "encode" | "decode")} className="mb-6">
+          <TabsList className="bg-muted/50 border border-border">
+            <TabsTrigger value="encode" className="font-mono data-[state=active]:bg-card">Encode</TabsTrigger>
+            <TabsTrigger value="decode" className="font-mono data-[state=active]:bg-card">Decode</TabsTrigger>
           </TabsList>
         </Tabs>
 
         <div className="mb-6">
           <div className="flex flex-wrap gap-3">
-            <Button 
+            <Button
               onClick={mode === "encode" ? handleEncode : handleDecode}
-              className="bg-blue-600 hover:bg-blue-700"
+              className="bg-primary text-primary-foreground hover:bg-primary/90 font-mono"
             >
               {mode === "encode" ? "Encode" : "Decode"}
             </Button>
-            <Button onClick={clearAll} variant="outline" className="text-red-600 hover:text-red-700">
+            <Button onClick={clearAll} variant="outline" className="text-destructive hover:text-destructive hover:bg-destructive/10 border-border font-mono">
               <RotateCcw className="w-4 h-4 mr-2" />
               Clear
             </Button>
@@ -106,55 +82,53 @@ const Base64Encoder = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Input</CardTitle>
-              <CardDescription>
+          <Card className="bg-card border-border card-glow h-[600px] flex flex-col">
+            <CardHeader className="py-4 border-b border-border shrink-0">
+              <CardTitle className="font-mono text-lg">Input</CardTitle>
+              <CardDescription className="font-mono">
                 {mode === "encode" ? "Enter text to encode" : "Enter Base64 string to decode"}
               </CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="p-0 flex-1 flex flex-col min-h-0">
               <Textarea
                 placeholder={mode === "encode" ? "Enter your text here..." : "Enter Base64 string here..."}
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                className="min-h-[400px] font-mono text-sm"
+                className="flex-1 w-full bg-transparent border-0 rounded-none resize-none px-4 py-4 font-mono text-sm focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-muted-foreground/50 h-full"
               />
             </CardContent>
           </Card>
 
-          <Card>
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <div>
-                  <CardTitle>Output</CardTitle>
-                  <CardDescription>
-                    {mode === "encode" ? "Base64 encoded result" : "Decoded text result"}
-                  </CardDescription>
-                </div>
-                <Button
-                  size="sm"
-                  variant="outline"
-                  onClick={copyToClipboard}
-                  disabled={!output}
-                >
-                  <Copy className="w-4 h-4" />
-                </Button>
+          <Card className="bg-card border-border card-glow h-[600px] flex flex-col">
+            <CardHeader className="py-4 border-b border-border flex flex-row items-center justify-between shrink-0">
+              <div>
+                <CardTitle className="font-mono text-lg">Output</CardTitle>
+                <CardDescription className="font-mono">
+                  {mode === "encode" ? "Base64 encoded result" : "Decoded text result"}
+                </CardDescription>
               </div>
+              <Button
+                size="sm"
+                variant="ghost"
+                onClick={copyToClipboard}
+                disabled={!output}
+                className="h-8 hover:bg-primary/10 hover:text-primary transition-colors -my-2"
+              >
+                <Copy className="w-4 h-4" />
+              </Button>
             </CardHeader>
-            <CardContent>
+            <CardContent className="p-0 flex-1 flex flex-col min-h-0 relative">
               <Textarea
                 value={output}
                 readOnly
-                className="min-h-[400px] font-mono text-sm bg-muted"
+                className="flex-1 w-full bg-muted/30 border-0 rounded-none resize-none px-4 py-4 font-mono text-sm focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-muted-foreground/30 h-full"
                 placeholder="Output will appear here..."
               />
             </CardContent>
           </Card>
         </div>
-      </div>
-    </div>
-  );
+              </ToolLayout>
+    );
 };
 
 export default Base64Encoder;

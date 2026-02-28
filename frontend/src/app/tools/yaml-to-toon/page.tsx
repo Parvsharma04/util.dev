@@ -157,95 +157,8 @@ users:
     };
 
     return (
-        <div className="min-h-screen bg-background">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                <div className="mb-8">
-                    <Link href="/tools"
-                        className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground mb-4"
-                    >
-                        <ArrowLeft className="w-4 h-4 mr-2" />
-                        Back to Tools
-                    </Link>
-
-                    <div className="flex items-center gap-4 mb-4">
-                        <div className="w-12 h-12 bg-primary/20 rounded-xl flex items-center justify-center border border-primary/30">
-                            <Zap className="w-6 h-6 text-primary" />
-                        </div>
-                        <div>
-                            <h1 className="text-3xl font-bold text-foreground font-mono">
-                                YAML ↔ TOON
-                            </h1>
-                            <p className="text-muted-foreground">
-                                Convert YAML to TOON format for smaller LLM context
-                            </p>
-                        </div>
-                    </div>
-
-                    <div className="flex items-center gap-2 flex-wrap">
-                        <Badge variant="outline" className="border-primary/30 text-primary">
-                            AI Tools
-                        </Badge>
-                        <Badge variant="outline">Token Saver</Badge>
-                        <Badge variant="outline">Config</Badge>
-                    </div>
-                </div>
-
-                {/* Options Bar */}
-                <Card className="mb-6 bg-card border-border">
-                    <CardContent className="py-4">
-                        <div className="flex flex-wrap items-center gap-6">
-                            <div className="flex items-center gap-2">
-                                <Label className="text-sm text-muted-foreground">Mode:</Label>
-                                <Badge
-                                    variant={mode === "yaml-to-toon" ? "default" : "outline"}
-                                    className="cursor-pointer"
-                                    onClick={() => setMode("yaml-to-toon")}
-                                >
-                                    YAML → TOON
-                                </Badge>
-                                <Badge
-                                    variant={mode === "toon-to-yaml" ? "default" : "outline"}
-                                    className="cursor-pointer"
-                                    onClick={() => setMode("toon-to-yaml")}
-                                >
-                                    TOON → YAML
-                                </Badge>
-                            </div>
-
-                            <div className="flex items-center gap-2">
-                                <Label className="text-sm text-muted-foreground">
-                                    Delimiter:
-                                </Label>
-                                <Select
-                                    value={delimiter}
-                                    onValueChange={(v) => setDelimiter(v as Delimiter)}
-                                >
-                                    <SelectTrigger className="w-[100px] h-8 bg-background">
-                                        <SelectValue />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectItem value=",">Comma</SelectItem>
-                                        <SelectItem value="	">Tab</SelectItem>
-                                        <SelectItem value="|">Pipe</SelectItem>
-                                    </SelectContent>
-                                </Select>
-                            </div>
-
-                            <div className="flex items-center gap-2">
-                                <Switch
-                                    id="keyFolding"
-                                    checked={keyFolding}
-                                    onCheckedChange={setKeyFolding}
-                                />
-                                <Label
-                                    htmlFor="keyFolding"
-                                    className="text-sm text-muted-foreground cursor-pointer"
-                                >
-                                    Key Folding
-                                </Label>
-                            </div>
-
-                            <Button onClick={loadSample} variant="outline" size="sm">
+        <ToolLayout title="YAML ↔ TOON" description="Convert YAML to TOON format for smaller LLM context" category="AI Tools" icon={Zap}>
+<Button onClick={loadSample} variant="outline" size="sm">
                                 Load Sample
                             </Button>
                         </div>
@@ -379,8 +292,7 @@ users:
                         </p>
                     </CardContent>
                 </Card>
-            </div>
-        </div>
+                    </ToolLayout>
     );
 };
 

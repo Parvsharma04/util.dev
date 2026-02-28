@@ -109,23 +109,8 @@ const CronHelper = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-foreground">Cron Expression Helper</h1>
-          <p className="text-muted-foreground">Create and understand cron expressions</p>
-          <Badge className="bg-orange-100 text-orange-700 border-orange-200 mt-2">Time & Schedule</Badge>
-        </div>
-
-        <div className="space-y-6">
-          <Card>
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <div>
-                  <CardTitle>Cron Expression</CardTitle>
-                  <CardDescription>Format: minute hour day-of-month month day-of-week</CardDescription>
-                </div>
-                <Button size="sm" variant="outline" onClick={copyToClipboard}>
+        <ToolLayout title="Cron Expression Helper" description="Create and understand cron expressions" category="Time & Schedule" icon={Badge}>
+<Button size="sm" variant="outline" onClick={copyToClipboard}>
                   <Copy className="w-4 h-4 mr-2" />
                   Copy
                 </Button>
@@ -143,7 +128,7 @@ const CronHelper = () => {
                     className="font-mono text-lg"
                     placeholder="0 0 * * *"
                   />
-                  <Clock className="w-5 h-5 text-slate-400" />
+                  <Clock className="w-5 h-5 text-muted-foreground" />
                 </div>
                 
                 {description && (
@@ -278,9 +263,8 @@ const CronHelper = () => {
             </CardContent>
           </Card>
         </div>
-      </div>
-    </div>
-  );
+              </ToolLayout>
+    );
 };
 
 export default CronHelper;

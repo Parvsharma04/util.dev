@@ -84,15 +84,8 @@ const JsonMerge = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-foreground">JSON Merge Tool</h1>
-          <p className="text-muted-foreground">Merge two JSON objects with different strategies</p>
-          <Badge className="bg-green-100 text-green-700 border-green-200 mt-2">File & Format</Badge>
-        </div>
-
-        <div className="mb-6">
+        <ToolLayout title="JSON Merge Tool" description="Merge two JSON objects with different strategies" category="File & Format" icon={Button}>
+<div className="mb-6">
           <div className="flex gap-4 items-end">
             <div>
               <label className="text-sm font-medium">Merge Strategy</label>
@@ -193,9 +186,8 @@ const JsonMerge = () => {
             </div>
           </CardContent>
         </Card>
-      </div>
-    </div>
-  );
+              </ToolLayout>
+    );
 };
 
 export default JsonMerge;

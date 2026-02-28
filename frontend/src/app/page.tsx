@@ -10,57 +10,11 @@ import { Badge } from "@/components/ui/badge";
 import { Sidebar } from "@/components/Sidebar";
 import { CommandPalette } from "@/components/CommandPalette";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { allTools } from "@/lib/tools";
 
-const featuredTools = [
-    {
-        title: "JSON Formatter",
-        description: "Prettify, minify, and validate JSON with syntax highlighting",
-        icon: Code,
-        category: "Text & String",
-        route: "/tools/json-formatter",
-        popular: true
-    },
-    {
-        title: "Base64 Encoder",
-        description: "Encode and decode Base64 strings and files",
-        icon: FileText,
-        category: "Text & String",
-        route: "/tools/base64",
-        popular: true
-    },
-    {
-        title: "Color Converter",
-        description: "Convert between HEX, RGB, HSL color formats",
-        icon: Palette,
-        category: "Frontend/UX",
-        route: "/tools/color-converter",
-        popular: false
-    },
-    {
-        title: "Timestamp Converter",
-        description: "Convert UNIX timestamps to human readable dates",
-        icon: Clock,
-        category: "Developer Tools",
-        route: "/tools/timestamp",
-        popular: true
-    },
-    {
-        title: "UUID Generator",
-        description: "Generate UUIDs v1, v4, v5 with customizable options",
-        icon: Zap,
-        category: "Text & String",
-        route: "/tools/uuid-generator",
-        popular: true
-    },
-    {
-        title: "HTTP Request Tester",
-        description: "Test API endpoints with custom headers and body",
-        icon: Globe,
-        category: "Developer Tools",
-        route: "/tools/http-tester",
-        popular: false
-    }
-];
+const featuredTools = allTools.slice(0, 6);
+
+
 
 const Index = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -268,7 +222,8 @@ const Index = () => {
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                         <Card className="bg-card border-border card-glow">
                             <CardContent className="p-6 text-center">
-                                <div className="text-3xl font-bold text-primary glow font-mono">30+</div>
+                                <div className="text-3xl font-bold text-primary glow font-mono">{allTools.length}+</div>
+
                                 <div className="text-sm text-muted-foreground font-mono">Tools Available</div>
                             </CardContent>
                         </Card>

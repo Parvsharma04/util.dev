@@ -53,31 +53,8 @@ const UuidGenerator = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <Link href="/tools" className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground mb-4">
-            <ArrowLeft className="w-4 h-4 mr-1" />
-            Back to Tools
-          </Link>
-          
-          <div className="flex items-center gap-4 mb-4">
-            <div className="w-12 h-12 bg-gradient-to-r from-yellow-600 to-orange-600 rounded-xl flex items-center justify-center">
-              <RefreshCw className="w-6 h-6 text-white" />
-            </div>
-            <div>
-              <h1 className="text-3xl font-bold text-foreground">UUID Generator</h1>
-              <p className="text-muted-foreground">Generate unique identifiers (UUIDs) v1, v4, and more</p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <Badge className="bg-blue-100 text-blue-700 border-blue-200">Text & String</Badge>
-            <Badge variant="outline">Popular</Badge>
-          </div>
-        </div>
-
-        <div className="mb-6">
+        <ToolLayout title="UUID Generator" description="Generate unique identifiers (UUIDs) v1, v4, and more" category="Text & String" icon={Badge} popular>
+<div className="mb-6">
           <div className="flex flex-wrap gap-4 items-end">
             <div className="flex flex-col gap-2">
               <label className="text-sm font-medium">Version</label>
@@ -134,7 +111,7 @@ const UuidGenerator = () => {
           <CardContent>
             {uuids.length === 0 ? (
               <div className="text-center py-12 text-muted-foreground">
-                <RefreshCw className="w-12 h-12 mx-auto mb-4 text-slate-300" />
+                <RefreshCw className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
                 <p>Click "Generate" to create UUIDs</p>
               </div>
             ) : (
@@ -181,9 +158,8 @@ const UuidGenerator = () => {
             </CardContent>
           </Card>
         </div>
-      </div>
-    </div>
-  );
+              </ToolLayout>
+    );
 };
 
 export default UuidGenerator;

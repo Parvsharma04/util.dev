@@ -1,53 +1,12 @@
 
 import { useState, useEffect } from "react";
-import { Search, FileText, Code, Zap, Clock, Globe, Palette, ArrowRight } from "lucide-react";
+import { Search, ArrowRight } from "lucide-react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { allTools } from "@/lib/tools";
 
-const allTools = [
-  // Text & String Utilities
-  { name: "JSON Formatter", category: "Text & String", icon: Code, description: "Prettify, minify, and validate JSON", route: "/tools/json-formatter" },
-  { name: "Base64 Encoder/Decoder", category: "Text & String", icon: FileText, description: "Encode and decode Base64 strings", route: "/tools/base64" },
-  { name: "URL Encoder/Decoder", category: "Text & String", icon: FileText, description: "Encode and decode URLs", route: "/tools/url-encoder" },
-  { name: "String Case Converter", category: "Text & String", icon: FileText, description: "Convert between different cases", route: "/tools/string-case" },
-  { name: "JWT Decoder", category: "Text & String", icon: Code, description: "Decode JWT tokens", route: "/tools/jwt-decoder" },
-  { name: "Hash Generator", category: "Text & String", icon: Code, description: "Generate MD5, SHA1, SHA256 hashes", route: "/tools/hash-generator" },
-  { name: "UUID Generator", category: "Text & String", icon: Zap, description: "Generate UUIDs v1, v4, v5", route: "/tools/uuid-generator" },
-  { name: "Regex Tester", category: "Text & String", icon: Code, description: "Test regular expressions", route: "/tools/regex-tester" },
-  { name: "Lorem Ipsum Generator", category: "Text & String", icon: FileText, description: "Generate placeholder text", route: "/tools/lorem-ipsum" },
-  
-  // File & Format Utilities
-  { name: "File Converter", category: "File & Format", icon: Code, description: "Convert between file formats", route: "/tools/file-converter" },
-  { name: "Markdown ↔ HTML", category: "File & Format", icon: FileText, description: "Convert Markdown to HTML", route: "/tools/md-html-converter" },
-  { name: "CSV Parser", category: "File & Format", icon: FileText, description: "Parse and convert CSV files", route: "/tools/csv-parser" },
-  { name: "Text Diff Checker", category: "File & Format", icon: Code, description: "Compare text differences", route: "/tools/text-diff" },
-  { name: "JSON Merge Tool", category: "File & Format", icon: Code, description: "Merge JSON objects", route: "/tools/json-merge" },
-  { name: "YAML ↔ JSON", category: "File & Format", icon: Code, description: "Convert YAML to JSON", route: "/tools/yaml-json" },
-  
-  // Developer Tools
-  { name: ".env Formatter", category: "Developer Tools", icon: Zap, description: "Format environment files", route: "/tools/env-formatter" },
-  { name: "Gitignore Generator", category: "Developer Tools", icon: Code, description: "Generate .gitignore files", route: "/tools/gitignore-generator" },
-  { name: "HTTP Request Tester", category: "Developer Tools", icon: Globe, description: "Test HTTP requests", route: "/tools/http-tester" },
-  { name: "Dockerfile Generator", category: "Developer Tools", icon: Code, description: "Generate Dockerfiles", route: "/tools/dockerfile-generator" },
-  { name: "Timestamp Converter", category: "Developer Tools", icon: Clock, description: "Convert timestamps", route: "/tools/timestamp" },
-  { name: "Code Minifier/Beautifier", category: "Developer Tools", icon: Code, description: "Minify and beautify code", route: "/tools/code-beautifier" },
-  
-  // Time & Schedule
-  { name: "Cron Expression Helper", category: "Time & Schedule", icon: Clock, description: "Create cron expressions", route: "/tools/cron-helper" },
-  { name: "Timezone Converter", category: "Time & Schedule", icon: Clock, description: "Convert between timezones", route: "/tools/timezone" },
-  { name: "Countdown Timer", category: "Time & Schedule", icon: Clock, description: "Create countdown timers", route: "/tools/countdown" },
-  
-  // Network & Web Tools
-  { name: "IP & DNS Lookup", category: "Network & Web", icon: Globe, description: "Lookup IP and DNS information", route: "/tools/ip-lookup" },
-  { name: "Ping / Traceroute Visualizer", category: "Network & Web", icon: Globe, description: "Visualize network paths", route: "/tools/network-tools" },
-  { name: "User Agent Parser", category: "Network & Web", icon: Globe, description: "Parse user agent strings", route: "/tools/user-agent" },
-  
-  // Frontend/UX Helpers
-  { name: "Color Converter", category: "Frontend/UX", icon: Palette, description: "Convert between color formats", route: "/tools/color-converter" },
-  { name: "Font Previewer", category: "Frontend/UX", icon: Palette, description: "Preview and compare fonts", route: "/tools/font-previewer" },
-  { name: "Favicon Generator", category: "Frontend/UX", icon: Palette, description: "Generate favicons", route: "/tools/favicon-generator" }
-];
+
 
 interface CommandPaletteProps {
   open: boolean;
@@ -59,10 +18,11 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const filteredTools = allTools.filter(tool =>
-    tool.name.toLowerCase().includes(search.toLowerCase()) ||
+    tool.title.toLowerCase().includes(search.toLowerCase()) ||
     tool.description.toLowerCase().includes(search.toLowerCase()) ||
     tool.category.toLowerCase().includes(search.toLowerCase())
   );
+
 
   useEffect(() => {
     if (open) {
@@ -144,24 +104,23 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
                       window.location.href = tool.route;
                       onOpenChange(false);
                     }}
-                    className={`w-full flex items-center gap-4 p-3 rounded-lg text-left transition-colors ${
-                      index === selectedIndex 
-                        ? 'bg-primary/10 border-primary/30 border' 
-                        : 'hover:bg-accent'
-                    }`}
+                    className={`w-full flex items-center gap-4 p-3 rounded-lg text-left transition-colors ${index === selectedIndex
+                      ? 'bg-primary/10 border-primary/30 border'
+                      : 'hover:bg-accent'
+                      }`}
                   >
-                    <div className={`w-10 h-10 rounded-lg flex items-center justify-center border ${
-                      index === selectedIndex 
-                        ? 'bg-primary/10 text-primary border-primary/30' 
-                        : 'bg-accent text-muted-foreground border-border'
-                    }`}>
+                    <div className={`w-10 h-10 rounded-lg flex items-center justify-center border ${index === selectedIndex
+                      ? 'bg-primary/10 text-primary border-primary/30'
+                      : 'bg-accent text-muted-foreground border-border'
+                      }`}>
                       <tool.icon className="w-5 h-5" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1">
                         <h3 className="font-medium text-foreground truncate font-mono">
-                          {tool.name}
+                          {tool.title}
                         </h3>
+
                         <Badge variant="outline" className="text-xs font-mono border-border">
                           {tool.category}
                         </Badge>
@@ -170,9 +129,8 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
                         {tool.description}
                       </p>
                     </div>
-                    <ArrowRight className={`w-4 h-4 ${
-                      index === selectedIndex ? 'text-primary' : 'text-muted-foreground'
-                    }`} />
+                    <ArrowRight className={`w-4 h-4 ${index === selectedIndex ? 'text-primary' : 'text-muted-foreground'
+                      }`} />
                   </button>
                 ))}
               </div>

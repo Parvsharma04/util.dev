@@ -92,15 +92,8 @@ const EnvFormatter = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-foreground">.env Formatter</h1>
-          <p className="text-muted-foreground">Format and organize environment variables</p>
-          <Badge className="bg-purple-100 text-purple-700 border-purple-200 mt-2">Developer Tools</Badge>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <ToolLayout title=".env Formatter" description="Format and organize environment variables" category="Developer Tools" icon={Badge}>
+<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <Card>
             <CardHeader>
               <CardTitle>Environment Variables Input</CardTitle>
@@ -205,9 +198,8 @@ const EnvFormatter = () => {
             </div>
           </CardContent>
         </Card>
-      </div>
-    </div>
-  );
+              </ToolLayout>
+    );
 };
 
 export default EnvFormatter;

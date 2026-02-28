@@ -10,6 +10,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import { ToolLayout } from "@/components/ToolLayout";
+import { FileText } from "lucide-react";
+
 
 const LoremIpsum = () => {
   const [count, setCount] = useState(5);
@@ -39,59 +42,58 @@ const LoremIpsum = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-foreground">Lorem Ipsum Generator</h1>
-          <p className="text-muted-foreground">Generate placeholder text for your designs</p>
-          <Badge className="bg-blue-100 text-blue-700 border-blue-200 mt-2">Text & String</Badge>
-        </div>
+    <ToolLayout title="Lorem Ipsum Generator" description="Generate placeholder text for your designs" category="Text & String" icon={FileText}>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <Card className="bg-card border-border shadow-sm">
+          <CardHeader>
+            <CardTitle className="text-foreground font-mono">Settings</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="space-y-2">
+              <label className="text-sm font-medium font-mono text-muted-foreground">Type</label>
+              <Select value={type} onValueChange={setType}>
+                <SelectTrigger className="w-full bg-input border-border font-mono">
+                  <SelectValue placeholder="Select type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="paragraphs">Paragraphs</SelectItem>
+                  <SelectItem value="sentences">Sentences</SelectItem>
+                  <SelectItem value="words">Words</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium font-mono text-muted-foreground">Count</label>
+              <Input
+                type="number"
+                value={count}
+                onChange={(e) => setCount(parseInt(e.target.value))}
+                className="bg-input border-border font-mono"
+                min={1}
+                max={50}
+              />
+            </div>
+            <Button onClick={generateLorem} className="w-full bg-primary text-primary-foreground hover:bg-primary/90 font-mono">
+              Generate
+            </Button>
+          </CardContent>
+        </Card>
 
-        <div className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Generate Options</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="flex gap-4 items-end">
-                <div>
-                  <label className="text-sm font-medium">Count</label>
-                  <Input type="number" min="1" max="50" value={count} onChange={(e) => setCount(parseInt(e.target.value) || 1)} className="w-24" />
-                </div>
-                <div>
-                  <label className="text-sm font-medium">Type</label>
-                  <Select value={type} onValueChange={setType}>
-                    <SelectTrigger className="w-40">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="paragraphs">Paragraphs</SelectItem>
-                      <SelectItem value="sentences">Sentences</SelectItem>
-                      <SelectItem value="words">Words</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <Button onClick={generateLorem} className="bg-blue-600 hover:bg-blue-700">Generate</Button>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <CardTitle>Generated Text</CardTitle>
-                <Button size="sm" variant="outline" onClick={copyToClipboard} disabled={!generated}>
-                  <Copy className="w-4 h-4" />
-                </Button>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <Textarea value={generated} readOnly className="min-h-[300px]" placeholder="Generated text will appear here..." />
-            </CardContent>
-          </Card>
-        </div>
+        <Card>
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <CardTitle>Generated Text</CardTitle>
+              <Button size="sm" variant="outline" onClick={copyToClipboard} disabled={!generated}>
+                <Copy className="w-4 h-4" />
+              </Button>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <Textarea value={generated} readOnly className="min-h-[300px]" placeholder="Generated text will appear here..." />
+          </CardContent>
+        </Card>
       </div>
-    </div>
+    </ToolLayout>
   );
 };
 

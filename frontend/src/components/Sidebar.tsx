@@ -6,91 +6,8 @@ import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 
-const toolCategories = [
-  {
-    name: "Text & String Utilities",
-    icon: FileText,
-    count: 9,
-    tools: [
-      { name: "JSON Formatter", route: "/tools/json-formatter" },
-      { name: "Base64 Encoder/Decoder", route: "/tools/base64" }, 
-      { name: "URL Encoder/Decoder", route: "/tools/url-encoder" },
-      { name: "String Case Converter", route: "/tools/string-case" },
-      { name: "JWT Decoder", route: "/tools/jwt-decoder" },
-      { name: "Hash Generator", route: "/tools/hash-generator" },
-      { name: "UUID Generator", route: "/tools/uuid-generator" },
-      { name: "Regex Tester", route: "/tools/regex-tester" },
-      { name: "Lorem Ipsum Generator", route: "/tools/lorem-ipsum" }
-    ]
-  },
-  {
-    name: "File & Format Utilities",
-    icon: Code,
-    count: 6,
-    tools: [
-      { name: "File Converter", route: "/tools/file-converter" },
-      { name: "Markdown ↔ HTML", route: "/tools/md-html-converter" },
-      { name: "CSV Parser", route: "/tools/csv-parser" },
-      { name: "Text Diff Checker", route: "/tools/text-diff" },
-      { name: "JSON Merge Tool", route: "/tools/json-merge" },
-      { name: "YAML ↔ JSON", route: "/tools/yaml-json" }
-    ]
-  },
-  {
-    name: "Developer-Specific Tools",
-    icon: Zap,
-    count: 6,
-    tools: [
-      { name: ".env Formatter", route: "/tools/env-formatter" },
-      { name: "Gitignore Generator", route: "/tools/gitignore-generator" },
-      { name: "HTTP Request Tester", route: "/tools/http-tester" },
-      { name: "Dockerfile Generator", route: "/tools/dockerfile-generator" },
-      { name: "Timestamp Converter", route: "/tools/timestamp" },
-      { name: "Code Minifier/Beautifier", route: "/tools/code-beautifier" }
-    ]
-  },
-  {
-    name: "Time & Schedule",
-    icon: Clock,
-    count: 3,
-    tools: [
-      { name: "Cron Expression Helper", route: "/tools/cron-helper" },
-      { name: "Timezone Converter", route: "/tools/timezone" },
-      { name: "Countdown Timer", route: "/tools/countdown" }
-    ]
-  },
-  {
-    name: "Network & Web Tools",
-    icon: Globe,
-    count: 3,
-    tools: [
-      { name: "IP & DNS Lookup", route: "/tools/ip-lookup" },
-      { name: "Ping / Traceroute Visualizer", route: "/tools/network-tools" },
-      { name: "User Agent Parser", route: "/tools/user-agent" }
-    ]
-  },
-  {
-    name: "Frontend/UX Helpers",
-    icon: Palette,
-    count: 3,
-    tools: [
-      { name: "Color Converter", route: "/tools/color-converter" },
-      { name: "Font Previewer", route: "/tools/font-previewer" },
-      { name: "Favicon Generator", route: "/tools/favicon-generator" }
-    ]
-  },
-  {
-    name: "AI & LLM Tools",
-    icon: Zap,
-    count: 4,
-    tools: [
-      { name: "Token Counter", route: "/tools/token-counter" },
-      { name: "JSON → TOON", route: "/tools/json-to-toon" },
-      { name: "YAML → TOON", route: "/tools/yaml-to-toon" },
-      { name: "Prompt Optimizer", route: "/tools/prompt-optimizer" }
-    ]
-  }
-];
+import { toolCategories } from "@/lib/tools";
+
 
 const mainNavItems = [
   { name: "Home", icon: Home, href: "/" },
@@ -108,8 +25,8 @@ export function Sidebar({ open, onOpenChange }: SidebarProps) {
   const [expandedCategories, setExpandedCategories] = useState<string[]>([]);
 
   const toggleCategory = (categoryName: string) => {
-    setExpandedCategories(prev => 
-      prev.includes(categoryName) 
+    setExpandedCategories(prev =>
+      prev.includes(categoryName)
         ? prev.filter(name => name !== categoryName)
         : [...prev, categoryName]
     );
@@ -124,11 +41,10 @@ export function Sidebar({ open, onOpenChange }: SidebarProps) {
           onClick={() => onOpenChange(false)}
         />
       )}
-      
+
       {/* Sidebar */}
-      <div className={`fixed inset-y-0 left-0 z-50 w-64 bg-sidebar border-r border-sidebar-border transform transition-transform duration-300 ease-in-out ${
-        open ? 'translate-x-0' : '-translate-x-full'
-      }`}>
+      <div className={`fixed inset-y-0 left-0 z-50 w-64 bg-sidebar border-r border-sidebar-border transform transition-transform duration-300 ease-in-out ${open ? 'translate-x-0' : '-translate-x-full'
+        }`}>
         <div className="flex flex-col h-full">
           {/* Header */}
           <div className="flex items-center justify-between p-4 border-b border-sidebar-border">
@@ -188,9 +104,8 @@ export function Sidebar({ open, onOpenChange }: SidebarProps) {
                           {category.count}
                         </Badge>
                         <svg
-                          className={`w-4 h-4 transition-transform ${
-                            expandedCategories.includes(category.name) ? 'rotate-90' : ''
-                          }`}
+                          className={`w-4 h-4 transition-transform ${expandedCategories.includes(category.name) ? 'rotate-90' : ''
+                            }`}
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
@@ -199,7 +114,7 @@ export function Sidebar({ open, onOpenChange }: SidebarProps) {
                         </svg>
                       </div>
                     </button>
-                    
+
                     {expandedCategories.includes(category.name) && (
                       <div className="ml-7 mt-1 space-y-1">
                         {category.tools.map((tool) => (

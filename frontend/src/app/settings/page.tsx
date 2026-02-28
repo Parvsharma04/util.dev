@@ -19,7 +19,7 @@ const Settings = () => {
       description: "Easy on the eyes for night sessions",
       icon: Moon,
       preview: "bg-slate-900 border-slate-700",
-      textColor: "text-slate-100",
+      textColor: "text-muted-foreground",
     },
     {
       id: "light",
@@ -27,7 +27,7 @@ const Settings = () => {
       description: "Clean and bright for daytime use",
       icon: Sun,
       preview: "bg-white border-slate-200",
-      textColor: "text-slate-900",
+      textColor: "text-muted-foreground",
     },
     {
       id: "system",
@@ -35,7 +35,7 @@ const Settings = () => {
       description: "Follows your OS preference",
       icon: Monitor,
       preview: "bg-gradient-to-r from-slate-900 to-white border-slate-400",
-      textColor: "text-slate-600",
+      textColor: "text-muted-foreground",
     },
   ];
 

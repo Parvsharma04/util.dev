@@ -111,15 +111,8 @@ const IpLookup = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-foreground">IP & DNS Lookup</h1>
-          <p className="text-muted-foreground">Lookup IP geolocation and DNS information</p>
-          <Badge className="bg-red-100 text-red-700 border-red-200 mt-2">Network & Web</Badge>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+        <ToolLayout title="IP & DNS Lookup" description="Lookup IP geolocation and DNS information" category="Network & Web" icon={Badge}>
+<div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
           <Card>
             <CardHeader>
               <CardTitle>IP Geolocation Lookup</CardTitle>
@@ -201,7 +194,7 @@ const IpLookup = () => {
                     <MapPin className="w-4 h-4 text-muted-foreground" />
                     <span className="font-medium">Location</span>
                   </div>
-                  <p className="text-sm text-slate-700">
+                  <p className="text-sm text-muted-foreground">
                     {ipResults.city}, {ipResults.region}<br />
                     {ipResults.country}
                   </p>
@@ -212,14 +205,14 @@ const IpLookup = () => {
                     <Globe className="w-4 h-4 text-muted-foreground" />
                     <span className="font-medium">ISP</span>
                   </div>
-                  <p className="text-sm text-slate-700">{ipResults.isp}</p>
+                  <p className="text-sm text-muted-foreground">{ipResults.isp}</p>
                 </div>
 
                 <div className="p-3 bg-muted rounded-lg">
                   <div className="flex items-center gap-2 mb-2">
                     <span className="font-medium">Coordinates</span>
                   </div>
-                  <p className="text-sm text-slate-700 font-mono">
+                  <p className="text-sm text-muted-foreground font-mono">
                     {ipResults.latitude}, {ipResults.longitude}
                   </p>
                 </div>
@@ -228,14 +221,14 @@ const IpLookup = () => {
                   <div className="flex items-center gap-2 mb-2">
                     <span className="font-medium">Timezone</span>
                   </div>
-                  <p className="text-sm text-slate-700">{ipResults.timezone}</p>
+                  <p className="text-sm text-muted-foreground">{ipResults.timezone}</p>
                 </div>
 
                 <div className="p-3 bg-muted rounded-lg">
                   <div className="flex items-center gap-2 mb-2">
                     <span className="font-medium">ASN</span>
                   </div>
-                  <p className="text-sm text-slate-700">{ipResults.asn}</p>
+                  <p className="text-sm text-muted-foreground">{ipResults.asn}</p>
                 </div>
 
                 <div className="p-3 bg-muted rounded-lg">
@@ -271,12 +264,12 @@ const IpLookup = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="p-3 bg-muted rounded-lg">
                     <span className="font-medium">IP Address</span>
-                    <p className="text-sm text-slate-700 font-mono">{dnsResults.ipAddress}</p>
+                    <p className="text-sm text-muted-foreground font-mono">{dnsResults.ipAddress}</p>
                   </div>
                   
                   <div className="p-3 bg-muted rounded-lg">
                     <span className="font-medium">Registrar</span>
-                    <p className="text-sm text-slate-700">{dnsResults.registrar}</p>
+                    <p className="text-sm text-muted-foreground">{dnsResults.registrar}</p>
                   </div>
                 </div>
 
@@ -288,7 +281,7 @@ const IpLookup = () => {
                         <div className="font-medium text-sm mb-2">{type} Records</div>
                         <div className="space-y-1">
                           {(records as string[]).map((record, index) => (
-                            <div key={index} className="text-sm text-slate-700 font-mono">
+                            <div key={index} className="text-sm text-muted-foreground font-mono">
                               {record}
                             </div>
                           ))}
@@ -301,12 +294,12 @@ const IpLookup = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="p-3 bg-muted rounded-lg">
                     <span className="font-medium">Created</span>
-                    <p className="text-sm text-slate-700">{dnsResults.created}</p>
+                    <p className="text-sm text-muted-foreground">{dnsResults.created}</p>
                   </div>
                   
                   <div className="p-3 bg-muted rounded-lg">
                     <span className="font-medium">Expires</span>
-                    <p className="text-sm text-slate-700">{dnsResults.expires}</p>
+                    <p className="text-sm text-muted-foreground">{dnsResults.expires}</p>
                   </div>
                 </div>
               </div>
@@ -317,15 +310,14 @@ const IpLookup = () => {
         {!ipResults && !dnsResults && !loading && (
           <Card>
             <CardContent className="text-center py-12">
-              <Search className="w-12 h-12 mx-auto mb-4 text-slate-300" />
+              <Search className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
               <h3 className="text-lg font-medium text-foreground mb-2">No Results Yet</h3>
               <p className="text-muted-foreground">Enter an IP address or domain name to get started</p>
             </CardContent>
           </Card>
         )}
-      </div>
-    </div>
-  );
+              </ToolLayout>
+    );
 };
 
 export default IpLookup;

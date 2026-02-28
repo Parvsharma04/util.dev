@@ -89,35 +89,8 @@ const CsvParser = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <Link href="/tools" className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground mb-4">
-            <ArrowLeft className="w-4 h-4 mr-1" />
-            Back to Tools
-          </Link>
-          <h1 className="text-3xl font-bold text-foreground">CSV Parser</h1>
-          <p className="text-muted-foreground">Parse CSV data and convert to JSON or view as table</p>
-          <Badge className="bg-green-100 text-green-700 border-green-200 mt-2">File & Format</Badge>
-        </div>
-
-        <div className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>CSV Input</CardTitle>
-              <CardDescription>Enter CSV data or upload a CSV file</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div className="flex gap-4">
-                  <input
-                    type="file"
-                    onChange={handleFileUpload}
-                    accept=".csv"
-                    className="hidden"
-                    id="csv-upload"
-                  />
-                  <Button asChild variant="outline">
+        <ToolLayout title="CSV Parser" description="Parse CSV data and convert to JSON or view as table" category="File & Format" icon={Terminal}>
+<Button asChild variant="outline">
                     <label htmlFor="csv-upload" className="cursor-pointer">
                       <Upload className="w-4 h-4 mr-2" />
                       Upload CSV
@@ -200,9 +173,8 @@ const CsvParser = () => {
             </Card>
           )}
         </div>
-      </div>
-    </div>
-  );
+              </ToolLayout>
+    );
 };
 
 export default CsvParser;

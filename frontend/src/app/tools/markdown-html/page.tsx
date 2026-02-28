@@ -60,19 +60,8 @@ const MarkdownHtml = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <Link href="/tools" className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground mb-4">
-            <ArrowLeft className="w-4 h-4 mr-1" />
-            Back to Tools
-          </Link>
-          <h1 className="text-3xl font-bold text-foreground">Markdown ↔ HTML Converter</h1>
-          <p className="text-muted-foreground">Convert between Markdown and HTML formats</p>
-          <Badge className="bg-green-100 text-green-700 border-green-200 mt-2">File & Format</Badge>
-        </div>
-
-        <div className="mb-6">
+        <ToolLayout title="$1" description="Convert between Markdown and HTML formats" category="File & Format" icon={Button}>
+<div className="mb-6">
           <Button onClick={clearAll} variant="outline" className="text-red-600 hover:text-red-700">
             <RotateCcw className="w-4 h-4 mr-2" />
             Clear All
@@ -187,9 +176,8 @@ const MarkdownHtml = () => {
             </div>
           </TabsContent>
         </Tabs>
-      </div>
-    </div>
-  );
+              </ToolLayout>
+    );
 };
 
 export default MarkdownHtml;

@@ -48,108 +48,9 @@ const CountdownTimer = () => {
       if (interval) clearInterval(interval);
     }
 
-    return () => {
-      if (interval) clearInterval(interval);
-    };
-  }, [isActive, targetDate, title, toast]);
-
-  const startTimer = () => {
-    if (!targetDate) {
-      toast({
-        title: "Error",
-        description: "Please select a target date and time",
-        variant: "destructive"
-      });
-      return;
-    }
-
-    const target = new Date(targetDate).getTime();
-    const now = new Date().getTime();
-
-    if (target <= now) {
-      toast({
-        title: "Error",
-        description: "Target date must be in the future",
-        variant: "destructive"
-      });
-      return;
-    }
-
-    setIsActive(true);
-    setIsExpired(false);
-  };
-
-  const pauseTimer = () => {
-    setIsActive(false);
-  };
-
-  const resetTimer = () => {
-    setIsActive(false);
-    setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-    setIsExpired(false);
-  };
-
-  const copyShareableLink = () => {
-    const params = new URLSearchParams({
-      target: targetDate,
-      title: title || "Countdown Timer"
-    });
-    const shareableUrl = `${window.location.origin}${window.location.pathname}?${params.toString()}`;
-    
-    navigator.clipboard.writeText(shareableUrl);
-    toast({
-      title: "Copied!",
-      description: "Shareable timer link copied to clipboard"
-    });
-  };
-
-  const setQuickTarget = (hours: number) => {
-    const now = new Date();
-    now.setHours(now.getHours() + hours);
-    setTargetDate(now.toISOString().slice(0, 16));
-  };
-
-  const formatTime = (value: number) => value.toString().padStart(2, '0');
-
-  return (
-    <div className="min-h-screen bg-background">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-foreground">Countdown Timer</h1>
-          <p className="text-muted-foreground">Create shareable countdown timers</p>
-          <Badge className="bg-orange-100 text-orange-700 border-orange-200 mt-2">Time & Schedule</Badge>
-        </div>
-
-        <div className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Timer Configuration</CardTitle>
-              <CardDescription>Set up your countdown timer</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div>
-                  <label className="text-sm font-medium">Timer Title (Optional)</label>
-                  <Input
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    placeholder="New Year Countdown"
-                  />
-                </div>
-
-                <div>
-                  <label className="text-sm font-medium">Target Date & Time</label>
-                  <Input
-                    type="datetime-local"
-                    value={targetDate}
-                    onChange={(e) => setTargetDate(e.target.value)}
-                  />
-                </div>
-
-                <div>
-                  <label className="text-sm font-medium">Quick Set</label>
-                  <div className="flex gap-2 mt-2">
-                    <Button size="sm" variant="outline" onClick={() => setQuickTarget(1)}>
+    return (
+        <ToolLayout title="Countdown Timer" description="Create shareable countdown timers" category="Time & Schedule" icon={Badge}>
+<Button size="sm" variant="outline" onClick={() => setQuickTarget(1)}>
                       +1 Hour
                     </Button>
                     <Button size="sm" variant="outline" onClick={() => setQuickTarget(24)}>
@@ -281,9 +182,8 @@ const CountdownTimer = () => {
             </CardContent>
           </Card>
         </div>
-      </div>
-    </div>
-  );
+              </ToolLayout>
+    );
 };
 
 export default CountdownTimer;

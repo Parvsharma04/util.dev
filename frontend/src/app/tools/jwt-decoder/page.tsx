@@ -45,49 +45,8 @@ const JwtDecoder = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
-            <a href="/" className="hover:text-foreground">Home</a>
-            <span>→</span>
-            <a href="/tools" className="hover:text-foreground">Tools</a>
-            <span>→</span>
-            <span className="text-foreground">JWT Decoder</span>
-          </div>
-          
-          <div className="flex items-center gap-4 mb-4">
-            <div className="w-12 h-12 bg-gradient-to-r from-red-600 to-pink-600 rounded-xl flex items-center justify-center">
-              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-              </svg>
-            </div>
-            <div>
-              <h1 className="text-3xl font-bold text-foreground">JWT Decoder</h1>
-              <p className="text-muted-foreground">Decode JSON Web Tokens and view header, payload, and signature</p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <Badge className="bg-blue-100 text-blue-700 border-blue-200">Text & String</Badge>
-          </div>
-        </div>
-
-        <div className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>JWT Token Input</CardTitle>
-              <CardDescription>Paste your JWT token to decode</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                <Textarea
-                  placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
-                  value={jwt}
-                  onChange={(e) => setJwt(e.target.value)}
-                  className="min-h-[120px] font-mono text-sm"
-                />
-                <Button onClick={decodeJwt} className="bg-blue-600 hover:bg-blue-700">
+        <ToolLayout title="JWT Decoder" description="Decode JSON Web Tokens and view header, payload, and signature" category="Text & String" icon={Badge}>
+<Button onClick={decodeJwt} className="bg-blue-600 hover:bg-blue-700">
                   Decode JWT
                 </Button>
               </div>
@@ -167,9 +126,8 @@ const JwtDecoder = () => {
             </>
           )}
         </div>
-      </div>
-    </div>
-  );
+              </ToolLayout>
+    );
 };
 
 export default JwtDecoder;

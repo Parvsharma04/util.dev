@@ -64,74 +64,8 @@ const FileConverter = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <Link href="/tools" className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground mb-4">
-            <ArrowLeft className="w-4 h-4 mr-1" />
-            Back to Tools
-          </Link>
-          <h1 className="text-3xl font-bold text-foreground">File Converter</h1>
-          <p className="text-muted-foreground">Convert between different file formats</p>
-          <Badge className="bg-green-100 text-green-700 border-green-200 mt-2">File & Format</Badge>
-        </div>
-
-        <div className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Upload File</CardTitle>
-              <CardDescription>Select a file to convert</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div className="border-2 border-dashed border-slate-300 rounded-lg p-6 text-center">
-                  <input
-                    type="file"
-                    onChange={handleFileUpload}
-                    className="hidden"
-                    id="file-upload"
-                    accept=".json,.csv,.xml,.txt"
-                  />
-                  <label htmlFor="file-upload" className="cursor-pointer">
-                    <Upload className="w-12 h-12 mx-auto mb-4 text-slate-400" />
-                    <p className="text-muted-foreground">Click to upload or drag and drop</p>
-                    <p className="text-sm text-muted-foreground">JSON, CSV, XML, TXT files</p>
-                  </label>
-                </div>
-                
-                {file && (
-                  <div className="flex items-center gap-3 p-3 bg-muted rounded-lg">
-                    <FileIcon className="w-5 h-5 text-muted-foreground" />
-                    <span className="text-sm font-medium">{file.name}</span>
-                    <Badge variant="outline">{file.type || 'Unknown'}</Badge>
-                  </div>
-                )}
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Conversion Options</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="flex gap-4 items-end">
-                <div className="flex-1">
-                  <label className="text-sm font-medium">Output Format</label>
-                  <Select value={outputFormat} onValueChange={setOutputFormat}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select format" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {supportedFormats.map((format) => (
-                        <SelectItem key={format.value} value={format.value}>
-                          {format.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <Button onClick={convertFile} className="bg-blue-600 hover:bg-blue-700">
+        <ToolLayout title="File Converter" description="Convert between different file formats" category="File & Format" icon={Terminal}>
+<Button onClick={convertFile} className="bg-blue-600 hover:bg-blue-700">
                   Convert File
                 </Button>
               </div>
@@ -157,9 +91,8 @@ const FileConverter = () => {
             </Card>
           )}
         </div>
-      </div>
-    </div>
-  );
+              </ToolLayout>
+    );
 };
 
 export default FileConverter;

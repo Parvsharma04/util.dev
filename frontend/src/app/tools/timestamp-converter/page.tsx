@@ -2,13 +2,15 @@
 
 
 import { useState } from "react";
-import { Copy, Clock } from "lucide-react";
+import { Copy, Clock, Terminal, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
+import { ThemeToggle } from "@/components/ThemeToggle";
+import { ToolLayout } from "@/components/ToolLayout";
 
 const TimestampConverter = () => {
   const [timestamp, setTimestamp] = useState(Math.floor(Date.now() / 1000).toString());
@@ -57,44 +59,18 @@ const TimestampConverter = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
-            <a href="/" className="hover:text-foreground">Home</a>
-            <span>→</span>
-            <a href="/tools" className="hover:text-foreground">Tools</a>
-            <span>→</span>
-            <span className="text-foreground">Timestamp Converter</span>
-          </div>
-          
-          <div className="flex items-center gap-4 mb-4">
-            <div className="w-12 h-12 bg-gradient-to-r from-orange-600 to-amber-600 rounded-xl flex items-center justify-center">
-              <Clock className="w-6 h-6 text-white" />
-            </div>
-            <div>
-              <h1 className="text-3xl font-bold text-foreground">Timestamp Converter</h1>
-              <p className="text-muted-foreground">Convert between UNIX timestamps and human-readable dates</p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <Badge className="bg-orange-100 text-orange-700 border-orange-200">Developer Tools</Badge>
-            <Badge variant="outline">Popular</Badge>
-          </div>
-        </div>
-
-        <Tabs defaultValue="to-human" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="to-human">Timestamp → Human</TabsTrigger>
-            <TabsTrigger value="to-timestamp">Human → Timestamp</TabsTrigger>
+        <ToolLayout title="Timestamp Converter" description="Convert between UNIX timestamps and human-readable dates" category="Developer Tools" icon={Terminal} popular>
+<Tabs defaultValue="to-human" className="space-y-6">
+          <TabsList className="grid w-full grid-cols-2 bg-muted/50 border border-border">
+            <TabsTrigger value="to-human" className="font-mono data-[state=active]:bg-card">Timestamp → Human</TabsTrigger>
+            <TabsTrigger value="to-timestamp" className="font-mono data-[state=active]:bg-card">Human → Timestamp</TabsTrigger>
           </TabsList>
 
           <TabsContent value="to-human" className="space-y-6">
-            <Card>
+            <Card className="bg-card border-border card-glow">
               <CardHeader>
-                <CardTitle>UNIX Timestamp Input</CardTitle>
-                <CardDescription>Enter a UNIX timestamp (seconds since epoch)</CardDescription>
+                <CardTitle className="font-mono">UNIX Timestamp Input</CardTitle>
+                <CardDescription className="font-mono">Enter a UNIX timestamp (seconds since epoch)</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="flex gap-3">
@@ -102,9 +78,9 @@ const TimestampConverter = () => {
                     placeholder="1672531200"
                     value={timestamp}
                     onChange={(e) => setTimestamp(e.target.value)}
-                    className="font-mono flex-1"
+                    className="font-mono flex-1 bg-input"
                   />
-                  <Button onClick={getCurrentTimestamp} variant="outline">
+                  <Button onClick={getCurrentTimestamp} variant="outline" className="border-border hover:border-primary/50 font-mono">
                     Now
                   </Button>
                 </div>
@@ -112,64 +88,68 @@ const TimestampConverter = () => {
             </Card>
 
             {formats && (
-              <Card>
+              <Card className="bg-card border-border card-glow">
                 <CardHeader>
-                  <CardTitle>Human-Readable Formats</CardTitle>
-                  <CardDescription>Various date and time representations</CardDescription>
+                  <CardTitle className="font-mono">Human-Readable Formats</CardTitle>
+                  <CardDescription className="font-mono">Various date and time representations</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
-                    <div className="flex items-center justify-between p-3 bg-muted rounded-lg">
+                    <div className="flex items-center justify-between p-3 bg-muted/30 border border-border rounded-lg">
                       <div>
-                        <div className="text-sm font-medium text-slate-700 mb-1">ISO 8601</div>
+                        <div className="text-sm font-medium text-muted-foreground mb-1 font-mono">ISO 8601</div>
                         <div className="font-mono text-sm text-foreground">{formats.iso}</div>
                       </div>
                       <Button
                         size="sm"
-                        variant="outline"
+                        variant="ghost"
                         onClick={() => copyToClipboard(formats.iso, "ISO 8601")}
+                        className="hover:bg-primary/10 hover:text-primary transition-colors"
                       >
                         <Copy className="w-4 h-4" />
                       </Button>
                     </div>
 
-                    <div className="flex items-center justify-between p-3 bg-muted rounded-lg">
+                    <div className="flex items-center justify-between p-3 bg-muted/30 border border-border rounded-lg">
                       <div>
-                        <div className="text-sm font-medium text-slate-700 mb-1">Local Time</div>
+                        <div className="text-sm font-medium text-muted-foreground mb-1 font-mono">Local Time</div>
                         <div className="font-mono text-sm text-foreground">{formats.local}</div>
                       </div>
                       <Button
                         size="sm"
-                        variant="outline"
+                        variant="ghost"
                         onClick={() => copyToClipboard(formats.local, "Local Time")}
+                        className="hover:bg-primary/10 hover:text-primary transition-colors"
                       >
                         <Copy className="w-4 h-4" />
                       </Button>
                     </div>
 
-                    <div className="flex items-center justify-between p-3 bg-muted rounded-lg">
+                    <div className="flex items-center justify-between p-3 bg-muted/30 border border-border rounded-lg">
                       <div>
-                        <div className="text-sm font-medium text-slate-700 mb-1">UTC</div>
+                        <div className="text-sm font-medium text-muted-foreground mb-1 font-mono">UTC</div>
                         <div className="font-mono text-sm text-foreground">{formats.utc}</div>
                       </div>
                       <Button
                         size="sm"
-                        variant="outline"
+                        variant="ghost"
                         onClick={() => copyToClipboard(formats.utc, "UTC")}
+                        className="hover:bg-primary/10 hover:text-primary transition-colors"
                       >
                         <Copy className="w-4 h-4" />
                       </Button>
                     </div>
 
-                    <div className="flex items-center justify-between p-3 bg-muted rounded-lg">
+                    <div className="flex items-center justify-between p-3 bg-muted/30 border border-border rounded-lg">
                       <div>
-                        <div className="text-sm font-medium text-slate-700 mb-1">Date Only</div>
+                        <div className="text-sm font-medium text-muted-foreground mb-1 font-mono">Date Only</div>
                         <div className="font-mono text-sm text-foreground">{formats.date}</div>
                       </div>
                       <Button
                         size="sm"
-                        variant="outline"
+                        variant="ghost"
                         onClick={() => copyToClipboard(formats.date, "Date Only")}
+                        className="hover:bg-primary/10 hover:text-primary transition-colors"
                       >
                         <Copy className="w-4 h-4" />
                       </Button>
@@ -181,34 +161,35 @@ const TimestampConverter = () => {
           </TabsContent>
 
           <TabsContent value="to-timestamp" className="space-y-6">
-            <Card>
+            <Card className="bg-card border-border card-glow">
               <CardHeader>
-                <CardTitle>Date and Time Input</CardTitle>
-                <CardDescription>Enter a date and time to convert to timestamp</CardDescription>
+                <CardTitle className="font-mono">Date and Time Input</CardTitle>
+                <CardDescription className="font-mono">Enter a date and time to convert to timestamp</CardDescription>
               </CardHeader>
               <CardContent>
                 <Input
                   type="datetime-local"
                   value={humanDate}
                   onChange={(e) => setHumanDate(e.target.value)}
-                  className="font-mono"
+                  className="font-mono bg-input"
                 />
               </CardContent>
             </Card>
 
             {humanTimestamp && (
-              <Card>
+              <Card className="bg-card border-border card-glow">
                 <CardHeader>
-                  <CardTitle>UNIX Timestamp</CardTitle>
-                  <CardDescription>Timestamp in seconds since epoch</CardDescription>
+                  <CardTitle className="font-mono">UNIX Timestamp</CardTitle>
+                  <CardDescription className="font-mono">Timestamp in seconds since epoch</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="flex items-center justify-between p-3 bg-muted rounded-lg">
+                  <div className="flex items-center justify-between p-3 bg-muted/30 border border-border rounded-lg">
                     <div className="font-mono text-lg text-foreground">{humanTimestamp}</div>
                     <Button
                       size="sm"
-                      variant="outline"
+                      variant="ghost"
                       onClick={() => copyToClipboard(humanTimestamp.toString(), "Timestamp")}
+                      className="hover:bg-primary/10 hover:text-primary transition-colors"
                     >
                       <Copy className="w-4 h-4" />
                     </Button>
@@ -219,12 +200,12 @@ const TimestampConverter = () => {
           </TabsContent>
         </Tabs>
 
-        <Card>
+        <Card className="bg-card border-border card-glow">
           <CardHeader>
-            <CardTitle>About UNIX Timestamps</CardTitle>
+            <CardTitle className="font-mono">About UNIX Timestamps</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-sm text-muted-foreground space-y-2">
+            <div className="text-sm text-muted-foreground space-y-2 font-mono">
               <p>
                 UNIX timestamps represent the number of seconds that have elapsed since January 1, 1970, 00:00:00 UTC.
               </p>
@@ -234,9 +215,8 @@ const TimestampConverter = () => {
             </div>
           </CardContent>
         </Card>
-      </div>
-    </div>
-  );
+              </ToolLayout>
+    );
 };
 
 export default TimestampConverter;

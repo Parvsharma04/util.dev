@@ -64,32 +64,8 @@ const StringCase = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <Link href="/tools" className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground mb-4">
-            <ArrowLeft className="w-4 h-4 mr-1" />
-            Back to Tools
-          </Link>
-          
-          <div className="flex items-center gap-4 mb-4">
-            <div className="w-12 h-12 bg-gradient-to-r from-orange-600 to-red-600 rounded-xl flex items-center justify-center">
-              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-              </svg>
-            </div>
-            <div>
-              <h1 className="text-3xl font-bold text-foreground">String Case Converter</h1>
-              <p className="text-muted-foreground">Convert strings between different naming conventions</p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <Badge className="bg-blue-100 text-blue-700 border-blue-200">Text & String</Badge>
-          </div>
-        </div>
-
-        <div className="mb-6">
+        <ToolLayout title="String Case Converter" description="Convert strings between different naming conventions" category="Text & String" icon={Badge}>
+<div className="mb-6">
           <Button onClick={clearAll} variant="outline" className="text-red-600 hover:text-red-700">
             <RotateCcw className="w-4 h-4 mr-2" />
             Clear
@@ -122,7 +98,7 @@ const StringCase = () => {
                 {cases.map((caseType) => (
                   <div key={caseType.name} className="flex items-center justify-between p-3 bg-muted rounded-lg">
                     <div className="flex-1 min-w-0">
-                      <div className="text-sm font-medium text-slate-700 mb-1">
+                      <div className="text-sm font-medium text-muted-foreground mb-1">
                         {caseType.name}
                       </div>
                       <div className="font-mono text-sm text-foreground break-all">
@@ -143,9 +119,8 @@ const StringCase = () => {
             </CardContent>
           </Card>
         </div>
-      </div>
-    </div>
-  );
+              </ToolLayout>
+    );
 };
 
 export default StringCase;

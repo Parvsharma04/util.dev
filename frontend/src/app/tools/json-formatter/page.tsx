@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { ToolLayout } from "@/components/ToolLayout";
 
 const JsonFormatter = () => {
   const [input, setInput] = useState("");
@@ -92,60 +93,8 @@ const JsonFormatter = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background matrix-bg">
-      {/* Header Bar */}
-      <header className="sticky top-0 z-40 bg-background/80 backdrop-blur-lg border-b border-border">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-14">
-            <div className="flex items-center gap-4">
-              <a href="/">
-                <Button variant="ghost" size="icon" className="shrink-0">
-                  <ArrowLeft className="w-5 h-5" />
-                </Button>
-              </a>
-              <div className="flex items-center gap-2">
-                <div className="w-7 h-7 bg-primary/10 border border-primary/30 rounded-lg flex items-center justify-center">
-                  <Terminal className="w-4 h-4 text-primary" />
-                </div>
-                <span className="font-bold text-foreground font-mono glow text-sm">util.dev</span>
-              </div>
-            </div>
-            <ThemeToggle />
-          </div>
-        </div>
-      </header>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4 font-mono">
-            <a href="/" className="hover:text-primary transition-colors">Home</a>
-            <span className="text-primary">→</span>
-            <a href="/tools" className="hover:text-primary transition-colors">Tools</a>
-            <span className="text-primary">→</span>
-            <span className="text-foreground">JSON Formatter</span>
-          </div>
-          
-          <div className="flex items-center gap-4 mb-4">
-            <div className="w-12 h-12 bg-primary/10 border border-primary/30 rounded-xl flex items-center justify-center">
-              <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-              </svg>
-            </div>
-            <div>
-              <h1 className="text-3xl font-bold text-foreground font-mono glow">JSON Formatter</h1>
-              <p className="text-muted-foreground">Prettify, minify, and validate JSON with syntax highlighting</p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <Badge className="bg-emerald-500/10 text-emerald-500 border-emerald-500/30 font-mono">Text & String</Badge>
-            <Badge variant="outline" className="border-yellow-500/30 text-yellow-500 font-mono">Popular</Badge>
-          </div>
-        </div>
-
-        {/* Action Buttons */}
-        <div className="mb-6">
+        <ToolLayout title="JSON Formatter" description="Prettify, minify, and validate JSON with syntax highlighting" category="Text & String" icon={Terminal} popular>
+<div className="mb-6">
           <div className="flex flex-wrap gap-3">
             <Button onClick={() => formatJson(2)} className="bg-primary text-primary-foreground hover:bg-primary/90 font-mono">
               Format (2 spaces)
@@ -292,9 +241,8 @@ const JsonFormatter = () => {
             </Card>
           </div>
         </div>
-      </div>
-    </div>
-  );
+              </ToolLayout>
+    );
 };
 
 export default JsonFormatter;

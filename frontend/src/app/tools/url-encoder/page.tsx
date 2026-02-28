@@ -56,32 +56,8 @@ const UrlEncoder = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <Link href="/tools" className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground mb-4">
-            <ArrowLeft className="w-4 h-4 mr-1" />
-            Back to Tools
-          </Link>
-          
-          <div className="flex items-center gap-4 mb-4">
-            <div className="w-12 h-12 bg-gradient-to-r from-purple-600 to-violet-600 rounded-xl flex items-center justify-center">
-              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-              </svg>
-            </div>
-            <div>
-              <h1 className="text-3xl font-bold text-foreground">URL Encoder/Decoder</h1>
-              <p className="text-muted-foreground">Encode and decode URLs for safe transmission</p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <Badge className="bg-blue-100 text-blue-700 border-blue-200">Text & String</Badge>
-          </div>
-        </div>
-
-        <Tabs value={mode} onValueChange={(value) => setMode(value as "encode" | "decode")} className="mb-6">
+        <ToolLayout title="URL Encoder/Decoder" description="Encode and decode URLs for safe transmission" category="Text & String" icon={Badge}>
+<Tabs value={mode} onValueChange={(value) => setMode(value as "encode" | "decode")} className="mb-6">
           <TabsList>
             <TabsTrigger value="encode">Encode</TabsTrigger>
             <TabsTrigger value="decode">Decode</TabsTrigger>
@@ -150,9 +126,8 @@ const UrlEncoder = () => {
             </CardContent>
           </Card>
         </div>
-      </div>
-    </div>
-  );
+              </ToolLayout>
+    );
 };
 
 export default UrlEncoder;

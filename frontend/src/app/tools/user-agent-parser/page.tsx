@@ -154,24 +154,8 @@ const UserAgentParser = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-foreground">User Agent Parser</h1>
-          <p className="text-muted-foreground">Parse browser and device information from user agent strings</p>
-          <Badge className="bg-red-100 text-red-700 border-red-200 mt-2">Network & Web</Badge>
-        </div>
-
-        <div className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>User Agent String</CardTitle>
-              <CardDescription>Enter or paste a user agent string to analyze</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div className="flex gap-2">
-                  <Button variant="outline" onClick={setCurrentUserAgent}>
+        <ToolLayout title="User Agent Parser" description="Parse browser and device information from user agent strings" category="Network & Web" icon={Badge}>
+<Button variant="outline" onClick={setCurrentUserAgent}>
                     My Browser
                   </Button>
                 </div>
@@ -325,9 +309,8 @@ const UserAgentParser = () => {
             </CardContent>
           </Card>
         </div>
-      </div>
-    </div>
-  );
+              </ToolLayout>
+    );
 };
 
 export default UserAgentParser;

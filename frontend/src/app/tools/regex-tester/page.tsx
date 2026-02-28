@@ -15,19 +15,8 @@ const RegexTester = () => {
   const [flags, setFlags] = useState("g");
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <Link href="/tools" className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground mb-4">
-            <ArrowLeft className="w-4 h-4 mr-1" />
-            Back to Tools
-          </Link>
-          <h1 className="text-3xl font-bold text-foreground">Regex Tester</h1>
-          <p className="text-muted-foreground">Test regular expressions with real-time highlighting</p>
-          <Badge className="bg-blue-100 text-blue-700 border-blue-200 mt-2">Text & String</Badge>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <ToolLayout title="Regex Tester" description="Test regular expressions with real-time highlighting" category="Text & String" icon={Badge}>
+<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <Card>
             <CardHeader>
               <CardTitle>Pattern & Text</CardTitle>
@@ -56,9 +45,8 @@ const RegexTester = () => {
             </CardContent>
           </Card>
         </div>
-      </div>
-    </div>
-  );
+              </ToolLayout>
+    );
 };
 
 export default RegexTester;
