@@ -136,7 +136,7 @@ export const allTools: Tool[] = [
         description: "Convert Markdown to HTML and vice versa",
         icon: FileText,
         category: "File & Format",
-        route: "/tools/md-html-converter",
+        route: "/tools/markdown-html",
         implemented: true
     },
     {
@@ -252,7 +252,7 @@ export const allTools: Tool[] = [
         description: "Convert between different timezones",
         icon: Clock,
         category: "Time & Schedule",
-        route: "/tools/timezone",
+        route: "/tools/timezone-converter",
         implemented: true
     },
     {
@@ -260,7 +260,7 @@ export const allTools: Tool[] = [
         description: "Create countdown timers",
         icon: Clock,
         category: "Time & Schedule",
-        route: "/tools/countdown",
+        route: "/tools/countdown-timer",
         implemented: true
     },
 
@@ -286,7 +286,7 @@ export const allTools: Tool[] = [
         description: "Parse and analyze user agent strings",
         icon: Globe,
         category: "Network & Web",
-        route: "/tools/user-agent",
+        route: "/tools/user-agent-parser",
         implemented: true
     },
 

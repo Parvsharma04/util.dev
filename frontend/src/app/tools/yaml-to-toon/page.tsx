@@ -25,6 +25,7 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { encode, decode } from "@toon-format/toon";
 import { parse as parseYaml, stringify as stringifyYaml } from "yaml";
+import { ToolLayout } from "@/components/ToolLayout";
 
 type Delimiter = "," | "\t" | "|";
 
@@ -158,17 +159,17 @@ users:
 
     return (
         <ToolLayout title="YAML ↔ TOON" description="Convert YAML to TOON format for smaller LLM context" category="AI Tools" icon={Zap}>
-<Button onClick={loadSample} variant="outline" size="sm">
-                                Load Sample
-                            </Button>
-                        </div>
-                    </CardContent>
-                </Card>
+            <Button onClick={loadSample} variant="outline" size="sm">
+                Load Sample
+            </Button>
+        </div>
+                    </CardContent >
+                </Card >
 
-                {/* Main Content */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    {/* Input */}
-                    <Card className="bg-card border-border">
+    {/* Main Content */ }
+    < div className = "grid grid-cols-1 lg:grid-cols-2 gap-6" >
+        {/* Input */ }
+        < Card className = "bg-card border-border" >
                         <CardHeader className="pb-3">
                             <div className="flex items-center justify-between">
                                 <CardTitle className="text-foreground font-mono">
@@ -191,10 +192,10 @@ users:
                                 className="min-h-[400px] font-mono text-sm bg-background border-border resize-none"
                             />
                         </CardContent>
-                    </Card>
+                    </Card >
 
-                    {/* Output */}
-                    <Card className="bg-card border-border">
+    {/* Output */ }
+    < Card className = "bg-card border-border" >
                         <CardHeader className="pb-3">
                             <div className="flex items-center justify-between">
                                 <CardTitle className="text-foreground font-mono">
@@ -228,11 +229,11 @@ users:
                                 />
                             )}
                         </CardContent>
-                    </Card>
-                </div>
+                    </Card >
+                </div >
 
-                {/* Actions */}
-                <div className="flex flex-wrap gap-3 mt-6 justify-center">
+    {/* Actions */ }
+    < div className = "flex flex-wrap gap-3 mt-6 justify-center" >
                     <Button onClick={convert} className="min-w-[140px]">
                         <Zap className="w-4 h-4 mr-2" />
                         Convert
@@ -249,10 +250,10 @@ users:
                         <Download className="w-4 h-4 mr-2" />
                         Download
                     </Button>
-                </div>
+                </div >
 
-                {/* Comparison Section */}
-                <Card className="mt-8 bg-muted/50 border-border">
+    {/* Comparison Section */ }
+    < Card className = "mt-8 bg-muted/50 border-border" >
                     <CardHeader>
                         <CardTitle className="text-foreground font-mono text-lg">
                             YAML vs TOON Comparison
@@ -291,8 +292,8 @@ users:
                             data.
                         </p>
                     </CardContent>
-                </Card>
-                    </ToolLayout>
+                </Card >
+                    </ToolLayout >
     );
 };
 

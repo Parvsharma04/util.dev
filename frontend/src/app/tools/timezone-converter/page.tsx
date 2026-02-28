@@ -1,14 +1,14 @@
 "use client";
 
-
 import { useState, useEffect } from "react";
-import { Copy, Clock, Globe } from "lucide-react";
+import { Copy, Clock, Globe, Calendar, RefreshCw, Info, Timer } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import { ToolLayout } from "@/components/ToolLayout";
 
 const TimezoneConverter = () => {
   const [sourceTime, setSourceTime] = useState("");
@@ -40,6 +40,7 @@ const TimezoneConverter = () => {
     "America/Los_Angeles",
     "Europe/London",
     "Asia/Tokyo",
+    "Asia/Kolkata",
     "Australia/Sydney"
   ];
 
@@ -48,15 +49,12 @@ const TimezoneConverter = () => {
       const times: { [key: string]: string } = {};
       majorTimezones.forEach(tz => {
         const now = new Date();
-        times[tz] = now.toLocaleString("en-US", {
+        times[tz] = now.toLocaleTimeString("en-US", {
           timeZone: tz,
           hour12: true,
           hour: "2-digit",
           minute: "2-digit",
-          second: "2-digit",
-          year: "numeric",
-          month: "short",
-          day: "2-digit"
+          second: "2-digit"
         });
       });
       setCurrentTimes(times);
@@ -64,142 +62,179 @@ const TimezoneConverter = () => {
 
     updateCurrentTimes();
     const interval = setInterval(updateCurrentTimes, 1000);
-    return (
-        <ToolLayout title="Timezone Converter" description="Convert times between different timezones" category="Time & Schedule" icon={Badge}>
-<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="text-sm font-medium">From Timezone</label>
-                    <Select value={sourceTimezone} onValueChange={setSourceTimezone}>
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {timezones.map((tz) => (
-                          <SelectItem key={tz.value} value={tz.value}>
-                            {tz.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
+    return () => clearInterval(interval);
+  }, []);
 
-                  <div>
-                    <label className="text-sm font-medium">To Timezone</label>
-                    <Select value={targetTimezone} onValueChange={setTargetTimezone}>
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {timezones.map((tz) => (
-                          <SelectItem key={tz.value} value={tz.value}>
-                            {tz.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
+  const handleNow = () => {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    const hours = String(now.getHours()).padStart(2, '0');
+    const mins = String(now.getMinutes()).padStart(2, '0');
+    setSourceTime(`${year}-${month}-${day}T${hours}:${mins}`);
+  };
 
-                <div>
-                  <label className="text-sm font-medium">Date and Time</label>
-                  <div className="flex gap-2">
-                    <Input
-                      type="datetime-local"
-                      value={sourceTime}
-                      onChange={(e) => setSourceTime(e.target.value)}
-                      className="flex-1"
-                    />
-                    <Button variant="outline" onClick={setCurrentTime}>
-                      Now
-                    </Button>
-                  </div>
-                </div>
+  const convertTime = () => {
+    if (!sourceTime) {
+      toast({ title: "Input Required", description: "Please select a date and time", variant: "destructive" });
+      return;
+    }
 
-                <Button onClick={convertTime} className="w-full bg-blue-600 hover:bg-blue-700">
-                  <Clock className="w-4 h-4 mr-2" />
-                  Convert Time
+    try {
+      const date = new Date(sourceTime);
+      // This is a bit tricky with raw JS Date. 
+      // We'll use Intl.DateTimeFormat to get the string in the target timezone.
+      const targetStr = date.toLocaleString("en-US", {
+        timeZone: targetTimezone,
+        dateStyle: "full",
+        timeStyle: "long",
+      });
+      setConvertedTime(targetStr);
+      toast({ title: "Converted", description: "Time converted successfully" });
+    } catch (e) {
+      toast({ title: "Error", description: "Invalid date or timezone", variant: "destructive" });
+    }
+  };
+
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text);
+    toast({ title: "Copied!", description: "Converted time copied" });
+  };
+
+  const getTimezoneLabel = (val: string) => timezones.find(t => t.value === val)?.label || val;
+
+  return (
+    <ToolLayout
+      title="Timezone Converter"
+      description="Convert times between global timezones with real-time world clocks"
+      category="Time & Schedule"
+      icon={Globe}
+    >
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Converter Card */}
+        <Card className="lg:col-span-2 bg-card border-border card-glow">
+          <CardHeader>
+            <CardTitle className="font-mono flex items-center gap-2">
+              <RefreshCw className="w-5 h-5 text-primary" />
+              Converter
+            </CardTitle>
+            <CardDescription className="font-mono">Adjust source and target zones</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">From Timezone</label>
+                <Select value={sourceTimezone} onValueChange={setSourceTimezone}>
+                  <SelectTrigger className="bg-muted/20 border-border font-mono">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {timezones.map((tz) => (
+                      <SelectItem key={tz.value} value={tz.value} className="font-mono text-xs">
+                        {tz.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">To Timezone</label>
+                <Select value={targetTimezone} onValueChange={setTargetTimezone}>
+                  <SelectTrigger className="bg-muted/20 border-border font-mono">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {timezones.map((tz) => (
+                      <SelectItem key={tz.value} value={tz.value} className="font-mono text-xs">
+                        {tz.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Source Date & Time</label>
+              <div className="flex gap-2">
+                <Input
+                  type="datetime-local"
+                  value={sourceTime}
+                  onChange={(e) => setSourceTime(e.target.value)}
+                  className="flex-1 font-mono bg-muted/20 border-border h-12"
+                />
+                <Button variant="outline" onClick={handleNow} className="font-mono h-12 px-6 border-border">
+                  Now
                 </Button>
+              </div>
+            </div>
 
-                {convertedTime && (
-                  <div className="p-4 bg-blue-50 rounded-lg">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-sm text-blue-600 font-medium">Converted Time</p>
-                        <p className="text-lg font-bold text-blue-900">{convertedTime}</p>
-                        <p className="text-sm text-blue-600">{getTimezoneLabel(targetTimezone)}</p>
-                      </div>
-                      <Button size="sm" variant="outline" onClick={() => copyToClipboard(convertedTime)}>
-                        <Copy className="w-4 h-4" />
-                      </Button>
+            <Button onClick={convertTime} className="w-full h-12 font-mono bg-primary hover:bg-primary/90 text-lg">
+              <Clock className="w-5 h-5 mr-2" />
+              Convert Time
+            </Button>
+
+            {convertedTime && (
+              <div className="p-6 bg-primary/5 border border-primary/20 rounded-2xl animate-fade-in">
+                <div className="flex items-center justify-between">
+                  <div className="space-y-1">
+                    <p className="text-[10px] font-bold text-primary uppercase tracking-widest">Converted Outcome</p>
+                    <p className="text-xl font-bold font-mono text-foreground leading-tight">{convertedTime}</p>
+                    <p className="text-xs text-muted-foreground font-mono italic">{getTimezoneLabel(targetTimezone)}</p>
+                  </div>
+                  <Button size="icon" variant="ghost" onClick={() => copyToClipboard(convertedTime)} className="hover:bg-primary/10 hover:text-primary">
+                    <Copy className="w-5 h-5" />
+                  </Button>
+                </div>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
+        {/* World Clock Sidebar */}
+        <div className="space-y-6">
+          <Card className="bg-card border-border card-glow">
+            <CardHeader>
+              <CardTitle className="font-mono flex items-center gap-2">
+                <Globe className="w-5 h-5 text-primary" />
+                World Clock
+              </CardTitle>
+              <CardDescription className="font-mono text-xs">Major tech hubs & global zones</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              {majorTimezones.map((tz) => (
+                <div key={tz} className="group p-3 border border-border rounded-xl bg-muted/10 hover:border-primary/30 transition-all">
+                  <div className="flex items-center justify-between font-mono">
+                    <div className="text-[10px] text-muted-foreground uppercase font-bold group-hover:text-primary transition-colors">
+                      {tz.split("/").pop()?.replace("_", " ")}
+                    </div>
+                    <div className="text-sm font-bold text-foreground tabular-nums">
+                      {currentTimes[tz] || "--:--:--"}
                     </div>
                   </div>
-                )}
-              </div>
+                </div>
+              ))}
             </CardContent>
           </Card>
 
-          <Card>
-            <CardHeader>
-              <CardTitle>World Clock</CardTitle>
-              <CardDescription>Current time in major timezones</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {majorTimezones.map((tz) => (
-                  <div key={tz} className="p-3 border border-slate-200 rounded-lg">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <div className="font-medium text-foreground">
-                          {getTimezoneLabel(tz)}
-                        </div>
-                        <div className="text-lg font-mono text-muted-foreground">
-                          {currentTimes[tz] || "Loading..."}
-                        </div>
-                      </div>
-                      <Globe className="w-5 h-5 text-muted-foreground" />
-                    </div>
-                  </div>
-                ))}
+          <Card className="bg-muted/30 border-border">
+            <CardContent className="p-6 space-y-4 text-xs font-mono text-muted-foreground">
+              <div className="flex gap-3">
+                <Info className="w-4 h-4 text-primary shrink-0" />
+                <p>Calculations use your browser's local Intl libraries for high precision.</p>
               </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Timezone Information</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                <div>
-                  <h4 className="font-medium mb-2">UTC (Coordinated Universal Time)</h4>
-                  <p className="text-muted-foreground">
-                    The primary time standard by which the world regulates clocks and time.
-                  </p>
-                </div>
-                <div>
-                  <h4 className="font-medium mb-2">Daylight Saving Time</h4>
-                  <p className="text-muted-foreground">
-                    Some timezones automatically adjust for daylight saving time changes.
-                  </p>
-                </div>
-                <div>
-                  <h4 className="font-medium mb-2">Time Zones</h4>
-                  <p className="text-muted-foreground">
-                    Earth is divided into 24 time zones, each representing one hour of the day.
-                  </p>
-                </div>
-                <div>
-                  <h4 className="font-medium mb-2">ISO 8601</h4>
-                  <p className="text-muted-foreground">
-                    International standard for date and time representation.
-                  </p>
-                </div>
+              <div className="flex gap-3">
+                <Timer className="w-4 h-4 text-primary shrink-0" />
+                <p>The world clock updates in real-time every second.</p>
               </div>
             </CardContent>
           </Card>
         </div>
-              </ToolLayout>
-    );
+      </div>
+    </ToolLayout>
+  );
 };
 
 export default TimezoneConverter;

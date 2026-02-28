@@ -11,6 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
 import { useToast } from "@/hooks/use-toast";
+import { ToolLayout } from "@/components/ToolLayout";
 
 const FontPreviewer = () => {
   const [selectedFont, setSelectedFont] = useState("Arial");
@@ -60,7 +61,7 @@ const FontPreviewer = () => {
 font-size: ${fontSize[0]}px;
 font-weight: ${fontWeight};
 font-style: ${fontStyle};`;
-    
+
     navigator.clipboard.writeText(cssText);
     toast({
       title: "Copied!",
@@ -75,241 +76,241 @@ font-style: ${fontStyle};`;
   const currentFont = customFont || selectedFont;
 
   return (
-        <ToolLayout title="Font Previewer" description="Preview and compare fonts with custom text" category="Frontend/UX" icon={Badge}>
-<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-1 space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Font Settings</CardTitle>
-                <CardDescription>Customize font appearance</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div>
-                    <label className="text-sm font-medium">System Fonts</label>
-                    <Select value={selectedFont} onValueChange={setSelectedFont}>
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {systemFonts.map((font) => (
-                          <SelectItem key={font} value={font}>
-                            {font}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div>
-                    <label className="text-sm font-medium">Web Fonts</label>
-                    <Select value={selectedFont} onValueChange={setSelectedFont}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select web font" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {webFonts.map((font) => (
-                          <SelectItem key={font} value={font}>
-                            {font}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div>
-                    <label className="text-sm font-medium">Custom Font Family</label>
-                    <Input
-                      placeholder="Inter, system-ui, sans-serif"
-                      value={customFont}
-                      onChange={(e) => setCustomFont(e.target.value)}
-                    />
-                  </div>
-
-                  <div>
-                    <label className="text-sm font-medium">Font Size: {fontSize[0]}px</label>
-                    <Slider
-                      value={fontSize}
-                      onValueChange={setFontSize}
-                      max={72}
-                      min={8}
-                      step={1}
-                      className="mt-2"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="text-sm font-medium">Font Weight</label>
-                    <Select value={fontWeight} onValueChange={setFontWeight}>
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {fontWeights.map((weight) => (
-                          <SelectItem key={weight.value} value={weight.value}>
-                            {weight.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div>
-                    <label className="text-sm font-medium">Font Style</label>
-                    <Select value={fontStyle} onValueChange={setFontStyle}>
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="normal">Normal</SelectItem>
-                        <SelectItem value="italic">Italic</SelectItem>
-                        <SelectItem value="oblique">Oblique</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <Button onClick={copyCSS} className="w-full">
-                    <Copy className="w-4 h-4 mr-2" />
-                    Copy CSS
-                  </Button>
+    <ToolLayout title="Font Previewer" description="Preview and compare fonts with custom text" category="Frontend/UX" icon={Badge}>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-1 space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>Font Settings</CardTitle>
+              <CardDescription>Customize font appearance</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div>
+                  <label className="text-sm font-medium">System Fonts</label>
+                  <Select value={selectedFont} onValueChange={setSelectedFont}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {systemFonts.map((font) => (
+                        <SelectItem key={font} value={font}>
+                          {font}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
-              </CardContent>
-            </Card>
 
-            <Card>
-              <CardHeader>
-                <CardTitle>Sample Texts</CardTitle>
-                <CardDescription>Quick text examples</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-2">
-                  {sampleTexts.map((text, index) => (
-                    <button
-                      key={index}
-                      onClick={() => loadSampleText(text)}
-                      className="w-full text-left p-2 text-sm border border-slate-200 rounded hover:bg-muted transition-colors"
-                    >
-                      {text.substring(0, 40)}...
-                    </button>
-                  ))}
+                <div>
+                  <label className="text-sm font-medium">Web Fonts</label>
+                  <Select value={selectedFont} onValueChange={setSelectedFont}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select web font" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {webFonts.map((font) => (
+                        <SelectItem key={font} value={font}>
+                          {font}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
-              </CardContent>
-            </Card>
-          </div>
 
-          <div className="lg:col-span-2 space-y-6">
-            <Card>
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <CardTitle>Preview Text</CardTitle>
-                    <CardDescription>Enter your custom text to preview</CardDescription>
-                  </div>
-                  <Type className="w-5 h-5 text-muted-foreground" />
+                <div>
+                  <label className="text-sm font-medium">Custom Font Family</label>
+                  <Input
+                    placeholder="Inter, system-ui, sans-serif"
+                    value={customFont}
+                    onChange={(e) => setCustomFont(e.target.value)}
+                  />
                 </div>
-              </CardHeader>
-              <CardContent>
-                <Textarea
-                  value={previewText}
-                  onChange={(e) => setPreviewText(e.target.value)}
-                  className="min-h-[100px]"
-                  placeholder="Enter text to preview with different fonts..."
-                />
-              </CardContent>
-            </Card>
 
-            <Card>
-              <CardHeader>
-                <CardTitle>Font Preview</CardTitle>
-                <CardDescription>
-                  {currentFont} • {fontSize[0]}px • {fontWeight} • {fontStyle}
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-6">
-                  <div
-                    className="p-6 bg-white border border-slate-200 rounded-lg min-h-[200px] break-words"
-                    style={{
-                      fontFamily: currentFont,
-                      fontSize: `${fontSize[0]}px`,
-                      fontWeight: fontWeight,
-                      fontStyle: fontStyle,
-                      lineHeight: 1.5
-                    }}
+                <div>
+                  <label className="text-sm font-medium">Font Size: {fontSize[0]}px</label>
+                  <Slider
+                    value={fontSize}
+                    onValueChange={setFontSize}
+                    max={72}
+                    min={8}
+                    step={1}
+                    className="mt-2"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-sm font-medium">Font Weight</label>
+                  <Select value={fontWeight} onValueChange={setFontWeight}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {fontWeights.map((weight) => (
+                        <SelectItem key={weight.value} value={weight.value}>
+                          {weight.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div>
+                  <label className="text-sm font-medium">Font Style</label>
+                  <Select value={fontStyle} onValueChange={setFontStyle}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="normal">Normal</SelectItem>
+                      <SelectItem value="italic">Italic</SelectItem>
+                      <SelectItem value="oblique">Oblique</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <Button onClick={copyCSS} className="w-full">
+                  <Copy className="w-4 h-4 mr-2" />
+                  Copy CSS
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Sample Texts</CardTitle>
+              <CardDescription>Quick text examples</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-2">
+                {sampleTexts.map((text, index) => (
+                  <button
+                    key={index}
+                    onClick={() => loadSampleText(text)}
+                    className="w-full text-left p-2 text-sm border border-slate-200 rounded hover:bg-muted transition-colors"
                   >
-                    {previewText}
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="p-4 bg-muted rounded-lg">
-                      <h4 className="font-medium mb-2">Small Text (12px)</h4>
-                      <div
-                        style={{
-                          fontFamily: currentFont,
-                          fontSize: "12px",
-                          fontWeight: fontWeight,
-                          fontStyle: fontStyle
-                        }}
-                      >
-                        {previewText.substring(0, 50)}...
-                      </div>
-                    </div>
-
-                    <div className="p-4 bg-muted rounded-lg">
-                      <h4 className="font-medium mb-2">Large Text (24px)</h4>
-                      <div
-                        style={{
-                          fontFamily: currentFont,
-                          fontSize: "24px",
-                          fontWeight: fontWeight,
-                          fontStyle: fontStyle
-                        }}
-                      >
-                        {previewText.substring(0, 30)}...
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Font Information</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                  <div>
-                    <h4 className="font-medium mb-2">Web Safe Fonts</h4>
-                    <p className="text-muted-foreground">
-                      Fonts that are commonly available across different operating systems and browsers.
-                    </p>
-                  </div>
-                  <div>
-                    <h4 className="font-medium mb-2">Font Loading</h4>
-                    <p className="text-muted-foreground">
-                      Use font-display: swap for better performance when loading custom web fonts.
-                    </p>
-                  </div>
-                  <div>
-                    <h4 className="font-medium mb-2">Font Stacks</h4>
-                    <p className="text-muted-foreground">
-                      Provide fallback fonts in case your primary font fails to load.
-                    </p>
-                  </div>
-                  <div>
-                    <h4 className="font-medium mb-2">Accessibility</h4>
-                    <p className="text-muted-foreground">
-                      Ensure sufficient contrast and readable font sizes for better accessibility.
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+                    {text.substring(0, 40)}...
+                  </button>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
         </div>
-              </ToolLayout>
-    );
+
+        <div className="lg:col-span-2 space-y-6">
+          <Card>
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle>Preview Text</CardTitle>
+                  <CardDescription>Enter your custom text to preview</CardDescription>
+                </div>
+                <Type className="w-5 h-5 text-muted-foreground" />
+              </div>
+            </CardHeader>
+            <CardContent>
+              <Textarea
+                value={previewText}
+                onChange={(e) => setPreviewText(e.target.value)}
+                className="min-h-[100px]"
+                placeholder="Enter text to preview with different fonts..."
+              />
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Font Preview</CardTitle>
+              <CardDescription>
+                {currentFont} • {fontSize[0]}px • {fontWeight} • {fontStyle}
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-6">
+                <div
+                  className="p-6 bg-white border border-slate-200 rounded-lg min-h-[200px] break-words"
+                  style={{
+                    fontFamily: currentFont,
+                    fontSize: `${fontSize[0]}px`,
+                    fontWeight: fontWeight,
+                    fontStyle: fontStyle,
+                    lineHeight: 1.5
+                  }}
+                >
+                  {previewText}
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="p-4 bg-muted rounded-lg">
+                    <h4 className="font-medium mb-2">Small Text (12px)</h4>
+                    <div
+                      style={{
+                        fontFamily: currentFont,
+                        fontSize: "12px",
+                        fontWeight: fontWeight,
+                        fontStyle: fontStyle
+                      }}
+                    >
+                      {previewText.substring(0, 50)}...
+                    </div>
+                  </div>
+
+                  <div className="p-4 bg-muted rounded-lg">
+                    <h4 className="font-medium mb-2">Large Text (24px)</h4>
+                    <div
+                      style={{
+                        fontFamily: currentFont,
+                        fontSize: "24px",
+                        fontWeight: fontWeight,
+                        fontStyle: fontStyle
+                      }}
+                    >
+                      {previewText.substring(0, 30)}...
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Font Information</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <div>
+                  <h4 className="font-medium mb-2">Web Safe Fonts</h4>
+                  <p className="text-muted-foreground">
+                    Fonts that are commonly available across different operating systems and browsers.
+                  </p>
+                </div>
+                <div>
+                  <h4 className="font-medium mb-2">Font Loading</h4>
+                  <p className="text-muted-foreground">
+                    Use font-display: swap for better performance when loading custom web fonts.
+                  </p>
+                </div>
+                <div>
+                  <h4 className="font-medium mb-2">Font Stacks</h4>
+                  <p className="text-muted-foreground">
+                    Provide fallback fonts in case your primary font fails to load.
+                  </p>
+                </div>
+                <div>
+                  <h4 className="font-medium mb-2">Accessibility</h4>
+                  <p className="text-muted-foreground">
+                    Ensure sufficient contrast and readable font sizes for better accessibility.
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </ToolLayout>
+  );
 };
 
 export default FontPreviewer;

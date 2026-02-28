@@ -8,11 +8,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import Link from 'next/link';
+import { ToolLayout } from "@/components/ToolLayout";
 
 const TextDiff = () => {
   const [originalText, setOriginalText] = useState("");
   const [modifiedText, setModifiedText] = useState("");
-  const [diffResult, setDiffResult] = useState<Array<{type: 'added' | 'removed' | 'unchanged', content: string}>>([]);
+  const [diffResult, setDiffResult] = useState<Array<{ type: 'added' | 'removed' | 'unchanged', content: string }>>([]);
   const { toast } = useToast();
 
   const calculateDiff = () => {
@@ -28,14 +29,14 @@ const TextDiff = () => {
     // Simple line-by-line diff
     const originalLines = originalText.split('\n');
     const modifiedLines = modifiedText.split('\n');
-    const diff: Array<{type: 'added' | 'removed' | 'unchanged', content: string}> = [];
+    const diff: Array<{ type: 'added' | 'removed' | 'unchanged', content: string }> = [];
 
     const maxLength = Math.max(originalLines.length, modifiedLines.length);
-    
+
     for (let i = 0; i < maxLength; i++) {
       const originalLine = originalLines[i] || '';
       const modifiedLine = modifiedLines[i] || '';
-      
+
       if (originalLine === modifiedLine) {
         if (originalLine) {
           diff.push({ type: 'unchanged', content: originalLine });
@@ -62,7 +63,7 @@ const TextDiff = () => {
       const prefix = item.type === 'added' ? '+ ' : item.type === 'removed' ? '- ' : '  ';
       return prefix + item.content;
     }).join('\n');
-    
+
     navigator.clipboard.writeText(diffText);
     toast({ title: "Copied!", description: "Diff result copied to clipboard" });
   };
@@ -74,94 +75,93 @@ const TextDiff = () => {
   };
 
   return (
-        <ToolLayout title="Text Diff Checker" description="Compare two texts and highlight differences" category="File & Format" icon={Button}>
-<div className="mb-6">
-          <div className="flex gap-3">
-            <Button onClick={calculateDiff} className="bg-blue-600 hover:bg-blue-700">
-              Compare Texts
-            </Button>
-            <Button onClick={clearAll} variant="outline" className="text-red-600 hover:text-red-700">
-              <RotateCcw className="w-4 h-4 mr-2" />
-              Clear All
-            </Button>
-          </div>
+    <ToolLayout title="Text Diff Checker" description="Compare two texts and highlight differences" category="File & Format" icon={Button}>
+      <div className="mb-6">
+        <div className="flex gap-3">
+          <Button onClick={calculateDiff} className="bg-blue-600 hover:bg-blue-700">
+            Compare Texts
+          </Button>
+          <Button onClick={clearAll} variant="outline" className="text-red-600 hover:text-red-700">
+            <RotateCcw className="w-4 h-4 mr-2" />
+            Clear All
+          </Button>
         </div>
+      </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Original Text</CardTitle>
-              <CardDescription>Enter the original version</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Textarea
-                placeholder="Enter original text here..."
-                value={originalText}
-                onChange={(e) => setOriginalText(e.target.value)}
-                className="min-h-[300px] font-mono text-sm"
-              />
-            </CardContent>
-          </Card>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+        <Card>
+          <CardHeader>
+            <CardTitle>Original Text</CardTitle>
+            <CardDescription>Enter the original version</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Textarea
+              placeholder="Enter original text here..."
+              value={originalText}
+              onChange={(e) => setOriginalText(e.target.value)}
+              className="min-h-[300px] font-mono text-sm"
+            />
+          </CardContent>
+        </Card>
 
-          <Card>
-            <CardHeader>
-              <CardTitle>Modified Text</CardTitle>
-              <CardDescription>Enter the modified version</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Textarea
-                placeholder="Enter modified text here..."
-                value={modifiedText}
-                onChange={(e) => setModifiedText(e.target.value)}
-                className="min-h-[300px] font-mono text-sm"
-              />
-            </CardContent>
-          </Card>
-        </div>
+        <Card>
+          <CardHeader>
+            <CardTitle>Modified Text</CardTitle>
+            <CardDescription>Enter the modified version</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Textarea
+              placeholder="Enter modified text here..."
+              value={modifiedText}
+              onChange={(e) => setModifiedText(e.target.value)}
+              className="min-h-[300px] font-mono text-sm"
+            />
+          </CardContent>
+        </Card>
+      </div>
 
-        {diffResult.length > 0 && (
-          <Card>
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <div>
-                  <CardTitle>Diff Result</CardTitle>
-                  <CardDescription>
-                    <span className="text-green-600">+ Added lines</span> • 
-                    <span className="text-red-600 ml-2">- Removed lines</span> • 
-                    <span className="text-muted-foreground ml-2">Unchanged lines</span>
-                  </CardDescription>
-                </div>
-                <Button size="sm" variant="outline" onClick={copyDiff}>
-                  <Copy className="w-4 h-4 mr-2" />
-                  Copy Diff
-                </Button>
+      {diffResult.length > 0 && (
+        <Card>
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <div>
+                <CardTitle>Diff Result</CardTitle>
+                <CardDescription>
+                  <span className="text-green-600">+ Added lines</span> •
+                  <span className="text-red-600 ml-2">- Removed lines</span> •
+                  <span className="text-muted-foreground ml-2">Unchanged lines</span>
+                </CardDescription>
               </div>
-            </CardHeader>
-            <CardContent>
-              <div className="bg-muted p-4 rounded-lg font-mono text-sm max-h-96 overflow-auto">
-                {diffResult.map((item, index) => (
-                  <div
-                    key={index}
-                    className={`px-2 py-1 ${
-                      item.type === 'added' 
-                        ? 'bg-green-100 text-green-800' 
-                        : item.type === 'removed'
-                        ? 'bg-red-100 text-red-800'
-                        : 'text-muted-foreground'
+              <Button size="sm" variant="outline" onClick={copyDiff}>
+                <Copy className="w-4 h-4 mr-2" />
+                Copy Diff
+              </Button>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="bg-muted p-4 rounded-lg font-mono text-sm max-h-96 overflow-auto">
+              {diffResult.map((item, index) => (
+                <div
+                  key={index}
+                  className={`px-2 py-1 ${item.type === 'added'
+                    ? 'bg-green-100 text-green-800'
+                    : item.type === 'removed'
+                      ? 'bg-red-100 text-red-800'
+                      : 'text-muted-foreground'
                     }`}
-                  >
-                    <span className="select-none mr-2">
-                      {item.type === 'added' ? '+' : item.type === 'removed' ? '-' : ' '}
-                    </span>
-                    {item.content}
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        )}
-              </ToolLayout>
-    );
+                >
+                  <span className="select-none mr-2">
+                    {item.type === 'added' ? '+' : item.type === 'removed' ? '-' : ' '}
+                  </span>
+                  {item.content}
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      )}
+    </ToolLayout>
+  );
 };
 
 export default TextDiff;

@@ -16,6 +16,7 @@ import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
+import { ToolLayout } from "@/components/ToolLayout";
 
 interface OptimizationOption {
 	id: string;
@@ -285,170 +286,170 @@ const PromptOptimizer = () => {
 	};
 
 	return (
-        <ToolLayout title="Prompt Optimizer" description="Reduce token count in your LLM prompts" category="AI Tools" icon={Wand2}>
-<div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-					{/* Options Sidebar */}
-					<Card className="bg-card border-border lg:col-span-1">
-						<CardHeader>
-							<CardTitle className="text-foreground font-mono text-sm">
-								Optimizations
-							</CardTitle>
-						</CardHeader>
-						<CardContent className="space-y-4">
-							{options.map((opt) => (
-								<div key={opt.id} className="flex items-start space-x-3">
-									<Checkbox
-										id={opt.id}
-										checked={opt.enabled}
-										onCheckedChange={() => toggleOption(opt.id)}
-									/>
-									<div className="grid gap-1 leading-none">
-										<Label
-											htmlFor={opt.id}
-											className="text-sm font-medium text-foreground cursor-pointer"
-										>
-											{opt.label}
-										</Label>
-										<p className="text-xs text-muted-foreground">
-											{opt.description}
-										</p>
-									</div>
-								</div>
-							))}
-						</CardContent>
-					</Card>
-
-					{/* Main Content */}
-					<div className="lg:col-span-3 space-y-6">
-						{/* Stats Bar */}
-						{stats.inputTokens > 0 && (
-							<Card className="bg-card border-border">
-								<CardContent className="py-4">
-									<div className="flex flex-wrap items-center justify-between gap-4">
-										<div className="flex items-center gap-6">
-											<div>
-												<p className="text-xs text-muted-foreground">Input</p>
-												<p className="text-lg font-mono text-foreground">
-													{stats.inputTokens} tokens
-												</p>
-											</div>
-											<div className="text-muted-foreground">→</div>
-											<div>
-												<p className="text-xs text-muted-foreground">Output</p>
-												<p className="text-lg font-mono text-foreground">
-													{stats.outputTokens} tokens
-												</p>
-											</div>
-										</div>
-										{stats.saved > 0 && (
-											<Badge className="bg-green-500/20 text-green-400 border-green-500/30 font-mono">
-												-{stats.saved} tokens ({stats.savedPercent.toFixed(1)}%)
-											</Badge>
-										)}
-									</div>
-								</CardContent>
-							</Card>
-						)}
-
-						<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-							{/* Input */}
-							<Card className="bg-card border-border">
-								<CardHeader className="pb-3">
-									<CardTitle className="text-foreground font-mono">
-										Original Prompt
-									</CardTitle>
-								</CardHeader>
-								<CardContent>
-									<Textarea
-										value={input}
-										onChange={(e) => setInput(e.target.value)}
-										placeholder="Paste your prompt here..."
-										className="min-h-[350px] font-mono text-sm bg-background border-border resize-none"
-									/>
-								</CardContent>
-							</Card>
-
-							{/* Output */}
-							<Card className="bg-card border-border">
-								<CardHeader className="pb-3">
-									<CardTitle className="text-foreground font-mono">
-										Optimized Prompt
-									</CardTitle>
-								</CardHeader>
-								<CardContent>
-									<Textarea
-										value={output}
-										readOnly
-										placeholder="Optimized prompt will appear here..."
-										className="min-h-[350px] font-mono text-sm bg-background border-border resize-none"
-									/>
-								</CardContent>
-							</Card>
-						</div>
-
-						{/* Actions */}
-						<div className="flex flex-wrap gap-3 justify-center">
-							<Button onClick={optimize} className="min-w-[140px]">
-								<Wand2 className="w-4 h-4 mr-2" />
-								Optimize
-							</Button>
-							<Button onClick={copyOutput} variant="outline" disabled={!output}>
-								<Copy className="w-4 h-4 mr-2" />
-								Copy
-							</Button>
-							<Button onClick={clear} variant="outline">
-								<RotateCcw className="w-4 h-4 mr-2" />
-								Clear
-							</Button>
-						</div>
-					</div>
-				</div>
-
-				{/* Tips */}
-				<Card className="mt-8 bg-muted/50 border-border">
+		<ToolLayout title="Prompt Optimizer" description="Reduce token count in your LLM prompts" category="AI Tools" icon={Wand2}>
+			<div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+				{/* Options Sidebar */}
+				<Card className="bg-card border-border lg:col-span-1">
 					<CardHeader>
-						<CardTitle className="text-foreground font-mono text-lg flex items-center gap-2">
-							<Info className="w-5 h-5" />
-							Tips for Prompt Optimization
+						<CardTitle className="text-foreground font-mono text-sm">
+							Optimizations
 						</CardTitle>
 					</CardHeader>
-					<CardContent className="space-y-2 text-sm text-muted-foreground">
-						<ul className="list-disc list-inside space-y-1">
-							<li>
-								Use <strong className="text-foreground">TOON format</strong>{" "}
-								instead of JSON/YAML for structured data
-							</li>
-							<li>
-								Prefer{" "}
-								<strong className="text-foreground">bullet points</strong> over
-								paragraphs for instructions
-							</li>
-							<li>
-								Use <strong className="text-foreground">abbreviations</strong>{" "}
-								where context is clear
-							</li>
-							<li>
-								Remove{" "}
-								<strong className="text-foreground">politeness phrases</strong>{" "}
-								— LLMs don't need them
-							</li>
-							<li>
-								Use{" "}
-								<strong className="text-foreground">
-									shorter variable names
-								</strong>{" "}
-								in code examples
-							</li>
-							<li>
-								Consider{" "}
-								<strong className="text-foreground">tab delimiters</strong> over
-								commas (better tokenization)
-							</li>
-						</ul>
+					<CardContent className="space-y-4">
+						{options.map((opt) => (
+							<div key={opt.id} className="flex items-start space-x-3">
+								<Checkbox
+									id={opt.id}
+									checked={opt.enabled}
+									onCheckedChange={() => toggleOption(opt.id)}
+								/>
+								<div className="grid gap-1 leading-none">
+									<Label
+										htmlFor={opt.id}
+										className="text-sm font-medium text-foreground cursor-pointer"
+									>
+										{opt.label}
+									</Label>
+									<p className="text-xs text-muted-foreground">
+										{opt.description}
+									</p>
+								</div>
+							</div>
+						))}
 					</CardContent>
 				</Card>
-			        </ToolLayout>
-    );
+
+				{/* Main Content */}
+				<div className="lg:col-span-3 space-y-6">
+					{/* Stats Bar */}
+					{stats.inputTokens > 0 && (
+						<Card className="bg-card border-border">
+							<CardContent className="py-4">
+								<div className="flex flex-wrap items-center justify-between gap-4">
+									<div className="flex items-center gap-6">
+										<div>
+											<p className="text-xs text-muted-foreground">Input</p>
+											<p className="text-lg font-mono text-foreground">
+												{stats.inputTokens} tokens
+											</p>
+										</div>
+										<div className="text-muted-foreground">→</div>
+										<div>
+											<p className="text-xs text-muted-foreground">Output</p>
+											<p className="text-lg font-mono text-foreground">
+												{stats.outputTokens} tokens
+											</p>
+										</div>
+									</div>
+									{stats.saved > 0 && (
+										<Badge className="bg-green-500/20 text-green-400 border-green-500/30 font-mono">
+											-{stats.saved} tokens ({stats.savedPercent.toFixed(1)}%)
+										</Badge>
+									)}
+								</div>
+							</CardContent>
+						</Card>
+					)}
+
+					<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+						{/* Input */}
+						<Card className="bg-card border-border">
+							<CardHeader className="pb-3">
+								<CardTitle className="text-foreground font-mono">
+									Original Prompt
+								</CardTitle>
+							</CardHeader>
+							<CardContent>
+								<Textarea
+									value={input}
+									onChange={(e) => setInput(e.target.value)}
+									placeholder="Paste your prompt here..."
+									className="min-h-[350px] font-mono text-sm bg-background border-border resize-none"
+								/>
+							</CardContent>
+						</Card>
+
+						{/* Output */}
+						<Card className="bg-card border-border">
+							<CardHeader className="pb-3">
+								<CardTitle className="text-foreground font-mono">
+									Optimized Prompt
+								</CardTitle>
+							</CardHeader>
+							<CardContent>
+								<Textarea
+									value={output}
+									readOnly
+									placeholder="Optimized prompt will appear here..."
+									className="min-h-[350px] font-mono text-sm bg-background border-border resize-none"
+								/>
+							</CardContent>
+						</Card>
+					</div>
+
+					{/* Actions */}
+					<div className="flex flex-wrap gap-3 justify-center">
+						<Button onClick={optimize} className="min-w-[140px]">
+							<Wand2 className="w-4 h-4 mr-2" />
+							Optimize
+						</Button>
+						<Button onClick={copyOutput} variant="outline" disabled={!output}>
+							<Copy className="w-4 h-4 mr-2" />
+							Copy
+						</Button>
+						<Button onClick={clear} variant="outline">
+							<RotateCcw className="w-4 h-4 mr-2" />
+							Clear
+						</Button>
+					</div>
+				</div>
+			</div>
+
+			{/* Tips */}
+			<Card className="mt-8 bg-muted/50 border-border">
+				<CardHeader>
+					<CardTitle className="text-foreground font-mono text-lg flex items-center gap-2">
+						<Info className="w-5 h-5" />
+						Tips for Prompt Optimization
+					</CardTitle>
+				</CardHeader>
+				<CardContent className="space-y-2 text-sm text-muted-foreground">
+					<ul className="list-disc list-inside space-y-1">
+						<li>
+							Use <strong className="text-foreground">TOON format</strong>{" "}
+							instead of JSON/YAML for structured data
+						</li>
+						<li>
+							Prefer{" "}
+							<strong className="text-foreground">bullet points</strong> over
+							paragraphs for instructions
+						</li>
+						<li>
+							Use <strong className="text-foreground">abbreviations</strong>{" "}
+							where context is clear
+						</li>
+						<li>
+							Remove{" "}
+							<strong className="text-foreground">politeness phrases</strong>{" "}
+							— LLMs don't need them
+						</li>
+						<li>
+							Use{" "}
+							<strong className="text-foreground">
+								shorter variable names
+							</strong>{" "}
+							in code examples
+						</li>
+						<li>
+							Consider{" "}
+							<strong className="text-foreground">tab delimiters</strong> over
+							commas (better tokenization)
+						</li>
+					</ul>
+				</CardContent>
+			</Card>
+		</ToolLayout>
+	);
 };
 
 export default PromptOptimizer;

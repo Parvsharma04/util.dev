@@ -2,23 +2,17 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Search, Command, Zap, Code, FileText, Clock, Globe, Palette, Terminal, ChevronRight } from "lucide-react";
+import { Search, Command, Terminal, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Sidebar } from "@/components/Sidebar";
-import { CommandPalette } from "@/components/CommandPalette";
-import { ThemeToggle } from "@/components/ThemeToggle";
+import { AppShell } from "@/components/AppShell";
 import { allTools } from "@/lib/tools";
 
 const featuredTools = allTools.slice(0, 6);
 
-
-
 const Index = () => {
-    const [sidebarOpen, setSidebarOpen] = useState(false);
-    const [commandOpen, setCommandOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     const [typedText, setTypedText] = useState("");
     const fullText = "util.dev";
@@ -36,89 +30,14 @@ const Index = () => {
         return () => clearInterval(timer);
     }, []);
 
-    useEffect(() => {
-        const handleKeyDown = (e: KeyboardEvent) => {
-            if ((e.metaKey || e.ctrlKey) && e.key === "k") {
-                e.preventDefault();
-                setCommandOpen(true);
-            }
-            if ((e.metaKey || e.ctrlKey) && e.key === "b") {
-                e.preventDefault();
-                setSidebarOpen(!sidebarOpen);
-            }
-        };
-
-        window.addEventListener("keydown", handleKeyDown);
-        return () => window.removeEventListener("keydown", handleKeyDown);
-    }, [sidebarOpen]);
-
     const filteredTools = featuredTools.filter(tool =>
         tool.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         tool.description.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
     return (
-        <div className="min-h-screen bg-background matrix-bg flex flex-col">
-            <Sidebar open={sidebarOpen} onOpenChange={setSidebarOpen} />
-            <CommandPalette open={commandOpen} onOpenChange={setCommandOpen} />
-
-            <div className={`flex-1 transition-all duration-300 ${sidebarOpen ? 'ml-64' : 'ml-0'} flex flex-col`}>
-                {/* Header */}
-                <header className="sticky top-0 z-40 bg-background/80 backdrop-blur-lg border-b border-border">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="flex items-center justify-between h-16">
-                            <div className="flex items-center gap-4">
-                                <Button
-                                    variant="ghost"
-                                    size="sm"
-                                    onClick={() => setSidebarOpen(!sidebarOpen)}
-                                    className="hover:bg-accent"
-                                >
-                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                                    </svg>
-                                </Button>
-                                <div className="flex items-center gap-2">
-                                    <div className="w-8 h-8 bg-primary/10 border border-primary/30 rounded-lg flex items-center justify-center">
-                                        <Terminal className="w-5 h-5 text-primary" />
-                                    </div>
-                                    <div>
-                                        <h1 className="text-xl font-bold text-foreground glow font-mono">
-                                            util.dev
-                                        </h1>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="flex items-center gap-3">
-                                <Button
-                                    variant="outline"
-                                    size="sm"
-                                    onClick={() => setCommandOpen(true)}
-                                    className="hidden sm:flex items-center gap-2 px-3 py-2 border-border hover:border-primary/50 hover:bg-accent"
-                                >
-                                    <Search className="w-4 h-4" />
-                                    <span className="text-sm text-muted-foreground">Search tools...</span>
-                                    <div className="flex items-center gap-1 ml-auto">
-                                        <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border border-border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground">
-                                            <span className="text-xs">⌘</span>K
-                                        </kbd>
-                                    </div>
-                                </Button>
-                                <Button
-                                    variant="ghost"
-                                    size="sm"
-                                    onClick={() => setCommandOpen(true)}
-                                    className="sm:hidden"
-                                >
-                                    <Search className="w-4 h-4" />
-                                </Button>
-                                <ThemeToggle />
-                            </div>
-                        </div>
-                    </div>
-                </header>
-
+        <AppShell>
+            <div className="flex flex-col">
                 {/* Hero Section */}
                 <section className="relative py-16 sm:py-24 overflow-hidden">
                     <div className="absolute inset-0 grid-pattern opacity-50"></div>
@@ -148,11 +67,10 @@ const Index = () => {
                                 </div>
                                 <Button
                                     size="lg"
-                                    onClick={() => setCommandOpen(true)}
                                     className="h-12 px-8 bg-primary text-primary-foreground hover:bg-primary/90 font-mono animate-pulse-glow"
                                 >
                                     <Command className="w-5 h-5 mr-2" />
-                                    Open Command Palette
+                                    Search Command Palette
                                 </Button>
                             </div>
                         </div>
@@ -223,7 +141,6 @@ const Index = () => {
                         <Card className="bg-card border-border card-glow">
                             <CardContent className="p-6 text-center">
                                 <div className="text-3xl font-bold text-primary glow font-mono">{allTools.length}+</div>
-
                                 <div className="text-sm text-muted-foreground font-mono">Tools Available</div>
                             </CardContent>
                         </Card>
@@ -271,7 +188,7 @@ const Index = () => {
                     </div>
                 </footer>
             </div>
-        </div>
+        </AppShell>
     );
 };
 

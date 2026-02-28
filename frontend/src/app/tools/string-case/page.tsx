@@ -8,6 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import Link from 'next/link';
+import { ToolLayout } from "@/components/ToolLayout";
 
 const StringCase = () => {
   const [input, setInput] = useState("");
@@ -15,10 +16,10 @@ const StringCase = () => {
 
   const convertToCase = (text: string, caseType: string): string => {
     if (!text) return "";
-    
+
     switch (caseType) {
       case "camelCase":
-        return text.replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) => 
+        return text.replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) =>
           index === 0 ? word.toLowerCase() : word.toUpperCase()).replace(/\s+/g, '');
       case "PascalCase":
         return text.replace(/(?:^\w|[A-Z]|\b\w)/g, word => word.toUpperCase()).replace(/\s+/g, '');
@@ -33,7 +34,7 @@ const StringCase = () => {
       case "UPPERCASE":
         return text.toUpperCase();
       case "Title Case":
-        return text.replace(/\w\S*/g, txt => 
+        return text.replace(/\w\S*/g, txt =>
           txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
       default:
         return text;
@@ -64,63 +65,63 @@ const StringCase = () => {
   ];
 
   return (
-        <ToolLayout title="String Case Converter" description="Convert strings between different naming conventions" category="Text & String" icon={Badge}>
-<div className="mb-6">
-          <Button onClick={clearAll} variant="outline" className="text-red-600 hover:text-red-700">
-            <RotateCcw className="w-4 h-4 mr-2" />
-            Clear
-          </Button>
-        </div>
+    <ToolLayout title="String Case Converter" description="Convert strings between different naming conventions" category="Text & String" icon={Badge}>
+      <div className="mb-6">
+        <Button onClick={clearAll} variant="outline" className="text-red-600 hover:text-red-700">
+          <RotateCcw className="w-4 h-4 mr-2" />
+          Clear
+        </Button>
+      </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <Card className="lg:col-span-1">
-            <CardHeader>
-              <CardTitle>Input</CardTitle>
-              <CardDescription>Enter your text to convert</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Textarea
-                placeholder="my variable name"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                className="min-h-[300px] font-mono text-sm"
-              />
-            </CardContent>
-          </Card>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <Card className="lg:col-span-1">
+          <CardHeader>
+            <CardTitle>Input</CardTitle>
+            <CardDescription>Enter your text to convert</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Textarea
+              placeholder="my variable name"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              className="min-h-[300px] font-mono text-sm"
+            />
+          </CardContent>
+        </Card>
 
-          <Card className="lg:col-span-2">
-            <CardHeader>
-              <CardTitle>Converted Cases</CardTitle>
-              <CardDescription>All case variations of your input</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {cases.map((caseType) => (
-                  <div key={caseType.name} className="flex items-center justify-between p-3 bg-muted rounded-lg">
-                    <div className="flex-1 min-w-0">
-                      <div className="text-sm font-medium text-muted-foreground mb-1">
-                        {caseType.name}
-                      </div>
-                      <div className="font-mono text-sm text-foreground break-all">
-                        {input ? convertToCase(input, caseType.name) : caseType.example}
-                      </div>
+        <Card className="lg:col-span-2">
+          <CardHeader>
+            <CardTitle>Converted Cases</CardTitle>
+            <CardDescription>All case variations of your input</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              {cases.map((caseType) => (
+                <div key={caseType.name} className="flex items-center justify-between p-3 bg-muted rounded-lg">
+                  <div className="flex-1 min-w-0">
+                    <div className="text-sm font-medium text-muted-foreground mb-1">
+                      {caseType.name}
                     </div>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={() => copyToClipboard(convertToCase(input, caseType.name), caseType.name)}
-                      disabled={!input}
-                    >
-                      <Copy className="w-4 h-4" />
-                    </Button>
+                    <div className="font-mono text-sm text-foreground break-all">
+                      {input ? convertToCase(input, caseType.name) : caseType.example}
+                    </div>
                   </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-              </ToolLayout>
-    );
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => copyToClipboard(convertToCase(input, caseType.name), caseType.name)}
+                    disabled={!input}
+                  >
+                    <Copy className="w-4 h-4" />
+                  </Button>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </ToolLayout>
+  );
 };
 
 export default StringCase;

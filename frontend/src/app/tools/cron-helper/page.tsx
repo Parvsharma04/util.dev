@@ -1,270 +1,276 @@
 "use client";
 
-
-import { useState } from "react";
-import { Copy, Clock, Calendar } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Copy, Clock, Calendar, Hash, Info, RotateCcw, Settings, Zap, History, Layout, Check, Terminal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import { ToolLayout } from "@/components/ToolLayout";
 
 const CronHelper = () => {
-  const [cronExpression, setCronExpression] = useState("0 0 * * *");
+  const [cronExpression, setCronExpression] = useState("0 12 * * *");
   const [minute, setMinute] = useState("0");
-  const [hour, setHour] = useState("0");
+  const [hour, setHour] = useState("12");
   const [dayOfMonth, setDayOfMonth] = useState("*");
   const [month, setMonth] = useState("*");
   const [dayOfWeek, setDayOfWeek] = useState("*");
-  const [description, setDescription] = useState("");
+  const [description, setDescription] = useState("At 12:00 PM, every day");
   const { toast } = useToast();
 
   const presets = [
-    { name: "Every minute", expression: "* * * * *", desc: "Runs every minute" },
-    { name: "Every hour", expression: "0 * * * *", desc: "Runs at the start of every hour" },
-    { name: "Daily at midnight", expression: "0 0 * * *", desc: "Runs every day at 12:00 AM" },
-    { name: "Daily at noon", expression: "0 12 * * *", desc: "Runs every day at 12:00 PM" },
-    { name: "Weekly (Sunday)", expression: "0 0 * * 0", desc: "Runs every Sunday at midnight" },
-    { name: "Monthly", expression: "0 0 1 * *", desc: "Runs on the 1st day of every month" },
-    { name: "Yearly", expression: "0 0 1 1 *", desc: "Runs on January 1st every year" },
-    { name: "Weekdays only", expression: "0 9 * * 1-5", desc: "Runs at 9 AM on weekdays" },
-    { name: "Every 15 minutes", expression: "*/15 * * * *", desc: "Runs every 15 minutes" },
-    { name: "Every 6 hours", expression: "0 */6 * * *", desc: "Runs every 6 hours" }
+    { name: "Every minute", expression: "* * * * *", desc: "Minute-by-minute execution" },
+    { name: "Hourly Start", expression: "0 * * * *", desc: "Top of every hour" },
+    { name: "Daily Midnight", expression: "0 0 * * *", desc: "Every day at 12:00 AM" },
+    { name: "Daily Noon", expression: "0 12 * * *", desc: "Every day at 12:00 PM" },
+    { name: "Weekly Sunday", expression: "0 0 * * 0", desc: "Sundays at midnight" },
+    { name: "Monthly Start", expression: "0 0 1 * *", desc: "1st day of every month" },
+    { name: "Quarterly", expression: "0 0 1 */3 *", desc: "Every 3 months" },
+    { name: "Workdays Only", expression: "0 9 * * 1-5", desc: "9 AM on weekdays" },
+    { name: "Every 15 mins", expression: "*/15 * * * *", desc: "High frequency syncs" },
+    { name: "Every 6 hours", expression: "0 */6 * * *", desc: "Quadratic execution" }
   ];
 
-  const generateCronExpression = () => {
-    const expression = `${minute} ${hour} ${dayOfMonth} ${month} ${dayOfWeek}`;
-    setCronExpression(expression);
-    generateDescription(expression);
-  };
-
   const generateDescription = (expression: string) => {
-    const parts = expression.split(' ');
+    const parts = expression.trim().split(/\s+/);
+    if (parts.length !== 5) {
+      setDescription("Invalid Stream: Segment mismatch detected");
+      return;
+    }
     const [min, hr, dom, mon, dow] = parts;
-    
-    let desc = "Runs ";
-    
+
+    let descParts: string[] = [];
+
     // Day of week
+    let dowDesc = "";
     if (dow !== "*") {
       const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
       if (dow.includes("-")) {
         const [start, end] = dow.split("-");
-        desc += `${days[parseInt(start)]}-${days[parseInt(end)]} `;
+        dowDesc = `on ${days[parseInt(start)]} through ${days[parseInt(end)]}`;
       } else if (dow.includes(",")) {
         const daysList = dow.split(",").map(d => days[parseInt(d)]).join(", ");
-        desc += `${daysList} `;
+        dowDesc = `on ${daysList}`;
       } else {
-        desc += `${days[parseInt(dow)]} `;
+        dowDesc = `on ${days[parseInt(dow)]}`;
       }
     }
-    
+
     // Time
     if (hr === "*" && min === "*") {
-      desc += "every minute";
+      descParts.push("every single minute");
     } else if (hr === "*") {
-      desc += min === "0" ? "every hour" : `at minute ${min} of every hour`;
+      descParts.push(min === "0" ? "at the start of every hour" : `at minute ${min} of every hour`);
     } else if (min === "*") {
-      desc += `every minute during hour ${hr}`;
+      descParts.push(`every minute during hour ${hr}`);
     } else {
-      desc += `at ${hr.padStart(2, '0')}:${min.padStart(2, '0')}`;
+      descParts.push(`at ${hr.padStart(2, '0')}:${min.padStart(2, '0')}`);
     }
-    
-    // Day of month
-    if (dom !== "*") {
-      desc += ` on day ${dom} of the month`;
-    }
-    
-    // Month
+
+    if (dowDesc) descParts.push(dowDesc);
+    if (dom !== "*") descParts.push(`on day ${dom} of the month`);
     if (mon !== "*") {
-      const months = ["January", "February", "March", "April", "May", "June",
-                     "July", "August", "September", "October", "November", "December"];
-      desc += ` in ${months[parseInt(mon) - 1]}`;
+      const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      descParts.push(`in ${months[parseInt(mon) - 1]}`);
     }
-    
-    setDescription(desc);
+
+    const finalDesc = descParts.join(", ");
+    setDescription(finalDesc.charAt(0).toUpperCase() + finalDesc.slice(1));
   };
 
-  const parseCronExpression = (expression: string) => {
-    const parts = expression.split(' ');
+  const handleInputChange = (val: string) => {
+    setCronExpression(val);
+    const parts = val.trim().split(/\s+/);
     if (parts.length === 5) {
       setMinute(parts[0]);
       setHour(parts[1]);
       setDayOfMonth(parts[2]);
       setMonth(parts[3]);
       setDayOfWeek(parts[4]);
-      generateDescription(expression);
+      generateDescription(val);
     }
   };
 
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(cronExpression);
-    toast({ title: "Copied!", description: "Cron expression copied to clipboard" });
+  const syncFromFields = () => {
+    const expr = `${minute} ${hour} ${dayOfMonth} ${month} ${dayOfWeek}`;
+    setCronExpression(expr);
+    generateDescription(expr);
   };
 
-  const selectPreset = (preset: typeof presets[0]) => {
-    setCronExpression(preset.expression);
-    parseCronExpression(preset.expression);
-    setDescription(preset.desc);
+  useEffect(() => {
+    syncFromFields();
+  }, [minute, hour, dayOfMonth, month, dayOfWeek]);
+
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(cronExpression);
+    toast({ title: "Copied!", description: "Schedule manifest copied to clipboard" });
   };
 
   return (
-        <ToolLayout title="Cron Expression Helper" description="Create and understand cron expressions" category="Time & Schedule" icon={Badge}>
-<Button size="sm" variant="outline" onClick={copyToClipboard}>
-                  <Copy className="w-4 h-4 mr-2" />
-                  Copy
+    <ToolLayout
+      title="Cron Architect"
+      description="Design, optimize, and decode complex job schedules for automation engines"
+      category="Time & Schedule"
+      icon={Terminal}
+    >
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+        {/* Main Display Area */}
+        <div className="lg:col-span-2 space-y-6">
+          <Card className="bg-card border-border card-glow overflow-hidden">
+            <div className="p-8 bg-primary/5 border-b border-border flex flex-col items-center justify-center text-center gap-4">
+              <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20 font-mono text-[9px] uppercase tracking-widest px-3">
+                Active Expression Manifest
+              </Badge>
+              <h2 className="text-4xl md:text-5xl font-mono font-bold tracking-[0.15em] text-foreground p-4 bg-muted/20 border border-border/50 rounded-2xl w-full max-w-2xl select-all tabular-nums">
+                {cronExpression}
+              </h2>
+              <div className="flex gap-3">
+                <Button size="sm" onClick={copyToClipboard} className="bg-primary font-mono text-xs px-6">
+                  <Copy className="w-3.5 h-3.5 mr-2" />
+                  Copy Manifest
+                </Button>
+                <Button size="sm" variant="outline" onClick={() => handleInputChange("0 0 * * *")} className="font-mono text-xs border-border">
+                  <RotateCcw className="w-3.5 h-3.5 mr-2" />
+                  Reset
                 </Button>
               </div>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div className="flex items-center gap-3">
-                  <Input
-                    value={cronExpression}
-                    onChange={(e) => {
-                      setCronExpression(e.target.value);
-                      parseCronExpression(e.target.value);
-                    }}
-                    className="font-mono text-lg"
-                    placeholder="0 0 * * *"
-                  />
-                  <Clock className="w-5 h-5 text-muted-foreground" />
+            </div>
+            <CardContent className="p-6 bg-card/50">
+              <div className="flex items-start gap-4 p-4 rounded-xl bg-muted/20 border border-border">
+                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                  <Info className="w-5 h-5 text-primary" />
                 </div>
-                
-                {description && (
-                  <div className="p-3 bg-blue-50 rounded-lg">
-                    <p className="text-blue-900 font-medium">{description}</p>
-                  </div>
-                )}
+                <div className="space-y-1">
+                  <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Natural Intelligence Readout</p>
+                  <p className="text-sm font-medium text-foreground leading-relaxed">{description}</p>
+                </div>
               </div>
             </CardContent>
           </Card>
 
-          <Card>
-            <CardHeader>
-              <CardTitle>Build Expression</CardTitle>
-              <CardDescription>Customize each field of the cron expression</CardDescription>
+          {/* Builder Interface */}
+          <Card className="bg-card border-border card-glow">
+            <CardHeader className="pb-3 border-b border-border bg-muted/5">
+              <CardTitle className="font-mono text-xs uppercase tracking-widest text-muted-foreground flex items-center gap-2">
+                <Settings className="w-4 h-4 text-primary" />
+                Structural Builder
+              </CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-                <div>
-                  <label className="text-sm font-medium">Minute (0-59)</label>
-                  <Input
-                    value={minute}
-                    onChange={(e) => setMinute(e.target.value)}
-                    placeholder="0"
-                    className="font-mono"
-                  />
-                </div>
-                
-                <div>
-                  <label className="text-sm font-medium">Hour (0-23)</label>
-                  <Input
-                    value={hour}
-                    onChange={(e) => setHour(e.target.value)}
-                    placeholder="0"
-                    className="font-mono"
-                  />
-                </div>
-                
-                <div>
-                  <label className="text-sm font-medium">Day (1-31)</label>
-                  <Input
-                    value={dayOfMonth}
-                    onChange={(e) => setDayOfMonth(e.target.value)}
-                    placeholder="*"
-                    className="font-mono"
-                  />
-                </div>
-                
-                <div>
-                  <label className="text-sm font-medium">Month (1-12)</label>
-                  <Input
-                    value={month}
-                    onChange={(e) => setMonth(e.target.value)}
-                    placeholder="*"
-                    className="font-mono"
-                  />
-                </div>
-                
-                <div>
-                  <label className="text-sm font-medium">Day of Week (0-6)</label>
-                  <Input
-                    value={dayOfWeek}
-                    onChange={(e) => setDayOfWeek(e.target.value)}
-                    placeholder="*"
-                    className="font-mono"
-                  />
-                </div>
-              </div>
-              
-              <Button onClick={generateCronExpression} className="mt-4 w-full bg-blue-600 hover:bg-blue-700">
-                <Calendar className="w-4 h-4 mr-2" />
-                Generate Expression
-              </Button>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Common Presets</CardTitle>
-              <CardDescription>Quick selection of commonly used cron expressions</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                {presets.map((preset, index) => (
-                  <div
-                    key={index}
-                    onClick={() => selectPreset(preset)}
-                    className="p-3 border border-slate-200 rounded-lg cursor-pointer hover:bg-muted transition-colors"
-                  >
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <div className="font-medium text-foreground">{preset.name}</div>
-                        <div className="text-sm text-muted-foreground">{preset.desc}</div>
-                      </div>
-                      <code className="text-sm bg-slate-100 px-2 py-1 rounded font-mono">
-                        {preset.expression}
-                      </code>
-                    </div>
+            <CardContent className="p-8">
+              <div className="grid grid-cols-1 sm:grid-cols-5 gap-8">
+                {[
+                  { label: "Minute", val: minute, set: setMinute, range: "0-59" },
+                  { label: "Hour", val: hour, set: setHour, range: "0-23" },
+                  { label: "Day (M)", val: dayOfMonth, set: setDayOfMonth, range: "1-31" },
+                  { label: "Month", val: month, set: setMonth, range: "1-12" },
+                  { label: "Day (W)", val: dayOfWeek, set: setDayOfWeek, range: "0-6" },
+                ].map((field) => (
+                  <div key={field.label} className="space-y-3 group text-center">
+                    <label className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest block">{field.label}</label>
+                    <Input
+                      value={field.val}
+                      onChange={(e) => field.set(e.target.value)}
+                      className="font-mono bg-muted/20 border-border h-14 text-xl text-center font-bold text-primary focus-visible:ring-primary focus-visible:bg-muted/10"
+                    />
+                    <div className="text-[9px] text-muted-foreground/60 font-mono italic opacity-40 group-hover:opacity-100 transition-opacity">{field.range}</div>
                   </div>
                 ))}
               </div>
             </CardContent>
           </Card>
+        </div>
 
-          <Card>
-            <CardHeader>
-              <CardTitle>Cron Syntax Guide</CardTitle>
+        {/* Side Controls: Presets & Help */}
+        <div className="lg:col-span-1 space-y-6">
+          <Card className="bg-card border-border card-glow h-full flex flex-col">
+            <CardHeader className="pb-3 border-b border-border bg-muted/5">
+              <CardTitle className="font-mono text-xs uppercase tracking-widest text-muted-foreground flex items-center gap-2">
+                <Zap className="w-4 h-4 text-amber-500" />
+                Template Library
+              </CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="space-y-4 text-sm">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <h4 className="font-medium mb-2">Special Characters</h4>
-                    <ul className="space-y-1 text-muted-foreground">
-                      <li><code>*</code> - Any value</li>
-                      <li><code>,</code> - Value list separator</li>
-                      <li><code>-</code> - Range of values</li>
-                      <li><code>/</code> - Step values</li>
-                    </ul>
+            <CardContent className="p-0 overflow-y-auto max-h-[500px] custom-scrollbar">
+              <div className="divide-y divide-border">
+                {presets.map((preset, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handleInputChange(preset.expression)}
+                    className="w-full p-4 flex flex-col gap-1 items-start hover:bg-muted/30 transition-colors group"
+                  >
+                    <div className="flex items-center justify-between w-full">
+                      <span className="text-xs font-bold text-foreground group-hover:text-primary transition-colors">{preset.name}</span>
+                      <code className="text-[10px] font-mono bg-muted px-2 py-0.5 rounded border border-border text-muted-foreground">{preset.expression}</code>
+                    </div>
+                    <p className="text-[10px] text-muted-foreground font-mono italic">{preset.desc}</p>
+                  </button>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-muted/10 border-border">
+            <CardContent className="p-6">
+              <h4 className="text-[10px] font-bold text-foreground mb-4 font-mono uppercase tracking-widest flex items-center gap-2 border-b border-border pb-2">
+                <Hash className="w-3.5 h-3.5 text-primary" />
+                Logic Symbols
+              </h4>
+              <div className="space-y-3">
+                {[
+                  { char: "*", note: "Matches any value in the field segment." },
+                  { char: ",", note: "Separation for multiple non-contiguous values." },
+                  { char: "-", note: "Definition for a continuous range of values." },
+                  { char: "/", note: "Incremental steps (e.g. */15 = every 15)." }
+                ].map((s, idx) => (
+                  <div key={idx} className="flex gap-3 items-start">
+                    <span className="font-mono text-primary font-bold text-xs shrink-0 w-4">{s.char}</span>
+                    <p className="text-[10px] font-mono text-muted-foreground leading-snug">{s.note}</p>
                   </div>
-                  <div>
-                    <h4 className="font-medium mb-2">Examples</h4>
-                    <ul className="space-y-1 text-muted-foreground">
-                      <li><code>*/15</code> - Every 15 units</li>
-                      <li><code>1-5</code> - Range from 1 to 5</li>
-                      <li><code>1,3,5</code> - On 1st, 3rd, and 5th</li>
-                      <li><code>0</code> - Only on 0</li>
-                    </ul>
-                  </div>
-                </div>
+                ))}
               </div>
             </CardContent>
           </Card>
         </div>
-              </ToolLayout>
-    );
+
+        {/* Global Stats Footer */}
+        <Card className="lg:col-span-3 bg-muted/30 border-border">
+          <CardContent className="p-8">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+              <div className="flex gap-4">
+                <History className="w-8 h-8 text-primary shrink-0 opacity-40" />
+                <div className="space-y-1">
+                  <h5 className="font-bold font-mono text-[10px] uppercase tracking-widest">History Limit</h5>
+                  <p className="text-[10px] text-muted-foreground font-mono leading-relaxed">Cron schedules are typically evaluated in UTC unless the host engine specifies otherwise.</p>
+                </div>
+              </div>
+              <div className="flex gap-4">
+                <Layout className="w-8 h-8 text-primary shrink-0 opacity-40" />
+                <div className="space-y-1">
+                  <h5 className="font-bold font-mono text-[10px] uppercase tracking-widest">UI Integrity</h5>
+                  <p className="text-[10px] text-muted-foreground font-mono leading-relaxed">This builder strictly adheres to the standard 5-part POSIX crontab specification.</p>
+                </div>
+              </div>
+              <div className="flex gap-4">
+                <Check className="w-8 h-8 text-primary shrink-0 opacity-40" />
+                <div className="space-y-1">
+                  <h5 className="font-bold font-mono text-[10px] uppercase tracking-widest">Verification</h5>
+                  <p className="text-[10px] text-muted-foreground font-mono leading-relaxed">Natural language readout is generated in real-time to prevent faulty schedule deployment.</p>
+                </div>
+              </div>
+              <div className="flex gap-4">
+                <Terminal className="w-8 h-8 text-primary shrink-0 opacity-40" />
+                <div className="space-y-1">
+                  <h5 className="font-bold font-mono text-[10px] uppercase tracking-widest">Engine Ready</h5>
+                  <p className="text-[10px] text-muted-foreground font-mono leading-relaxed">Copy output and paste directly into your system's crontab or job manifest.</p>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </ToolLayout>
+  );
 };
 
 export default CronHelper;
